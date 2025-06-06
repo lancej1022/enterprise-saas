@@ -20,5 +20,4 @@ catalogs:
     '@types/react-dom': ^19.1.5
 onlyBuiltDependencies:
   - esbuild
-patchedDependencies:
-  better-auth: patches/better-auth.patch
+
