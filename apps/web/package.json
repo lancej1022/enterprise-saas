@@ -34,7 +34,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@tailwindcss/vite": "^4.0.15",
     "@tanstack/react-form": "^1.0.5",
-    "@tanstack/react-query": "^5.80.5",
+    "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "^1.114.25",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

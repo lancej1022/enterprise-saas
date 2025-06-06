@@ -1,74 +1,70 @@
-// import Header from "@/components/header";
-// import Loader from "@/components/loader";
-// import { ThemeProvider } from "@/components/theme-provider";
-// import { Toaster } from "@/components/ui/sonner";
-// import { link, orpc, ORPCContext } from "@/utils/orpc";
-// import type { RouterClient } from "@orpc/server";
 import type { QueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-// import type { appRouter } from "../../../server/src/routers";
-// import { createORPCClient } from "@orpc/client";
-// import { createTanstackQueryUtils } from "@orpc/tanstack-query";
+import * as React from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   createRootRouteWithContext,
-  HeadContent,
+  Link,
   Outlet,
-  useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import "../index.css";
-
-export interface RouterAppContext {
-  // orpc: typeof orpc;
+export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-}
-
-export const Route = createRootRouteWithContext<RouterAppContext>()({
+}>()({
   component: RootComponent,
-  // context: {
-  //   queryClient,
-  // },
-  head: () => ({
-    meta: [
-      {
-        title: "My App",
-      },
-      {
-        name: "description",
-        content: "My App is a web application",
-      },
-    ],
-    links: [
-      {
-        rel: "icon",
-        href: "/favicon.ico",
-      },
-    ],
-  }),
+  notFoundComponent: () => {
+    return (
+      <div>
+        <p>This is the notFoundComponent configured on root route</p>
+        <Link to="/">Start Over</Link>
+      </div>
+    );
+  },
 });
 
 function RootComponent() {
-  const isFetching = useRouterState({
-    select: (s) => s.isLoading,
-  });
-
-  // const [client] = useState<RouterClient<typeof appRouter>>(() => createORPCClient(link));
-  // const [orpcUtils] = useState(() => createTanstackQueryUtils(client));
-
   return (
     <>
-      <HeadContent />
-      {/* <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme"> */}
-      <div className="grid h-svh grid-rows-[auto_1fr]">
-        {/* <Header /> */}
-        {isFetching ? <div>Loading...</div> : <Outlet />}
+      <div className="flex gap-2 p-2 text-lg">
+        <Link
+          to="/"
+          activeProps={{
+            className: "font-bold",
+          }}
+          activeOptions={{ exact: true }}
+        >
+          Home
+        </Link>{" "}
+        {/* <Link
+          to="/posts"
+          activeProps={{
+            className: 'font-bold',
+          }}
+        >
+          Posts
+        </Link>{' '}
+        <Link
+          to="/route-a"
+          activeProps={{
+            className: 'font-bold',
+          }}
+        >
+          Pathless Layout
+        </Link>{' '} */}
+        <Link
+          // @ts-expect-error
+          to="/this-route-does-not-exist"
+          activeProps={{
+            className: "font-bold",
+          }}
+        >
+          This Route Does Not Exist
+        </Link>
       </div>
-      {/* <Toaster richColors /> */}
-      {/* </ThemeProvider> */}
-      <TanStackRouterDevtools position="bottom-left" />
-      <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+      <hr />
+      <Outlet />
+      <ReactQueryDevtools buttonPosition="top-right" />
+      <TanStackRouterDevtools position="bottom-right" />
     </>
   );
 }
