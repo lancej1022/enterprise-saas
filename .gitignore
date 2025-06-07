@@ -53,5 +53,4 @@ dist/
 
 # go
 .backend
-postgres-data
-postgres-test-data
+backend/database
