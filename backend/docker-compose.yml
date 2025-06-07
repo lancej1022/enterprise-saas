@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: "chat_app_db"
+    image: postgres:17-alpine
+    volumes:
+      - "./database/postgres-data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    restart: unless-stopped
+
+  # TODO: Probably want to run the test DB separately rather than relying on a single compose file
+  test_db:
+    container_name: "chat_app_db_test"
+    image: postgres:17-alpine
+    volumes:
+      - "./database/postgres-test-data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    restart: unless-stopped
