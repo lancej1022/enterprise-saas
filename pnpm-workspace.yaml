@@ -10,6 +10,7 @@ catalog:
   "@types/node": 22.15.29
   zod: ^3.25.49
   '@tanstack/react-query': 5.80.2
+  '@tanstack/react-form': 1.12.2
   react: 19.0.0
   react-dom: 19.0.0
   '@types/react': 19.1.6
