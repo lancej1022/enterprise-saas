@@ -10,7 +10,7 @@
     "serve": "vite preview",
     "start": "vite",
     "test": "playwright test",
-    "check-types": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "tauri": "tauri",
     "desktop:dev": "tauri dev",
     "desktop:build": "tauri build"
