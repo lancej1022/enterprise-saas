@@ -1,9 +1,8 @@
 import React from "react";
-import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 
-import { Button } from "~/components/ui/button";
+import { LoginScreen } from "~/components/login/login-screen";
 
 export default function Index() {
   // const queryClient = useQueryClient();
@@ -49,10 +48,11 @@ export default function Index() {
 
         <CreatePost />
       </View> */}
-      <Text>Hello world</Text>
+      {/* <Text>Hello world</Text>
       <Button>
         <Text>Click me</Text>
-      </Button>
+      </Button> */}
+      <LoginScreen />
     </SafeAreaView>
   );
 }

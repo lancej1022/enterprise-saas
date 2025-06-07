@@ -67,14 +67,17 @@ export default tseslint.config(
     ],
     rules: {
       ...turboPlugin.configs.recommended.rules,
+      // handled by `unused-imports/no-unused-imports`
       "@typescript-eslint/no-unused-vars": "off",
       // provides an autofixable version of no-unused-vars, for imports specifically
       "unused-imports/no-unused-imports": "error",
+      // TODO: not clear if we really need `consistent-type-imports` since we also have `import/consistent-type-specifier-style` in place...
       // this rule improves tree-shaking by ensuring types are consistently imported in a way that allows them to be removed from production bundles
       "@typescript-eslint/consistent-type-imports": [
-        "warn",
+        "error",
         { prefer: "type-imports", fixStyle: "inline-type-imports" },
       ],
+      // disallows unsafe type casting
       "@typescript-eslint/consistent-type-assertions": [
         "error",
         { assertionStyle: "never" },
@@ -94,6 +97,8 @@ export default tseslint.config(
         },
       ],
       "@typescript-eslint/no-non-null-assertion": "error",
+      // `prefer-nullish-coalescing` can lead to bugs in cases where `||` is needed
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
       "import/consistent-type-specifier-style": ["error", "prefer-inline"],
       "no-restricted-imports": [
         "error",

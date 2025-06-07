@@ -1,12 +1,15 @@
-import type { VariantProps } from 'class-variance-authority';
-import type { LucideIcon } from 'lucide-react-native';
-import * as React from 'react';
-import { toggleTextVariants, toggleVariants } from '~/components/ui/toggle';
-import { TextClassContext } from '~/components/ui/text';
-import * as ToggleGroupPrimitive from '@rn-primitives/toggle-group';
-import { cn } from '~/lib/utils';
+import * as React from "react";
+import * as ToggleGroupPrimitive from "@rn-primitives/toggle-group";
+import { type VariantProps } from "class-variance-authority";
+import { type LucideIcon } from "lucide-react-native";
 
-const ToggleGroupContext = React.createContext<VariantProps<typeof toggleVariants> | null>(null);
+import { TextClassContext } from "~/components/ui/text";
+import { toggleTextVariants, toggleVariants } from "~/components/ui/toggle";
+import { cn } from "~/lib/utils";
+
+const ToggleGroupContext = React.createContext<VariantProps<
+  typeof toggleVariants
+> | null>(null);
 
 function ToggleGroup({
   className,
@@ -20,7 +23,10 @@ function ToggleGroup({
   }) {
   return (
     <ToggleGroupPrimitive.Root
-      className={cn('flex flex-row items-center justify-center gap-1', className)}
+      className={cn(
+        "flex flex-row items-center justify-center gap-1",
+        className,
+      )}
       {...props}
     >
       <ToggleGroupContext.Provider value={{ variant, size }}>
@@ -34,7 +40,7 @@ function useToggleGroupContext() {
   const context = React.useContext(ToggleGroupContext);
   if (context === null) {
     throw new Error(
-      'ToggleGroup compound components cannot be rendered outside the ToggleGroup component'
+      "ToggleGroup compound components cannot be rendered outside the ToggleGroup component",
     );
   }
   return context;
@@ -58,8 +64,8 @@ function ToggleGroupItem({
       value={cn(
         toggleTextVariants({ variant, size }),
         ToggleGroupPrimitive.utils.getIsSelected(value, props.value)
-          ? 'text-accent-foreground'
-          : 'web:group-hover:text-muted-foreground'
+          ? "text-accent-foreground"
+          : "web:group-hover:text-muted-foreground",
       )}
     >
       <ToggleGroupPrimitive.Item
@@ -68,9 +74,10 @@ function ToggleGroupItem({
             variant: context.variant || variant,
             size: context.size || size,
           }),
-          props.disabled && 'web:pointer-events-none opacity-50',
-          ToggleGroupPrimitive.utils.getIsSelected(value, props.value) && 'bg-accent',
-          className
+          props.disabled && "web:pointer-events-none opacity-50",
+          ToggleGroupPrimitive.utils.getIsSelected(value, props.value) &&
+            "bg-accent",
+          className,
         )}
         {...props}
       >

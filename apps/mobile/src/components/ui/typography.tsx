@@ -1,7 +1,8 @@
-import * as Slot from '@rn-primitives/slot';
-import * as React from 'react';
-import { Platform, Text as RNText } from 'react-native';
-import { cn } from '~/lib/utils';
+import * as React from "react";
+import { Platform, Text as RNText } from "react-native";
+import * as Slot from "@rn-primitives/slot";
+
+import { cn } from "~/lib/utils";
 
 type TypographyProps = React.ComponentProps<typeof RNText> & {
   ref?: React.RefObject<RNText>;
@@ -12,11 +13,11 @@ function H1({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role='heading'
-      aria-level='1'
+      role="heading"
+      aria-level="1"
       className={cn(
-        'web:scroll-m-20 text-4xl text-foreground font-extrabold tracking-tight lg:text-5xl web:select-text',
-        className
+        "web:scroll-m-20 web:select-text text-4xl font-extrabold tracking-tight text-foreground lg:text-5xl",
+        className,
       )}
       {...props}
     />
@@ -27,11 +28,11 @@ function H2({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role='heading'
-      aria-level='2'
+      role="heading"
+      aria-level="2"
       className={cn(
-        'web:scroll-m-20 border-b border-border pb-2 text-3xl text-foreground font-semibold tracking-tight first:mt-0 web:select-text',
-        className
+        "web:scroll-m-20 web:select-text border-b border-border pb-2 text-3xl font-semibold tracking-tight text-foreground first:mt-0",
+        className,
       )}
       {...props}
     />
@@ -42,11 +43,11 @@ function H3({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role='heading'
-      aria-level='3'
+      role="heading"
+      aria-level="3"
       className={cn(
-        'web:scroll-m-20 text-2xl text-foreground font-semibold tracking-tight web:select-text',
-        className
+        "web:scroll-m-20 web:select-text text-2xl font-semibold tracking-tight text-foreground",
+        className,
       )}
       {...props}
     />
@@ -57,11 +58,11 @@ function H4({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role='heading'
-      aria-level='4'
+      role="heading"
+      aria-level="4"
       className={cn(
-        'web:scroll-m-20 text-xl text-foreground font-semibold tracking-tight web:select-text',
-        className
+        "web:scroll-m-20 web:select-text text-xl font-semibold tracking-tight text-foreground",
+        className,
       )}
       {...props}
     />
@@ -71,7 +72,10 @@ function H4({ className, asChild = false, ...props }: TypographyProps) {
 function P({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
-    <Component className={cn('text-base text-foreground web:select-text', className)} {...props} />
+    <Component
+      className={cn("web:select-text text-base text-foreground", className)}
+      {...props}
+    />
   );
 }
 
@@ -79,11 +83,11 @@ function BlockQuote({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      // @ts-ignore - role of blockquote renders blockquote element on the web
-      role={Platform.OS === 'web' ? 'blockquote' : undefined}
+      // @ts-expect-error - role of blockquote renders blockquote element on the web
+      role={Platform.OS === "web" ? "blockquote" : undefined}
       className={cn(
-        'mt-6 native:mt-4 border-l-2 border-border pl-6 native:pl-3 text-base text-foreground italic web:select-text',
-        className
+        "native:mt-4 native:pl-3 web:select-text mt-6 border-l-2 border-border pl-6 text-base italic text-foreground",
+        className,
       )}
       {...props}
     />
@@ -94,11 +98,11 @@ function Code({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      // @ts-ignore - role of code renders code element on the web
-      role={Platform.OS === 'web' ? 'code' : undefined}
+      // @ts-expect-error - role of code renders code element on the web
+      role={Platform.OS === "web" ? "code" : undefined}
       className={cn(
-        'relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-sm text-foreground font-semibold web:select-text',
-        className
+        "web:select-text relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-sm font-semibold text-foreground",
+        className,
       )}
       {...props}
     />
@@ -109,7 +113,7 @@ function Lead({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      className={cn('text-xl text-muted-foreground web:select-text', className)}
+      className={cn("web:select-text text-xl text-muted-foreground", className)}
       {...props}
     />
   );
@@ -119,7 +123,10 @@ function Large({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      className={cn('text-xl text-foreground font-semibold web:select-text', className)}
+      className={cn(
+        "web:select-text text-xl font-semibold text-foreground",
+        className,
+      )}
       {...props}
     />
   );
@@ -129,7 +136,10 @@ function Small({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      className={cn('text-sm text-foreground font-medium leading-none web:select-text', className)}
+      className={cn(
+        "web:select-text text-sm font-medium leading-none text-foreground",
+        className,
+      )}
       {...props}
     />
   );
@@ -139,7 +149,7 @@ function Muted({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      className={cn('text-sm text-muted-foreground web:select-text', className)}
+      className={cn("web:select-text text-sm text-muted-foreground", className)}
       {...props}
     />
   );

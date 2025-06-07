@@ -1,5 +1,5 @@
-import type { QueryClient } from "@tanstack/react-query";
 import * as React from "react";
+import { type QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   createRootRouteWithContext,
@@ -52,7 +52,7 @@ function RootComponent() {
           Pathless Layout
         </Link>{' '} */}
         <Link
-          // @ts-expect-error
+          // @ts-expect-error -- TODO: this is just a way to demo a 404 page
           to="/this-route-does-not-exist"
           activeProps={{
             className: "font-bold",
