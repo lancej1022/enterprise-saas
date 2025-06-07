@@ -14,6 +14,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
     "@eslint/compat": "^1.2.9",
     "@next/eslint-plugin-next": "^15.3.3",
     "eslint-plugin-import": "^2.31.0",
