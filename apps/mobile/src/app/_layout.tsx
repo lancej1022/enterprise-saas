@@ -11,6 +11,7 @@ const queryClient = new QueryClient();
 // It wraps your pages with the providers they need
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();
+
   return (
     <QueryClientProvider client={queryClient}>
       {/*
@@ -19,9 +20,6 @@ export default function RootLayout() {
         */}
       <Stack
         screenOptions={{
-          headerStyle: {
-            backgroundColor: "#f472b6",
-          },
           contentStyle: {
             backgroundColor: colorScheme == "dark" ? "#09090B" : "#FFFFFF",
           },

@@ -1,10 +1,15 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.workingDirectories": [
     {
       "mode": "auto"
     }
   ],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
-  }
+  // TODO: can the below note be automated?
+  // NOTE: You must tell VS Code / Cursor to use the WORKSPACE version of TypeScript, not the IDE version. `Cmd + Shift + P` and select `TypeScript: Select TypeScript Version` and select `Use Workspace Version`
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
