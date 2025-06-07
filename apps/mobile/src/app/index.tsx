@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Button, Pressable, Text, TextInput, View } from "react-native";
+import React from "react";
+import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, Stack } from "expo-router";
-import { LegendList } from "@legendapp/list";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Stack } from "expo-router";
 
 // import type { RouterOutputs } from "~/utils/api";
 // import { trpc } from "~/utils/api";
