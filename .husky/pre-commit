@@ -1,0 +1,2 @@
+cd backend && make test-db-up && go test ./... && make test-db-down
+pnpm turbo typecheck lint test --output-logs=new-only

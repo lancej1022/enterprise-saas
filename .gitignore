@@ -7,11 +7,8 @@ node_modules
 
 # testing
 coverage
-
-# next.js
-.next/
-out/
-next-env.d.ts
+test-results
+playwright-report
 
 # nitro
 .nitro/
