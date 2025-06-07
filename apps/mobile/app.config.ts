@@ -2,9 +2,9 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "expo",
-  slug: "expo",
-  scheme: "expo",
+  name: "mobile",
+  slug: "mobile",
+  scheme: "mobile",
   version: "0.1.0",
   orientation: "portrait",
   icon: "./assets/icon-light.png",
