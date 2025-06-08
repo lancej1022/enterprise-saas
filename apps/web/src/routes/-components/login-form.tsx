@@ -2,17 +2,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { Link, useLocation } from "@tanstack/react-router";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
+export function LoginForm(props: React.ComponentProps<"form">) {
+  const pathname = useLocation({
+    select: (location) => location.pathname,
+  });
+  const isSignup = pathname === "/signup";
+
   return (
-    <form className={cn("flex flex-col gap-6", className)} {...props}>
+    <form className={cn("flex flex-col gap-6", props.className)} {...props}>
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Login to your account</h1>
+        <h1 className="text-2xl font-bold">
+          {isSignup ? "Sign up for an account" : "Login to your account"}
+        </h1>
         <p className="text-balance text-sm text-muted-foreground">
-          Enter your email below to login to your account
+          {isSignup
+            ? "Enter your email below to create an account"
+            : "Enter your email below to login to your account"}
         </p>
       </div>
       <div className="grid gap-6">
@@ -51,10 +58,21 @@ export function LoginForm({
         </Button>
       </div>
       <div className="text-center text-sm">
-        Don&apos;t have an account?{" "}
-        <a href="#" className="underline underline-offset-4">
-          Sign up
-        </a>
+        {isSignup ? (
+          <>
+            Already have an account?{" "}
+            <Link to="/login" className="underline underline-offset-4">
+              Login
+            </Link>
+          </>
+        ) : (
+          <>
+            Don&apos;t have an account?{" "}
+            <Link to="/signup" className="underline underline-offset-4">
+              Sign up
+            </Link>
+          </>
+        )}
       </div>
     </form>
   );

@@ -3,7 +3,7 @@ import { z } from "zod/v4";
 
 import { LoginPage } from "./-components/login-signup";
 
-const fallback = "/dashboard";
+const fallback = "/";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
