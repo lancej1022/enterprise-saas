@@ -1,3 +1,4 @@
+import { type AuthContext } from "@/auth";
 import { type QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -9,6 +10,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
+  auth: AuthContext | undefined;
 }>()({
   component: RootComponent,
   notFoundComponent: () => {
