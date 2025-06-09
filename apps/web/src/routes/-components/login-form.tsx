@@ -7,8 +7,8 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { z } from "zod/v4";
 
 const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z.email(),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 export function LoginForm(props: React.ComponentProps<"form">) {
