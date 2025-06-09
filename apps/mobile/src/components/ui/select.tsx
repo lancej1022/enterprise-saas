@@ -21,21 +21,21 @@ function SelectTrigger({
   children,
   ...props
 }: SelectPrimitive.TriggerProps & {
-  ref?: React.RefObject<SelectPrimitive.TriggerRef>;
   children?: React.ReactNode;
+  ref?: React.RefObject<SelectPrimitive.TriggerRef>;
 }) {
   return (
     <SelectPrimitive.Trigger
-      ref={ref}
       className={cn(
         'flex flex-row h-10 native:h-12 items-center text-sm justify-between rounded-md border border-input bg-background px-3 py-2 web:ring-offset-background text-muted-foreground web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 [&>span]:line-clamp-1',
         props.disabled && 'web:cursor-not-allowed opacity-50',
         className
       )}
+      ref={ref}
       {...props}
     >
       {children}
-      <ChevronDown size={16} aria-hidden={true} className='text-foreground opacity-50' />
+      <ChevronDown aria-hidden={true} className='text-foreground opacity-50' size={16} />
     </SelectPrimitive.Trigger>
   );
 }
@@ -52,7 +52,7 @@ function SelectScrollUpButton({ className, ...props }: SelectPrimitive.ScrollUpB
       className={cn('flex web:cursor-default items-center justify-center py-1', className)}
       {...props}
     >
-      <ChevronUp size={14} className='text-foreground' />
+      <ChevronUp className='text-foreground' size={14} />
     </SelectPrimitive.ScrollUpButton>
   );
 }
@@ -69,7 +69,7 @@ function SelectScrollDownButton({ className, ...props }: SelectPrimitive.ScrollD
       className={cn('flex web:cursor-default items-center justify-center py-1', className)}
       {...props}
     >
-      <ChevronDown size={14} className='text-foreground' />
+      <ChevronDown className='text-foreground' size={14} />
     </SelectPrimitive.ScrollDownButton>
   );
 }
@@ -81,9 +81,9 @@ function SelectContent({
   portalHost,
   ...props
 }: SelectPrimitive.ContentProps & {
-  ref?: React.RefObject<SelectPrimitive.ContentRef>;
   className?: string;
   portalHost?: string;
+  ref?: React.RefObject<SelectPrimitive.ContentRef>;
 }) {
   const { open } = SelectPrimitive.useRootContext();
 
@@ -157,7 +157,7 @@ function SelectItem({
     >
       <View className='absolute left-2 native:left-3.5 flex h-3.5 native:pt-px w-3.5 items-center justify-center'>
         <SelectPrimitive.ItemIndicator>
-          <Check size={16} strokeWidth={3} className='text-popover-foreground' />
+          <Check className='text-popover-foreground' size={16} strokeWidth={3} />
         </SelectPrimitive.ItemIndicator>
       </View>
       <SelectPrimitive.ItemText className='text-sm native:text-lg text-popover-foreground native:text-base web:group-focus:text-accent-foreground' />

@@ -64,8 +64,8 @@ function AlertDialogContent({
   portalHost,
   ...props
 }: AlertDialogPrimitive.ContentProps & {
-  ref?: React.RefObject<AlertDialogPrimitive.ContentRef>;
   portalHost?: string;
+  ref?: React.RefObject<AlertDialogPrimitive.ContentRef>;
 }) {
   const { open } = AlertDialogPrimitive.useRootContext();
 

@@ -9,11 +9,11 @@ const THEMES = { light: "", dark: ".dark" } as const;
 export type ChartConfig = Record<
   string,
   {
-    label?: React.ReactNode;
     icon?: React.ComponentType;
+    label?: React.ReactNode;
   } & (
-    | { color?: string; theme?: never }
     | { color?: never; theme: Record<keyof typeof THEMES, string> }
+    | { color?: string; theme?: never }
   )
 >;
 
@@ -40,10 +40,10 @@ function ChartContainer({
   config,
   ...props
 }: React.ComponentProps<"div"> & {
-  config: ChartConfig;
   children: React.ComponentProps<
     typeof RechartsPrimitive.ResponsiveContainer
   >["children"];
+  config: ChartConfig;
 }) {
   const uniqueId = React.useId();
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
@@ -51,15 +51,15 @@ function ChartContainer({
   return (
     <ChartContext.Provider value={{ config }}>
       <div
-        data-slot="chart"
-        data-chart={chartId}
         className={cn(
           "[&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-surface]:outline-hidden flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent",
           className,
         )}
+        data-chart={chartId}
+        data-slot="chart"
         {...props}
       >
-        <ChartStyle id={chartId} config={config} />
+        <ChartStyle config={config} id={chartId} />
         <RechartsPrimitive.ResponsiveContainer>
           {children}
         </RechartsPrimitive.ResponsiveContainer>
@@ -68,7 +68,7 @@ function ChartContainer({
   );
 }
 
-const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+const ChartStyle = ({ id, config }: { config: ChartConfig; id: string }) => {
   const colorConfig = Object.entries(config).filter(
     ([, config]) => config.theme || config.color,
   );
@@ -120,11 +120,11 @@ function ChartTooltipContent({
   labelKey,
 }: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
   React.ComponentProps<"div"> & {
-    hideLabel?: boolean;
     hideIndicator?: boolean;
-    indicator?: "line" | "dot" | "dashed";
-    nameKey?: string;
+    hideLabel?: boolean;
+    indicator?: "dashed" | "dot" | "line";
     labelKey?: string;
+    nameKey?: string;
   }) {
   const { config } = useChart();
 
@@ -188,11 +188,11 @@ function ChartTooltipContent({
 
           return (
             <div
-              key={item.dataKey}
               className={cn(
                 "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
                 indicator === "dot" && "items-center",
               )}
+              key={item.dataKey}
             >
               {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: this is straight from shadcn */}
               {formatter && item?.value !== undefined && item.name ? (
@@ -289,11 +289,11 @@ function ChartLegendContent({
 
         return (
           <div
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- this is straight from shadcn
-            key={item.value}
             className={cn(
               "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground",
             )}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- this is straight from shadcn
+            key={item.value}
           >
             {itemConfig?.icon && !hideIcon ? (
               <itemConfig.icon />

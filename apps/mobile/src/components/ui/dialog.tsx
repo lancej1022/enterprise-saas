@@ -37,13 +37,13 @@ function DialogOverlayNative({
   children,
   ...props
 }: DialogPrimitive.OverlayProps & {
-  ref?: React.RefObject<DialogPrimitive.OverlayRef>;
   children?: React.ReactNode;
+  ref?: React.RefObject<DialogPrimitive.OverlayRef>;
 }) {
   return (
     <DialogPrimitive.Overlay
-      style={StyleSheet.absoluteFill}
       className={cn('flex bg-black/80 justify-center items-center p-2', className)}
+      style={StyleSheet.absoluteFill}
       {...props}
     >
       <Animated.View entering={FadeIn.duration(150)} exiting={FadeOut.duration(150)}>
@@ -64,9 +64,9 @@ function DialogContent({
   portalHost,
   ...props
 }: DialogPrimitive.ContentProps & {
-  ref?: React.RefObject<DialogPrimitive.ContentRef>;
   className?: string;
   portalHost?: string;
+  ref?: React.RefObject<DialogPrimitive.ContentRef>;
 }) {
   const { open } = DialogPrimitive.useRootContext();
   return (
@@ -89,8 +89,8 @@ function DialogContent({
             }
           >
             <X
-              size={Platform.OS === 'web' ? 16 : 18}
               className={cn('text-muted-foreground', open && 'text-accent-foreground')}
+              size={Platform.OS === 'web' ? 16 : 18}
             />
           </DialogPrimitive.Close>
         </DialogPrimitive.Content>

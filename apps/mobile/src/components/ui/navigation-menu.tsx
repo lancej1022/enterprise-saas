@@ -87,9 +87,9 @@ function NavigationMenuTrigger({
       {children}
       <Animated.View style={chevronStyle}>
         <ChevronDown
-          size={12}
-          className={cn('relative text-foreground h-3 w-3 web:transition web:duration-200')}
           aria-hidden={true}
+          className={cn('relative text-foreground h-3 w-3 web:transition web:duration-200')}
+          size={12}
         />
       </Animated.View>
     </NavigationMenuPrimitive.Trigger>
@@ -165,12 +165,12 @@ function NavigationMenuIndicator({
 
   return (
     <NavigationMenuPrimitive.Indicator
-      ref={ref}
       className={cn(
         'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden',
         value === itemValue ? 'web:animate-in web:fade-in' : 'web:animate-out web:fade-out',
         className
       )}
+      ref={ref}
       {...props}
     >
       <View className='relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md shadow-foreground/5' />

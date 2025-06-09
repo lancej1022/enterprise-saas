@@ -31,7 +31,7 @@ function SubscribeButton({ label }: { label: string }) {
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
       {(isSubmitting) => (
-        <button type="submit" disabled={isSubmitting}>
+        <button disabled={isSubmitting} type="submit">
           {label}
         </button>
       )}
@@ -52,16 +52,16 @@ export function TanstackForm() {
     <form.AppForm>
       {/* Notice the `AppField` instead of `Field`; `AppField` provides the required context */}
       <form.AppField
-        name="email"
         children={(field) => (
-          <field.TextField label="Email" description="Email" />
+          <field.TextField description="Email" label="Email" />
         )}
+        name="email"
       />
       <form.AppField
-        name="password"
         children={(field) => (
-          <field.TextField label="Password" description="Password" />
+          <field.TextField description="Password" label="Password" />
         )}
+        name="password"
       />
       {/* Notice the `AppForm` component wrapper; `AppForm` provides the required context */}
       <form.SubscribeButton label="Submit" />

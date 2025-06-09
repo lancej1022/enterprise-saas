@@ -29,9 +29,9 @@ function ContextMenuSubTrigger({
   children,
   ...props
 }: ContextMenuPrimitive.SubTriggerProps & {
-  ref?: React.RefObject<ContextMenuPrimitive.SubTriggerRef>;
   children?: React.ReactNode;
   inset?: boolean;
+  ref?: React.RefObject<ContextMenuPrimitive.SubTriggerRef>;
 }) {
   const { open } = ContextMenuPrimitive.useSubContext();
   const Icon =
@@ -53,7 +53,7 @@ function ContextMenuSubTrigger({
         {...props}
       >
         {children}
-        <Icon size={18} className="ml-auto text-foreground" />
+        <Icon className="ml-auto text-foreground" size={18} />
       </ContextMenuPrimitive.SubTrigger>
     </TextClassContext.Provider>
   );
@@ -87,15 +87,16 @@ function ContextMenuContent({
   portalHost,
   ...props
 }: ContextMenuPrimitive.ContentProps & {
-  ref?: React.RefObject<ContextMenuPrimitive.ContentRef>;
-  overlayStyle?: StyleProp<ViewStyle>;
   overlayClassName?: string;
+  overlayStyle?: StyleProp<ViewStyle>;
   portalHost?: string;
+  ref?: React.RefObject<ContextMenuPrimitive.ContentRef>;
 }) {
   const { open } = ContextMenuPrimitive.useRootContext();
   return (
     <ContextMenuPrimitive.Portal hostName={portalHost}>
       <ContextMenuPrimitive.Overlay
+        className={overlayClassName}
         style={
           overlayStyle
             ? StyleSheet.flatten([
@@ -107,7 +108,6 @@ function ContextMenuContent({
               ? StyleSheet.absoluteFill
               : undefined
         }
-        className={overlayClassName}
       >
         <ContextMenuPrimitive.Content
           className={cn(
@@ -129,9 +129,9 @@ function ContextMenuItem({
   inset,
   ...props
 }: ContextMenuPrimitive.ItemProps & {
-  ref?: React.RefObject<ContextMenuPrimitive.ItemRef>;
   className?: string;
   inset?: boolean;
+  ref?: React.RefObject<ContextMenuPrimitive.ItemRef>;
 }) {
   return (
     <TextClassContext.Provider value="select-none text-sm native:text-lg text-popover-foreground web:group-focus:text-accent-foreground">
@@ -153,8 +153,8 @@ function ContextMenuCheckboxItem({
   children,
   ...props
 }: ContextMenuPrimitive.CheckboxItemProps & {
-  ref?: React.RefObject<ContextMenuPrimitive.CheckboxItemRef>;
   children?: React.ReactNode;
+  ref?: React.RefObject<ContextMenuPrimitive.CheckboxItemRef>;
 }) {
   return (
     <ContextMenuPrimitive.CheckboxItem
@@ -167,7 +167,7 @@ function ContextMenuCheckboxItem({
     >
       <View className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
         <ContextMenuPrimitive.ItemIndicator>
-          <Check size={14} strokeWidth={3} className="text-foreground" />
+          <Check className="text-foreground" size={14} strokeWidth={3} />
         </ContextMenuPrimitive.ItemIndicator>
       </View>
       {children}
@@ -180,8 +180,8 @@ function ContextMenuRadioItem({
   children,
   ...props
 }: ContextMenuPrimitive.RadioItemProps & {
-  ref?: React.RefObject<ContextMenuPrimitive.RadioItemRef>;
   children?: React.ReactNode;
+  ref?: React.RefObject<ContextMenuPrimitive.RadioItemRef>;
 }) {
   return (
     <ContextMenuPrimitive.RadioItem
@@ -207,9 +207,9 @@ function ContextMenuLabel({
   inset,
   ...props
 }: ContextMenuPrimitive.LabelProps & {
-  ref?: React.RefObject<ContextMenuPrimitive.LabelRef>;
   className?: string;
   inset?: boolean;
+  ref?: React.RefObject<ContextMenuPrimitive.LabelRef>;
 }) {
   return (
     <ContextMenuPrimitive.Label

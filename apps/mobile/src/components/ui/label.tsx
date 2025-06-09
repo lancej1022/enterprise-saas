@@ -15,8 +15,8 @@ function Label({
   return (
     <LabelPrimitive.Root
       className='web:cursor-default'
-      onPress={onPress}
       onLongPress={onLongPress}
+      onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
     >

@@ -5,20 +5,20 @@ import * as Slot from "@rn-primitives/slot";
 import { cn } from "~/lib/utils";
 
 type TypographyProps = React.ComponentProps<typeof RNText> & {
-  ref?: React.RefObject<RNText>;
   asChild?: boolean;
+  ref?: React.RefObject<RNText>;
 };
 
 function H1({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role="heading"
       aria-level="1"
       className={cn(
         "web:scroll-m-20 web:select-text text-4xl font-extrabold tracking-tight text-foreground lg:text-5xl",
         className,
       )}
+      role="heading"
       {...props}
     />
   );
@@ -28,12 +28,12 @@ function H2({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role="heading"
       aria-level="2"
       className={cn(
         "web:scroll-m-20 web:select-text border-b border-border pb-2 text-3xl font-semibold tracking-tight text-foreground first:mt-0",
         className,
       )}
+      role="heading"
       {...props}
     />
   );
@@ -43,12 +43,12 @@ function H3({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role="heading"
       aria-level="3"
       className={cn(
         "web:scroll-m-20 web:select-text text-2xl font-semibold tracking-tight text-foreground",
         className,
       )}
+      role="heading"
       {...props}
     />
   );
@@ -58,12 +58,12 @@ function H4({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      role="heading"
       aria-level="4"
       className={cn(
         "web:scroll-m-20 web:select-text text-xl font-semibold tracking-tight text-foreground",
         className,
       )}
+      role="heading"
       {...props}
     />
   );
@@ -83,12 +83,12 @@ function BlockQuote({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      // @ts-expect-error - role of blockquote renders blockquote element on the web
-      role={Platform.OS === "web" ? "blockquote" : undefined}
       className={cn(
         "native:mt-4 native:pl-3 web:select-text mt-6 border-l-2 border-border pl-6 text-base italic text-foreground",
         className,
       )}
+      // @ts-expect-error - role of blockquote renders blockquote element on the web
+      role={Platform.OS === "web" ? "blockquote" : undefined}
       {...props}
     />
   );
@@ -98,12 +98,12 @@ function Code({ className, asChild = false, ...props }: TypographyProps) {
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
-      // @ts-expect-error - role of code renders code element on the web
-      role={Platform.OS === "web" ? "code" : undefined}
       className={cn(
         "web:select-text relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-sm font-semibold text-foreground",
         className,
       )}
+      // @ts-expect-error - role of code renders code element on the web
+      role={Platform.OS === "web" ? "code" : undefined}
       {...props}
     />
   );

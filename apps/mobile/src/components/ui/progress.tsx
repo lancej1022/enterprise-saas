@@ -16,22 +16,22 @@ function Progress({
   indicatorClassName,
   ...props
 }: ProgressPrimitive.RootProps & {
-  ref?: React.RefObject<ProgressPrimitive.RootRef>;
   indicatorClassName?: string;
+  ref?: React.RefObject<ProgressPrimitive.RootRef>;
 }) {
   return (
     <ProgressPrimitive.Root
       className={cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className)}
       {...props}
     >
-      <Indicator value={value} className={indicatorClassName} />
+      <Indicator className={indicatorClassName} value={value} />
     </ProgressPrimitive.Root>
   );
 }
 
 export { Progress };
 
-function Indicator({ value, className }: { value: number | undefined | null; className?: string }) {
+function Indicator({ value, className }: { className?: string; value: null | number | undefined; }) {
   const progress = useDerivedValue(() => value ?? 0);
 
   const indicator = useAnimatedStyle(() => {
@@ -56,7 +56,7 @@ function Indicator({ value, className }: { value: number | undefined | null; cla
 
   return (
     <ProgressPrimitive.Indicator asChild>
-      <Animated.View style={indicator} className={cn('h-full bg-foreground', className)} />
+      <Animated.View className={cn('h-full bg-foreground', className)} style={indicator} />
     </ProgressPrimitive.Indicator>
   );
 }

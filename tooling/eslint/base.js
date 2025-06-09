@@ -6,6 +6,7 @@ import ESLintPluginESLintCommentsConfigs from "@eslint-community/eslint-plugin-e
 import { includeIgnoreFile } from "@eslint/compat";
 import eslint from "@eslint/js";
 import importPlugin from "eslint-plugin-import";
+import perfectionist from "eslint-plugin-perfectionist";
 import turboPlugin from "eslint-plugin-turbo";
 import unusedImports from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
@@ -58,6 +59,7 @@ export default tseslint.config(
       "unused-imports": unusedImports,
       turbo: turboPlugin,
       "@eslint-community/eslint-comments": ESLintPluginESLintComments,
+      perfectionist,
     },
     extends: [
       eslint.configs.recommended,
@@ -114,6 +116,13 @@ export default tseslint.config(
       "no-console": ["error", { allow: ["error"] }],
       // improves perf and reduces bugs by ensuring devs dont write code where the operators behave differently from the way the developer thought they would
       "no-constant-binary-expression": "error",
+      "perfectionist/sort-interfaces": "error",
+      "perfectionist/sort-jsx-props": "error",
+      "perfectionist/sort-maps": "error",
+      "perfectionist/sort-object-types": "error",
+      "perfectionist/sort-sets": "error",
+      "perfectionist/sort-union-types": "error",
+      "perfectionist/sort-switch-case": "error",
     },
   },
   {

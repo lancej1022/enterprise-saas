@@ -69,8 +69,8 @@ function SwitchNative({
   }));
   return (
     <Animated.View
-      style={animatedRootStyle}
       className={cn('h-8 w-[46px] rounded-full', props.disabled && 'opacity-50')}
+      style={animatedRootStyle}
     >
       <SwitchPrimitives.Root
         className={cn(

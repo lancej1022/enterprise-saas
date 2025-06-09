@@ -28,19 +28,13 @@ function Calendar({
 
   return (
     <DayPicker
-      showOutsideDays={showOutsideDays}
+      captionLayout={captionLayout}
       className={cn(
         "group/calendar bg-background p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className,
       )}
-      captionLayout={captionLayout}
-      formatters={{
-        formatMonthDropdown: (date) =>
-          date.toLocaleString("default", { month: "short" }),
-        ...formatters,
-      }}
       classNames={{
         root: cn("w-fit", defaultClassNames.root),
         months: cn(
@@ -126,9 +120,9 @@ function Calendar({
         Root: ({ className, rootRef, ...props }) => {
           return (
             <div
+              className={cn(className)}
               data-slot="calendar"
               ref={rootRef}
-              className={cn(className)}
               {...props}
             />
           );
@@ -165,6 +159,12 @@ function Calendar({
         },
         ...components,
       }}
+      formatters={{
+        formatMonthDropdown: (date) =>
+          date.toLocaleString("default", { month: "short" }),
+        ...formatters,
+      }}
+      showOutsideDays={showOutsideDays}
       {...props}
     />
   );
@@ -185,24 +185,24 @@ function CalendarDayButton({
 
   return (
     <Button
-      ref={ref}
-      variant="ghost"
-      size="icon"
+      className={cn(
+        "min-w-(--cell-size) flex aspect-square size-auto w-full flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-start=true]:rounded-l-md data-[range-end=true]:bg-primary data-[range-middle=true]:bg-accent data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-accent-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground [&>span]:text-xs [&>span]:opacity-70",
+        defaultClassNames.day,
+        className,
+      )}
       data-day={day.date.toLocaleDateString()}
+      data-range-end={modifiers.range_end}
+      data-range-middle={modifiers.range_middle}
+      data-range-start={modifiers.range_start}
       data-selected-single={
         modifiers.selected &&
         !modifiers.range_start &&
         !modifiers.range_end &&
         !modifiers.range_middle
       }
-      data-range-start={modifiers.range_start}
-      data-range-end={modifiers.range_end}
-      data-range-middle={modifiers.range_middle}
-      className={cn(
-        "min-w-(--cell-size) flex aspect-square size-auto w-full flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-start=true]:rounded-l-md data-[range-end=true]:bg-primary data-[range-middle=true]:bg-accent data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-accent-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground [&>span]:text-xs [&>span]:opacity-70",
-        defaultClassNames.day,
-        className,
-      )}
+      ref={ref}
+      size="icon"
+      variant="ghost"
       {...props}
     />
   );

@@ -6,8 +6,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
 
   return (
     <Sonner
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO: this is straight from shadcn
-      theme={theme as ToasterProps["theme"]}
       className="toaster group"
       style={
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO: this is straight from shadcn
@@ -17,6 +15,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-border": "var(--border)",
         } as React.CSSProperties
       }
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO: this is straight from shadcn
+      theme={theme as ToasterProps["theme"]}
       {...props}
     />
   );

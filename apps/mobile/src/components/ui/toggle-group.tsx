@@ -7,9 +7,9 @@ import { TextClassContext } from "~/components/ui/text";
 import { toggleTextVariants, toggleVariants } from "~/components/ui/toggle";
 import { cn } from "~/lib/utils";
 
-const ToggleGroupContext = React.createContext<VariantProps<
+const ToggleGroupContext = React.createContext<null | VariantProps<
   typeof toggleVariants
-> | null>(null);
+>>(null);
 
 function ToggleGroup({
   className,

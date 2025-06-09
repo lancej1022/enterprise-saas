@@ -32,22 +32,22 @@ function Alert({
   ...props
 }: ViewProps &
   VariantProps<typeof alertVariants> & {
-    ref?: React.RefObject<View>;
     icon: LucideIcon;
-    iconSize?: number;
     iconClassName?: string;
+    iconSize?: number;
+    ref?: React.RefObject<View>;
   }) {
   const { colors } = useTheme();
   return (
     <View
-      role="alert"
       className={alertVariants({ variant, className })}
+      role="alert"
       {...props}
     >
       <View className="absolute left-3.5 top-4 -translate-y-0.5">
         <Icon
-          size={iconSize}
           color={variant === "destructive" ? colors.notification : colors.text}
+          size={iconSize}
         />
       </View>
       {children}

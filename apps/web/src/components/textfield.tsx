@@ -24,8 +24,8 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <FormItemContext.Provider value={{ id }}>
       <div
-        data-slot="form-item"
         className={cn("grid gap-2", className)}
+        data-slot="form-item"
         {...props}
       />
     </FormItemContext.Provider>
@@ -52,9 +52,9 @@ function FormLabel({
 
   return (
     <Label
-      data-slot="form-label"
       // data-error={!!error}
       className={cn("data-[error=true]:text-destructive", className)}
+      data-slot="form-label"
       htmlFor={formItemId}
       {...props}
     />
@@ -66,9 +66,9 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 
   return (
     <p
+      className={cn("text-sm text-muted-foreground", className)}
       data-slot="form-description"
       id={formDescriptionId}
-      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   );
@@ -84,9 +84,9 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
 
   return (
     <Slot
+      aria-describedby={formDescriptionId}
       data-slot="form-control"
       id={formItemId}
-      aria-describedby={formDescriptionId}
       //   aria-describedby={
       //     !error
       //       ? `${formDescriptionId}`
@@ -103,9 +103,9 @@ export function TextField({
   placeholder,
   description,
 }: {
+  description?: string;
   label: string;
   placeholder?: string;
-  description?: string;
 }) {
   // TODO: there should be a way to make this more typesafe
   // The `Field` infers that it should have a `value` type of `string`
@@ -120,12 +120,12 @@ export function TextField({
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <Input
+          onChange={(e) => field.handleChange(e.target.value)}
           // aria-describedby={formDescriptionId}
           // aria-invalid={field.state.meta.errors.length > 0}
           // id={formItemId}
           placeholder={placeholder}
           value={field.state.value}
-          onChange={(e) => field.handleChange(e.target.value)}
         />
       </FormControl>
 

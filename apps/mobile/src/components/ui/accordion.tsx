@@ -93,7 +93,7 @@ function AccordionTrigger({
           >
             {children}
             <Animated.View style={chevronStyle}>
-              <ChevronDown size={18} className={"shrink-0 text-foreground"} />
+              <ChevronDown className={"shrink-0 text-foreground"} size={18} />
             </Animated.View>
           </Trigger>
         </AccordionPrimitive.Trigger>
@@ -141,9 +141,9 @@ function InnerContent({
   }
   return (
     <Animated.View
+      className={cn("pb-4", className)}
       entering={FadeIn}
       exiting={FadeOutUp.duration(200)}
-      className={cn("pb-4", className)}
     >
       {children}
     </Animated.View>

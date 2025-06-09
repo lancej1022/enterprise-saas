@@ -8,7 +8,7 @@ export interface AuthContext {
   isAuthenticated: boolean;
   login: (username: string) => Promise<void>;
   logout: () => Promise<void>;
-  user: string | null;
+  user: null | string;
 }
 
 const AuthContext = React.createContext<AuthContext | null>(null);
@@ -19,7 +19,7 @@ function getStoredUser() {
   return localStorage.getItem(key);
 }
 
-function setStoredUser(user: string | null) {
+function setStoredUser(user: null | string) {
   if (user) {
     localStorage.setItem(key, user);
   } else {
@@ -28,7 +28,7 @@ function setStoredUser(user: string | null) {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = React.useState<string | null>(getStoredUser());
+  const [user, setUser] = React.useState<null | string>(getStoredUser());
   const isAuthenticated = !!user;
 
   const logout = React.useCallback(async () => {

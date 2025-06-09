@@ -62,10 +62,10 @@ function MenubarSubTrigger({
   children,
   ...props
 }: MenubarPrimitive.SubTriggerProps & {
-  ref?: React.RefObject<MenubarPrimitive.SubTriggerRef>;
+  children?: React.ReactNode;
   className?: string;
   inset?: boolean;
-  children?: React.ReactNode;
+  ref?: React.RefObject<MenubarPrimitive.SubTriggerRef>;
 }) {
   const { open } = MenubarPrimitive.useSubContext();
   const Icon = Platform.OS === 'web' ? ChevronRight : open ? ChevronUp : ChevronDown;
@@ -86,7 +86,7 @@ function MenubarSubTrigger({
         {...props}
       >
         {children}
-        <Icon size={18} className='ml-auto text-foreground' />
+        <Icon className='ml-auto text-foreground' size={18} />
       </MenubarPrimitive.SubTrigger>
     </TextClassContext.Provider>
   );
@@ -118,9 +118,9 @@ function MenubarContent({
   portalHost,
   ...props
 }: MenubarPrimitive.ContentProps & {
-  ref?: React.RefObject<MenubarPrimitive.ContentRef>;
   className?: string;
   portalHost?: string;
+  ref?: React.RefObject<MenubarPrimitive.ContentRef>;
 }) {
   const { value } = MenubarPrimitive.useRootContext();
   const { value: itemValue } = MenubarPrimitive.useMenuContext();
@@ -145,9 +145,9 @@ function MenubarItem({
   inset,
   ...props
 }: MenubarPrimitive.ItemProps & {
-  ref?: React.RefObject<MenubarPrimitive.ItemRef>;
   className?: string;
   inset?: boolean;
+  ref?: React.RefObject<MenubarPrimitive.ItemRef>;
 }) {
   return (
     <TextClassContext.Provider value='select-none text-sm native:text-lg text-popover-foreground web:group-focus:text-accent-foreground'>
@@ -170,22 +170,22 @@ function MenubarCheckboxItem({
   checked,
   ...props
 }: MenubarPrimitive.CheckboxItemProps & {
-  ref?: React.RefObject<MenubarPrimitive.CheckboxItemRef>;
   children?: React.ReactNode;
+  ref?: React.RefObject<MenubarPrimitive.CheckboxItemRef>;
 }) {
   return (
     <MenubarPrimitive.CheckboxItem
+      checked={checked}
       className={cn(
         'relative flex flex-row web:cursor-default items-center web:group rounded-sm py-1.5 native:py-2 pl-8 pr-2 web:outline-none web:focus:bg-accent active:bg-accent',
         props.disabled && 'web:pointer-events-none opacity-50',
         className
       )}
-      checked={checked}
       {...props}
     >
       <View className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
         <MenubarPrimitive.ItemIndicator>
-          <Check size={14} strokeWidth={3} className='text-foreground' />
+          <Check className='text-foreground' size={14} strokeWidth={3} />
         </MenubarPrimitive.ItemIndicator>
       </View>
       {children}
@@ -198,8 +198,8 @@ function MenubarRadioItem({
   children,
   ...props
 }: MenubarPrimitive.RadioItemProps & {
-  ref?: React.RefObject<MenubarPrimitive.RadioItemRef>;
   children?: React.ReactNode;
+  ref?: React.RefObject<MenubarPrimitive.RadioItemRef>;
 }) {
   return (
     <MenubarPrimitive.RadioItem
@@ -225,9 +225,9 @@ function MenubarLabel({
   inset,
   ...props
 }: MenubarPrimitive.LabelProps & {
-  ref?: React.RefObject<MenubarPrimitive.LabelRef>;
   className?: string;
   inset?: boolean;
+  ref?: React.RefObject<MenubarPrimitive.LabelRef>;
 }) {
   return (
     <MenubarPrimitive.Label
