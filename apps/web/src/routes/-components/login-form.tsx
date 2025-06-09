@@ -4,6 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "@tanstack/react-router";
+import { z } from "zod/v4";
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
 
 export function LoginForm(props: React.ComponentProps<"form">) {
   const pathname = useLocation({
@@ -16,11 +22,33 @@ export function LoginForm(props: React.ComponentProps<"form">) {
       email: "",
       password: "",
     },
+    validators: {
+      onChange: loginSchema,
+    },
+    onSubmit: ({ value }) => {
+      // TODO: switch from `fetch` to `ky` or something similar.
+      void fetch(`http://localhost:8080/api/${isSignup ? "signup" : "login"}`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: value.email,
+          password: value.password,
+        }),
+      }).then((res) => {
+        // eslint-disable-next-line no-console -- debugging
+        console.log("res", res);
+      });
+    },
   });
 
   return (
     <form.AppForm {...props}>
-      <div className={cn("flex flex-col gap-6", props.className)}>
+      <form
+        className={cn("flex flex-col gap-6", props.className)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          void form.handleSubmit();
+        }}
+      >
         <div className="flex flex-col items-center gap-2 text-center">
           <h1 className="text-2xl font-bold">
             {isSignup ? "Sign up for an account" : "Login to your account"}
@@ -35,7 +63,18 @@ export function LoginForm(props: React.ComponentProps<"form">) {
           <div className="grid gap-3">
             <form.AppField
               name="email"
-              children={(field) => <field.TextField label="Email" />}
+              children={(field) => (
+                <>
+                  <field.TextField label="Email" />
+                  {field.state.meta.isTouched && !field.state.meta.isValid && (
+                    <em>
+                      {field.state.meta.errors
+                        .map((err) => err?.message)
+                        .join(",")}
+                    </em>
+                  )}
+                </>
+              )}
             />
           </div>
           <div className="grid gap-3">
@@ -60,6 +99,13 @@ export function LoginForm(props: React.ComponentProps<"form">) {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
+                  {field.state.meta.isTouched && !field.state.meta.isValid && (
+                    <em>
+                      {field.state.meta.errors
+                        .map((err) => err?.message)
+                        .join(",")}
+                    </em>
+                  )}
                 </>
               )}
             />
@@ -99,7 +145,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
             </>
           )}
         </div>
-      </div>
+      </form>
     </form.AppForm>
   );
 }
