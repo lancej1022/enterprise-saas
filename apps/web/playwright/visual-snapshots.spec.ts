@@ -12,7 +12,7 @@ import { expect, test } from "@playwright/test";
 // Get all routes from the router
 // const routes = router.flatRoutes.map((route) => route.path);
 
-const routes = ["/"];
+const routes = ["/", "/login", "/signup"];
 // Test each route
 for (const route of routes) {
   test(`Visual snapshot of route: ${route}`, async ({ page }) => {
