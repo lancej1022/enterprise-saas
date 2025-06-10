@@ -92,6 +92,7 @@ func main() {
 	router.Put("/api/users", apiInstance.HandleUpdateUser)
 	router.Post("/api/signup", apiInstance.HandleSignup)
 	router.Post("/api/login", apiInstance.HandleLogin)
+	router.Post("/api/logout", apiInstance.HandleLogout)
 	router.Post("/api/refresh", apiInstance.HandleLoginRefresh)
 	router.Post("/api/revoke", apiInstance.HandleRevokeRefreshToken)
 	router.Post("/api/chirps", apiInstance.HandleChirp)

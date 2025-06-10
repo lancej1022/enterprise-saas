@@ -27,7 +27,7 @@ func (cfg *Api) HandleChirp(w http.ResponseWriter, r *http.Request) {
 		Body string `json:"body"`
 	}
 
-	token, err := auth.GetBearerToken(r.Header)
+	token, err := auth.GetTokenFromCookie(r, "access_token")
 
 	if err != nil {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
@@ -167,7 +167,7 @@ func (cfg *Api) HandleDeleteChirp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := auth.GetBearerToken(r.Header)
+	token, err := auth.GetTokenFromCookie(r, "access_token")
 	if err != nil {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return

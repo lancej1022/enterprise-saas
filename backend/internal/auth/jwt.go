@@ -91,3 +91,14 @@ func GetAPIKey(headers http.Header) (string, error) {
 
 	return splitAuth[1], nil
 }
+
+func GetTokenFromCookie(r *http.Request, cookieName string) (string, error) {
+	cookie, err := r.Cookie(cookieName)
+	if err != nil {
+		return "", ErrNoAuthHeaderIncluded
+	}
+	if cookie.Value == "" {
+		return "", errors.New("empty token in cookie")
+	}
+	return cookie.Value, nil
+}

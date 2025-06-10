@@ -64,7 +64,7 @@ func (cfg *Api) HandleUpdateUser(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 
-	accessToken, err := auth.GetBearerToken(r.Header)
+	accessToken, err := auth.GetTokenFromCookie(r, "access_token")
 	if err != nil {
 		utils.RespondWithError(w, http.StatusUnauthorized, "Invalid authentication token", err)
 		return

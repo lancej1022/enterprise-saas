@@ -107,8 +107,8 @@ func TestUserChirpFlow(t *testing.T) {
 		}
 	})
 
-	// Step 2: Login with the created user
-	var accessToken string
+	// Step 2: Login with the created user and capture cookies
+	var cookies []*http.Cookie
 	t.Run("Login User", func(t *testing.T) {
 		loginJSON, err := json.Marshal(testUser)
 		if err != nil {
@@ -126,13 +126,11 @@ func TestUserChirpFlow(t *testing.T) {
 		}
 
 		var loginResponse struct {
-			ID           uuid.UUID `json:"id"`
-			Email        string    `json:"email"`
-			IsChirpyRed  bool      `json:"is_chirpy_red"`
-			CreatedAt    time.Time `json:"created_at"`
-			UpdatedAt    time.Time `json:"updated_at"`
-			Token        string    `json:"token"`
-			RefreshToken string    `json:"refresh_token"`
+			ID          uuid.UUID `json:"id"`
+			Email       string    `json:"email"`
+			IsChirpyRed bool      `json:"is_chirpy_red"`
+			CreatedAt   time.Time `json:"created_at"`
+			UpdatedAt   time.Time `json:"updated_at"`
 		}
 
 		err = json.Unmarshal(w.Body.Bytes(), &loginResponse)
@@ -144,18 +142,30 @@ func TestUserChirpFlow(t *testing.T) {
 			t.Errorf("Expected email %s, got %s", testUser.Email, loginResponse.Email)
 		}
 
-		if loginResponse.Token == "" {
-			t.Error("Expected access token to be present")
+		// Extract cookies from the response
+		cookies = w.Result().Cookies()
+		
+		// Verify that authentication cookies are set
+		var accessTokenFound, refreshTokenFound bool
+		for _, cookie := range cookies {
+			if cookie.Name == "access_token" && cookie.Value != "" {
+				accessTokenFound = true
+			}
+			if cookie.Name == "refresh_token" && cookie.Value != "" {
+				refreshTokenFound = true
+			}
 		}
 
-		if loginResponse.RefreshToken == "" {
-			t.Error("Expected refresh token to be present")
+		if !accessTokenFound {
+			t.Error("Expected access token cookie to be set")
 		}
 
-		accessToken = loginResponse.Token
+		if !refreshTokenFound {
+			t.Error("Expected refresh token cookie to be set")
+		}
 	})
 
-	// Step 3: Post a chirp using the access token
+	// Step 3: Post a chirp using the cookies for authentication
 	var chirpID uuid.UUID
 	t.Run("Post Chirp", func(t *testing.T) {
 		chirpJSON, err := json.Marshal(testChirp)
@@ -165,7 +175,12 @@ func TestUserChirpFlow(t *testing.T) {
 
 		req := httptest.NewRequest("POST", "/api/chirps", bytes.NewBuffer(chirpJSON))
 		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Authorization", "Bearer "+accessToken)
+		
+		// Add cookies to the request for authentication
+		for _, cookie := range cookies {
+			req.AddCookie(cookie)
+		}
+		
 		w := httptest.NewRecorder()
 
 		router.ServeHTTP(w, req)
@@ -255,7 +270,12 @@ func TestUserChirpFlow(t *testing.T) {
 
 		req := httptest.NewRequest("POST", "/api/chirps", bytes.NewBuffer(chirpJSON))
 		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Authorization", "Bearer "+accessToken)
+		
+		// Add cookies to the request for authentication
+		for _, cookie := range cookies {
+			req.AddCookie(cookie)
+		}
+		
 		w := httptest.NewRecorder()
 
 		router.ServeHTTP(w, req)
