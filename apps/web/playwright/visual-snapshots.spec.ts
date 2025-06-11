@@ -1,18 +1,28 @@
 import { expect, test } from "@playwright/test";
+import { QueryClient } from "@tanstack/react-query";
+import { createRouter } from "@tanstack/react-router";
 
-// TODO: for whatever reason, importing the routeTree and creating a router instance
-// causes the test to throw an error. But its definitely something that
-// needs to be done in order to make this work as more routes are added.
-// import { routeTree } from '../src/routeTree.gen';
-// import { createRouter } from '@tanstack/react-router';
+import { routeTree } from "../src/routeTree.gen";
+
+const queryClient = new QueryClient();
 
 // Create a test router instance to extract routes
-// const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+  context: {
+    queryClient,
+    auth: undefined,
+  },
+});
 
-// Get all routes from the router
-// const routes = router.flatRoutes.map((route) => route.path);
-
-const routes = ["/", "/login", "/signup"];
+// Get all route paths from the generated routeTree
+const routes = router.flatRoutes.reduce<string[]>((acc, route) => {
+  // This should technically always be truthy, but Ive added this to be safe
+  if (route.path) {
+    acc.push(String(route.path));
+  }
+  return acc;
+}, []);
 
 // Mock user data that matches the User type from auth.tsx
 const mockUser = {
