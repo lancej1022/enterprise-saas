@@ -119,16 +119,21 @@ export function TextField({
   return (
     // TODO: all of these elements are tightly bound to RHF -- need to reimplement them for Tanstack
     <FormItem>
-      <FormLabel>
+      <FormLabel htmlFor={field.name}>
         {label}
-        {required && <span className="text-destructive">*</span>}
+        {required && (
+          <span aria-hidden className="text-destructive">
+            *
+          </span>
+        )}
       </FormLabel>
       <FormControl>
         <Input
-          onChange={(e) => field.handleChange(e.target.value)}
           // aria-describedby={formDescriptionId}
           // aria-invalid={field.state.meta.errors.length > 0}
           // id={formItemId}
+          id={field.name}
+          onChange={(e) => field.handleChange(e.target.value)}
           placeholder={placeholder}
           value={field.state.value}
         />

@@ -15,7 +15,7 @@ import {
 import { z } from "zod/v4";
 
 const loginSchema = z.object({
-  email: z.email(),
+  email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
@@ -38,7 +38,8 @@ export function LoginForm(props: React.ComponentProps<"form">) {
       password: "",
     },
     validators: {
-      onChange: loginSchema,
+      onBlur: loginSchema,
+      onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
       const res = await apiClient.kyInstance.post(
@@ -101,7 +102,10 @@ export function LoginForm(props: React.ComponentProps<"form">) {
                 <>
                   <div className="flex items-center">
                     <Label className="gap-1" htmlFor={field.name}>
-                      Password<span className="text-destructive">*</span>
+                      Password
+                      <span aria-hidden className="text-destructive">
+                        *
+                      </span>
                     </Label>
                     <a
                       className="ml-auto text-sm underline-offset-4 hover:underline"
@@ -131,6 +135,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
             />
           </div>
           <Button className="w-full" type="submit">
+            {/* TODO: toggle between login and signup */}
             Login
           </Button>
           <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
