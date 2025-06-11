@@ -53,7 +53,7 @@ function FormLabel({
   return (
     <Label
       // data-error={!!error}
-      className={cn("data-[error=true]:text-destructive", className)}
+      className={cn("data-[error=true]:text-destructive", "gap-1", className)}
       data-slot="form-label"
       htmlFor={formItemId}
       {...props}
@@ -102,10 +102,12 @@ export function TextField({
   label,
   placeholder,
   description,
+  required,
 }: {
   description?: string;
   label: string;
   placeholder?: string;
+  required?: boolean;
 }) {
   // TODO: there should be a way to make this more typesafe
   // The `Field` infers that it should have a `value` type of `string`
@@ -117,7 +119,10 @@ export function TextField({
   return (
     // TODO: all of these elements are tightly bound to RHF -- need to reimplement them for Tanstack
     <FormItem>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel>
+        {label}
+        {required && <span className="text-destructive">*</span>}
+      </FormLabel>
       <FormControl>
         <Input
           onChange={(e) => field.handleChange(e.target.value)}

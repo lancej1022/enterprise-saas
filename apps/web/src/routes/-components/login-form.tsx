@@ -82,7 +82,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
             <form.AppField
               children={(field) => (
                 <>
-                  <field.TextField label="Email" />
+                  <field.TextField label="Email" required />
                   {field.state.meta.isTouched && !field.state.meta.isValid && (
                     <em>
                       {field.state.meta.errors
@@ -100,7 +100,9 @@ export function LoginForm(props: React.ComponentProps<"form">) {
               children={(field) => (
                 <>
                   <div className="flex items-center">
-                    <Label htmlFor={field.name}>Password</Label>
+                    <Label className="gap-1" htmlFor={field.name}>
+                      Password<span className="text-destructive">*</span>
+                    </Label>
                     <a
                       className="ml-auto text-sm underline-offset-4 hover:underline"
                       href="#"
