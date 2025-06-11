@@ -46,7 +46,7 @@ function updateLocalStorageUser(user: null | User) {
 // TODO: Move away from Context in favor of something like React Query or Zustand or XState
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<null | User>(getStoredUser());
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(!!user);
 
   function updateUser(user: null | User) {
     updateLocalStorageUser(user);

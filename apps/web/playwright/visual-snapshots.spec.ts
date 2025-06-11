@@ -13,6 +13,16 @@ import { expect, test } from "@playwright/test";
 // const routes = router.flatRoutes.map((route) => route.path);
 
 const routes = ["/", "/login", "/signup"];
+
+// Mock user data that matches the User type from auth.tsx
+const mockUser = {
+  created_at: "2024-01-01T00:00:00Z",
+  email: "test@example.com",
+  id: "123e4567-e89b-12d3-a456-426614174000",
+  is_chirpy_red: false,
+  updated_at: "2024-01-01T00:00:00Z",
+};
+
 // Test each route
 for (const route of routes) {
   test(`Visual snapshot of route: ${route}`, async ({ page }) => {
@@ -26,8 +36,22 @@ for (const route of routes) {
     // Normalize empty route to root path
     const path = route === "" ? "/" : route;
 
-    // Navigate to the route
-    await page.goto(`${path}`);
+    // For the index route, mock authentication by setting localStorage
+    if (route === "/") {
+      // Navigate to the page first
+      await page.goto(path);
+
+      // Inject the mock user into localStorage before the auth check
+      await page.evaluate((user) => {
+        localStorage.setItem("auth.user", JSON.stringify(user));
+      }, mockUser);
+
+      // Reload to trigger the auth context with the mocked user
+      await page.reload();
+    } else {
+      // For other routes (login, signup), navigate normally
+      await page.goto(path);
+    }
 
     // Wait for any loading states to resolve
     await page.waitForLoadState("networkidle");
