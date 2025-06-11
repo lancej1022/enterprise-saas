@@ -1,3 +1,4 @@
+import { type User } from "@/auth";
 import { expect, test } from "@playwright/test";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
@@ -24,16 +25,14 @@ const routes = router.flatRoutes.reduce<string[]>((acc, route) => {
   return acc;
 }, []);
 
-// Mock user data that matches the User type from auth.tsx
 const mockUser = {
   created_at: "2024-01-01T00:00:00Z",
   email: "test@example.com",
   id: "123e4567-e89b-12d3-a456-426614174000",
   is_chirpy_red: false,
   updated_at: "2024-01-01T00:00:00Z",
-};
+} satisfies User;
 
-// Test each route
 for (const route of routes) {
   test(`Visual snapshot of route: ${route}`, async ({ page }) => {
     // Skip routes with path parameters for simplicity
@@ -46,11 +45,12 @@ for (const route of routes) {
     // Normalize empty route to root path
     const path = route === "" ? "/" : route;
 
-    // For the index route, mock authentication by setting localStorage
-    if (route === "/") {
-      // Navigate to the page first
+    // For the login and signup routes there is no need to be authenticated to grab the screenshot
+    if (path === "login" || path === "signup") {
       await page.goto(path);
-
+    } else {
+      // TODO: this setup can be improved by reviewing the Playwright auth docs and just reusing the auth state instead of constantly setting the user in localStorage on each test
+      await page.goto(path);
       // Inject the mock user into localStorage before the auth check
       await page.evaluate((user) => {
         localStorage.setItem("auth.user", JSON.stringify(user));
@@ -58,15 +58,11 @@ for (const route of routes) {
 
       // Reload to trigger the auth context with the mocked user
       await page.reload();
-    } else {
-      // For other routes (login, signup), navigate normally
-      await page.goto(path);
     }
 
     // Wait for any loading states to resolve
     await page.waitForLoadState("networkidle");
 
-    // Take a screenshot and compare with baseline
     await expect(page).toHaveScreenshot(
       `${route.replace(/\//g, "-") || "home"}.png`,
     );
