@@ -8,26 +8,17 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignupImport } from './routes/signup'
 import { Route as LoginImport } from './routes/login'
-import { Route as authenticatedAuthenticatedImport } from './routes/(authenticated)/_authenticated'
-import { Route as authenticatedAuthenticatedIndexImport } from './routes/(authenticated)/_authenticated.index'
-
-// Create Virtual Routes
-
-const authenticatedImport = createFileRoute('/(authenticated)')()
+import { Route as authenticatedRouteImport } from './routes/(authenticated)/route'
+import { Route as authenticatedIndexImport } from './routes/(authenticated)/index'
+import { Route as authenticatedAdminUsersIndexImport } from './routes/(authenticated)/admin/users/index'
+import { Route as authenticatedAdminTeamsIndexImport } from './routes/(authenticated)/admin/teams/index'
 
 // Create/Update Routes
-
-const authenticatedRoute = authenticatedImport.update({
-  id: '/(authenticated)',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const SignupRoute = SignupImport.update({
   id: '/signup',
@@ -41,24 +32,42 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const authenticatedAuthenticatedRoute = authenticatedAuthenticatedImport.update(
-  {
-    id: '/_authenticated',
-    getParentRoute: () => authenticatedRoute,
-  } as any,
-)
+const authenticatedRouteRoute = authenticatedRouteImport.update({
+  id: '/(authenticated)',
+  getParentRoute: () => rootRoute,
+} as any)
 
-const authenticatedAuthenticatedIndexRoute =
-  authenticatedAuthenticatedIndexImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => authenticatedAuthenticatedRoute,
+const authenticatedIndexRoute = authenticatedIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => authenticatedRouteRoute,
+} as any)
+
+const authenticatedAdminUsersIndexRoute =
+  authenticatedAdminUsersIndexImport.update({
+    id: '/admin/users/',
+    path: '/admin/users/',
+    getParentRoute: () => authenticatedRouteRoute,
+  } as any)
+
+const authenticatedAdminTeamsIndexRoute =
+  authenticatedAdminTeamsIndexImport.update({
+    id: '/admin/teams/',
+    path: '/admin/teams/',
+    getParentRoute: () => authenticatedRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/(authenticated)': {
+      id: '/(authenticated)'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof authenticatedRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -73,104 +82,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
-    '/(authenticated)': {
-      id: '/(authenticated)'
+    '/(authenticated)/': {
+      id: '/(authenticated)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof authenticatedImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof authenticatedIndexImport
+      parentRoute: typeof authenticatedRouteImport
     }
-    '/(authenticated)/_authenticated': {
-      id: '/(authenticated)/_authenticated'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof authenticatedAuthenticatedImport
-      parentRoute: typeof authenticatedRoute
+    '/(authenticated)/admin/teams/': {
+      id: '/(authenticated)/admin/teams/'
+      path: '/admin/teams'
+      fullPath: '/admin/teams'
+      preLoaderRoute: typeof authenticatedAdminTeamsIndexImport
+      parentRoute: typeof authenticatedRouteImport
     }
-    '/(authenticated)/_authenticated/': {
-      id: '/(authenticated)/_authenticated/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof authenticatedAuthenticatedIndexImport
-      parentRoute: typeof authenticatedAuthenticatedImport
+    '/(authenticated)/admin/users/': {
+      id: '/(authenticated)/admin/users/'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof authenticatedAdminUsersIndexImport
+      parentRoute: typeof authenticatedRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface authenticatedAuthenticatedRouteChildren {
-  authenticatedAuthenticatedIndexRoute: typeof authenticatedAuthenticatedIndexRoute
+interface authenticatedRouteRouteChildren {
+  authenticatedIndexRoute: typeof authenticatedIndexRoute
+  authenticatedAdminTeamsIndexRoute: typeof authenticatedAdminTeamsIndexRoute
+  authenticatedAdminUsersIndexRoute: typeof authenticatedAdminUsersIndexRoute
 }
 
-const authenticatedAuthenticatedRouteChildren: authenticatedAuthenticatedRouteChildren =
-  {
-    authenticatedAuthenticatedIndexRoute: authenticatedAuthenticatedIndexRoute,
-  }
-
-const authenticatedAuthenticatedRouteWithChildren =
-  authenticatedAuthenticatedRoute._addFileChildren(
-    authenticatedAuthenticatedRouteChildren,
-  )
-
-interface authenticatedRouteChildren {
-  authenticatedAuthenticatedRoute: typeof authenticatedAuthenticatedRouteWithChildren
+const authenticatedRouteRouteChildren: authenticatedRouteRouteChildren = {
+  authenticatedIndexRoute: authenticatedIndexRoute,
+  authenticatedAdminTeamsIndexRoute: authenticatedAdminTeamsIndexRoute,
+  authenticatedAdminUsersIndexRoute: authenticatedAdminUsersIndexRoute,
 }
 
-const authenticatedRouteChildren: authenticatedRouteChildren = {
-  authenticatedAuthenticatedRoute: authenticatedAuthenticatedRouteWithChildren,
-}
-
-const authenticatedRouteWithChildren = authenticatedRoute._addFileChildren(
-  authenticatedRouteChildren,
-)
+const authenticatedRouteRouteWithChildren =
+  authenticatedRouteRoute._addFileChildren(authenticatedRouteRouteChildren)
 
 export interface FileRoutesByFullPath {
+  '/': typeof authenticatedIndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/': typeof authenticatedAuthenticatedIndexRoute
+  '/admin/teams': typeof authenticatedAdminTeamsIndexRoute
+  '/admin/users': typeof authenticatedAdminUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/': typeof authenticatedAuthenticatedIndexRoute
+  '/': typeof authenticatedIndexRoute
+  '/admin/teams': typeof authenticatedAdminTeamsIndexRoute
+  '/admin/users': typeof authenticatedAdminUsersIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/(authenticated)': typeof authenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/(authenticated)': typeof authenticatedRouteWithChildren
-  '/(authenticated)/_authenticated': typeof authenticatedAuthenticatedRouteWithChildren
-  '/(authenticated)/_authenticated/': typeof authenticatedAuthenticatedIndexRoute
+  '/(authenticated)/': typeof authenticatedIndexRoute
+  '/(authenticated)/admin/teams/': typeof authenticatedAdminTeamsIndexRoute
+  '/(authenticated)/admin/users/': typeof authenticatedAdminUsersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/signup' | '/'
+  fullPaths: '/' | '/login' | '/signup' | '/admin/teams' | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/'
+  to: '/login' | '/signup' | '/' | '/admin/teams' | '/admin/users'
   id:
     | '__root__'
+    | '/(authenticated)'
     | '/login'
     | '/signup'
-    | '/(authenticated)'
-    | '/(authenticated)/_authenticated'
-    | '/(authenticated)/_authenticated/'
+    | '/(authenticated)/'
+    | '/(authenticated)/admin/teams/'
+    | '/(authenticated)/admin/users/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  authenticatedRouteRoute: typeof authenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
-  authenticatedRoute: typeof authenticatedRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  authenticatedRouteRoute: authenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
-  authenticatedRoute: authenticatedRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -183,9 +187,17 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/(authenticated)",
         "/login",
-        "/signup",
-        "/(authenticated)"
+        "/signup"
+      ]
+    },
+    "/(authenticated)": {
+      "filePath": "(authenticated)/route.tsx",
+      "children": [
+        "/(authenticated)/",
+        "/(authenticated)/admin/teams/",
+        "/(authenticated)/admin/users/"
       ]
     },
     "/login": {
@@ -194,22 +206,17 @@ export const routeTree = rootRoute
     "/signup": {
       "filePath": "signup.tsx"
     },
-    "/(authenticated)": {
-      "filePath": "(authenticated)",
-      "children": [
-        "/(authenticated)/_authenticated"
-      ]
+    "/(authenticated)/": {
+      "filePath": "(authenticated)/index.tsx",
+      "parent": "/(authenticated)"
     },
-    "/(authenticated)/_authenticated": {
-      "filePath": "(authenticated)/_authenticated.tsx",
-      "parent": "/(authenticated)",
-      "children": [
-        "/(authenticated)/_authenticated/"
-      ]
+    "/(authenticated)/admin/teams/": {
+      "filePath": "(authenticated)/admin/teams/index.tsx",
+      "parent": "/(authenticated)"
     },
-    "/(authenticated)/_authenticated/": {
-      "filePath": "(authenticated)/_authenticated.index.tsx",
-      "parent": "/(authenticated)/_authenticated"
+    "/(authenticated)/admin/users/": {
+      "filePath": "(authenticated)/admin/users/index.tsx",
+      "parent": "/(authenticated)"
     }
   }
 }

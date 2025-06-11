@@ -51,22 +51,22 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
+      title: "Admin",
+      url: "/users",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Users",
+          url: "/admin/users",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Teams",
+          url: "/admin/teams",
         },
         {
           title: "Settings",
-          url: "#",
+          url: "/settings",
         },
       ],
     },

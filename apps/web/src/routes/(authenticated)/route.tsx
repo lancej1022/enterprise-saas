@@ -13,10 +13,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 
-// This creates a layout route that is used to wrap ALL the authenticated-only routes
-export const Route = createFileRoute("/(authenticated)/_authenticated")({
+// Naming this file `route.tsx` creates a layout route that is used to wrap ALL the other routes nested under this directory
+export const Route = createFileRoute("/(authenticated)")({
   component: AuthenticatedLayout,
 });
 
@@ -27,6 +27,7 @@ function AuthenticatedLayout() {
       <SidebarInset>
         <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
           <div className="flex items-center gap-2 px-4">
+            {/* TODO: wrap in a tooltip or something? */}
             <SidebarTrigger className="-ml-1" />
             <Separator
               className="mr-2 data-[orientation=vertical]:h-4"
@@ -35,8 +36,8 @@ function AuthenticatedLayout() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
