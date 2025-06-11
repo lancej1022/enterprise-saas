@@ -13,23 +13,20 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import {
-  createFileRoute,
-  // redirect
-} from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: Page,
-  // beforeLoad: ({ context, location }) => {
-  //   if (!context.auth?.isAuthenticated) {
-  //     throw redirect({
-  //       to: "/login",
-  //       search: {
-  //         redirect: location.href,
-  //       },
-  //     });
-  //   }
-  // },
+  beforeLoad: ({ context, location }) => {
+    if (!context.auth?.isAuthenticated) {
+      throw redirect({
+        to: "/login",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
 });
 
 function Page() {

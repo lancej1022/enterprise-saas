@@ -1,9 +1,17 @@
+import { useAuth, userSchema } from "@/auth";
 import { useAppForm } from "@/components/tanstack-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { apiClient } from "@/lib/api";
 import { cn } from "@/lib/utils";
-import { Link, useLocation } from "@tanstack/react-router";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useRouter,
+  useSearch,
+} from "@tanstack/react-router";
 import { z } from "zod/v4";
 
 const loginSchema = z.object({
@@ -12,10 +20,17 @@ const loginSchema = z.object({
 });
 
 export function LoginForm(props: React.ComponentProps<"form">) {
+  const navigate = useNavigate();
   const pathname = useLocation({
     select: (location) => location.pathname,
   });
   const isSignup = pathname === "/signup";
+  const redirectPath = useSearch({
+    from: isSignup ? "/signup" : "/login",
+    select: (search) => ("redirect" in search ? search.redirect : undefined),
+  });
+  const { updateUser } = useAuth();
+  const router = useRouter();
 
   const form = useAppForm({
     defaultValues: {
@@ -25,18 +40,21 @@ export function LoginForm(props: React.ComponentProps<"form">) {
     validators: {
       onChange: loginSchema,
     },
-    onSubmit: ({ value }) => {
-      // TODO: switch from `fetch` to `ky` or something similar.
-      void fetch(`http://localhost:8080/api/${isSignup ? "signup" : "login"}`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: value.email,
-          password: value.password,
-        }),
-      }).then((res) => {
-        // eslint-disable-next-line no-console -- debugging
-        console.log("res", res);
-      });
+    onSubmit: async ({ value }) => {
+      const res = await apiClient.kyInstance.post(
+        `${isSignup ? "signup" : "login"}`,
+        {
+          json: {
+            email: value.email,
+            password: value.password,
+          },
+        },
+      );
+      const data = userSchema.parse(await res.json());
+      updateUser(data);
+      // Force the router to update its context, which will update the `auth` context used by the router
+      await router.invalidate();
+      void navigate({ to: redirectPath || "/" });
     },
   });
 
