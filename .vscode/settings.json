@@ -11,5 +11,7 @@
   ],
   // TODO: can the below note be automated?
   // NOTE: You must tell VS Code / Cursor to use the WORKSPACE version of TypeScript, not the IDE version. `Cmd + Shift + P` and select `TypeScript: Select TypeScript Version` and select `Use Workspace Version`
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // https://gist.github.com/dillionverma/4450c1fc106002117c3aa35bddab9e94 -- hides radix imports from TS Autocomplete suggestions
+  "typescript.preferences.autoImportSpecifierExcludeRegexes": ["@radix-ui"]
 }
