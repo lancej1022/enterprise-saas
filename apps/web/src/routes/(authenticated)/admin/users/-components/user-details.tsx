@@ -175,7 +175,7 @@ export function UserDetail({ userId }: UserDetailProps) {
           </Breadcrumb>
           <div className="flex items-center gap-2">
             <Button asChild size="sm" variant="outline">
-              <Link to="/admin/users">
+              <Link search={(prev) => prev} to="/admin/users">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Users
               </Link>
