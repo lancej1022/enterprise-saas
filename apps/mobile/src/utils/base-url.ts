@@ -4,7 +4,7 @@ import Constants from "expo-constants";
  * Extend this function when going to production by
  * setting the baseUrl to your production API URL.
  */
-export const getBaseUrl = () => {
+export function getBaseUrl() {
   /**
    * Gets the IP address of your host-machine. If it cannot automatically find it,
    * you'll have to manually set it. NOTE: Port 3000 should work for most but confirm
@@ -23,4 +23,4 @@ export const getBaseUrl = () => {
     );
   }
   return `http://${localhost}:3000`;
-};
+}

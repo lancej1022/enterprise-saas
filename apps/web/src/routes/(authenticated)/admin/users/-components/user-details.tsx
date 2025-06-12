@@ -137,20 +137,20 @@ export function UserDetail({ userId }: UserDetailProps) {
   const [editedUser, setEditedUser] = useState(userData);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-  const handleSaveChanges = () => {
+  function handleSaveChanges() {
     setUser(editedUser);
     setIsEditing(false);
 
     toast.success("User information has been updated successfully.");
-  };
+  }
 
-  const handleDeleteUser = () => {
+  function handleDeleteUser() {
     // Here you would typically make an API call to delete the user
 
     toast.error("User has been deleted successfully.");
 
     // Redirect to users list would happen here
-  };
+  }
 
   return (
     <div className="flex h-screen flex-col">

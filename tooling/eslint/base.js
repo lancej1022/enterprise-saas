@@ -113,6 +113,7 @@ export default tseslint.config(
         "error",
         { ignore: [] },
       ],
+      "func-style": ["error", "declaration"],
       "no-console": ["error", { allow: ["error"] }],
       // improves perf and reduces bugs by ensuring devs dont write code where the operators behave differently from the way the developer thought they would
       "no-constant-binary-expression": "error",

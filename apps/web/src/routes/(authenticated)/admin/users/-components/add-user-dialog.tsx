@@ -77,7 +77,7 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [openPhoneCombobox, setOpenPhoneCombobox] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     // Here you would typically make an API call to create the user
@@ -95,7 +95,7 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
 
     // Close dialog
     onOpenChange(false);
-  };
+  }
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>

@@ -184,23 +184,23 @@ export function UserManagement() {
     );
   });
 
-  const toggleUserSelection = (userId: string) => {
+  function toggleUserSelection(userId: string) {
     setSelectedUsers((prev) =>
       prev.includes(userId)
         ? prev.filter((id) => id !== userId)
         : [...prev, userId],
     );
-  };
+  }
 
-  const toggleSelectAll = () => {
+  function toggleSelectAll() {
     if (selectedUsers.length === filteredUsers.length) {
       setSelectedUsers([]);
     } else {
       setSelectedUsers(filteredUsers.map((user) => user.id));
     }
-  };
+  }
 
-  const getStatusColor = (status: string) => {
+  function getStatusColor(status: string) {
     switch (status) {
       case "Active":
         return "bg-green-500";
@@ -211,7 +211,7 @@ export function UserManagement() {
       default:
         return "bg-gray-400";
     }
-  };
+  }
 
   return (
     <div className="flex h-screen flex-col">
