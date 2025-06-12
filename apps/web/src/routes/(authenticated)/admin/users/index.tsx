@@ -235,11 +235,14 @@ export function UserManagement() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>User Management</CardTitle>
+                <CardTitle>
+                  <h1>User Management</h1>
+                </CardTitle>
                 <CardDescription>
                   Manage your contact center users, teams, and permissions
                 </CardDescription>
               </div>
+              {/* TODO: This isnt really the right use case for Tabs, and `axe` correctly flags this as an a11y violation because there isnt any TabContent being controlled here */}
               <Tabs
                 className="w-[400px]"
                 defaultValue="all"
@@ -253,11 +256,22 @@ export function UserManagement() {
                 }}
                 value={tab}
               >
-                <TabsList className="grid grid-cols-4">
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="active">Active</TabsTrigger>
-                  <TabsTrigger value="away">Away</TabsTrigger>
-                  <TabsTrigger value="offline">Offline</TabsTrigger>
+                <TabsList
+                  aria-label="User status filter"
+                  className="grid grid-cols-4"
+                >
+                  <TabsTrigger aria-controls={undefined} value="all">
+                    All
+                  </TabsTrigger>
+                  <TabsTrigger aria-controls={undefined} value="active">
+                    Active
+                  </TabsTrigger>
+                  <TabsTrigger aria-controls={undefined} value="away">
+                    Away
+                  </TabsTrigger>
+                  <TabsTrigger aria-controls={undefined} value="offline">
+                    Offline
+                  </TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
@@ -406,8 +420,10 @@ export function UserManagement() {
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
+                  {/* <h1 className="sr-only">User Management</h1> */}
                   <TableRow>
                     <TableHead className="w-[40px]">
+                      <span className="sr-only">Select users</span>
                       <Checkbox
                         aria-label="Select all users"
                         checked={
@@ -428,7 +444,6 @@ export function UserManagement() {
                     <TableHead>Location</TableHead>
                     <TableHead>Phone Number</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead className="w-[80px]"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

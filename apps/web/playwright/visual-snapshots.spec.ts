@@ -1,4 +1,5 @@
 import { type User } from "@/auth";
+import AxeBuilder from "@axe-core/playwright"; // 1
 import { expect, test } from "@playwright/test";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
@@ -34,7 +35,9 @@ const mockUser = {
 } satisfies User;
 
 for (const route of routes) {
-  test(`Visual snapshot of route: ${route}`, async ({ page }) => {
+  test(`Visual snapshot and accessibility check of route: ${route}`, async ({
+    page,
+  }) => {
     // Skip routes with path parameters for simplicity
     // You could replace parameters with actual values if needed
     if (route.includes(":")) {
@@ -60,11 +63,13 @@ for (const route of routes) {
       await page.reload();
     }
 
-    // Wait for any loading states to resolve
     await page.waitForLoadState("networkidle");
 
     await expect(page).toHaveScreenshot(
       `${route.replace(/\//g, "-") || "home"}.png`,
     );
+
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
   });
 }

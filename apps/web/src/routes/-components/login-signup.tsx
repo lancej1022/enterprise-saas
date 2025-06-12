@@ -4,7 +4,7 @@ import { LoginForm } from "./login-form";
 
 export function LoginPage() {
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
+    <main className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a className="flex items-center gap-2 font-medium" href="#">
@@ -27,6 +27,6 @@ export function LoginPage() {
           src="https://4kwallpapers.com/images/walls/thumbs_3t/13248.jpg"
         />
       </div>
-    </div>
+    </main>
   );
 }
