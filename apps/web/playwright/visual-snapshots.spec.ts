@@ -17,14 +17,7 @@ const router = createRouter({
   },
 });
 
-// Get all route paths from the generated routeTree
-const routes = router.flatRoutes.reduce<string[]>((acc, route) => {
-  // This should technically always be truthy, but Ive added this to be safe
-  if (route.path) {
-    acc.push(String(route.path));
-  }
-  return acc;
-}, []);
+const routes = Object.keys(router.routesByPath);
 
 const mockUser = {
   created_at: "2024-01-01T00:00:00Z",
@@ -65,9 +58,13 @@ for (const route of routes) {
 
     await page.waitForLoadState("networkidle");
 
-    await expect(page).toHaveScreenshot(
-      `${route.replace(/\//g, "-") || "home"}.png`,
-    );
+    // Need to remove slashes from the route path otherwise the generated filename is invalid
+    const screenshotName =
+      route === "/"
+        ? "home"
+        : // slice(1) removes leading slash before replacing any remaining ones, so that we dont wind up with `-segmentHere-nextSegment`
+          route.slice(1).replace(/\//g, "-");
+    await expect(page).toHaveScreenshot(screenshotName + ".png");
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
     expect(accessibilityScanResults.violations).toEqual([]);
