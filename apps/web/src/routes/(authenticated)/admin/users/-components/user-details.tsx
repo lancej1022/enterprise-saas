@@ -153,7 +153,7 @@ export function UserDetail({ userId }: UserDetailProps) {
   }
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex flex-col">
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4">
           <Breadcrumb>

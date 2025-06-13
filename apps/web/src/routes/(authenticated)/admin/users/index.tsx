@@ -28,9 +28,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
+  Activity,
   ArrowUpDown,
   Building,
   Check,
@@ -38,7 +38,6 @@ import {
   Filter,
   MoreHorizontal,
   Phone,
-  Plus,
   Search,
   UserPlus,
   Users,
@@ -48,8 +47,8 @@ import { z } from "zod/v4";
 
 import { AddUserDialog } from "./-components/add-user-dialog";
 
-const tabs = ["all", "active", "away", "offline"] as const;
-const tabsSchema = z.enum(tabs).default("all");
+const statuses = ["All Statuses", "Active", "Away", "Offline"] as const;
+const statusSchema = z.enum(statuses).default("All Statuses");
 
 const teams = [
   "All Teams",
@@ -75,7 +74,7 @@ export const Route = createFileRoute("/(authenticated)/admin/users/")({
   component: UserManagement,
   validateSearch: z.object({
     search: z.string().optional(),
-    tab: tabsSchema,
+    status: statusSchema,
     team: teamsSchema,
     location: locationsSchema,
     role: rolesSchema,
@@ -142,10 +141,9 @@ const users = [
 ] as const;
 
 export function UserManagement() {
-  // TODO: refactor all of this stuff to use Tanstack params where possible!
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { search = "", tab, team, location, role } = Route.useSearch();
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const { search = "", status, team, location, role } = Route.useSearch();
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
   const navigate = useNavigate({ from: Route.fullPath });
 
@@ -162,12 +160,12 @@ export function UserManagement() {
       user.email.toLowerCase().includes(search.toLowerCase()) ||
       user.phoneNumber.includes(search);
 
-    // Filter by tab
-    const matchesTab =
-      tab === "all" ||
-      (tab === "active" && user.status === "Active") ||
-      (tab === "away" && user.status === "Away") ||
-      (tab === "offline" && user.status === "Offline");
+    // Filter by status
+    const matchesStatus =
+      status === "All Statuses" ||
+      (status === "Active" && user.status === "Active") ||
+      (status === "Away" && user.status === "Away") ||
+      (status === "Offline" && user.status === "Offline");
 
     // Filter by dropdown filters
     const matchesTeam = team === "All Teams" || user.team === team;
@@ -177,7 +175,7 @@ export function UserManagement() {
 
     return (
       matchesSearch &&
-      matchesTab &&
+      matchesStatus &&
       matchesTeam &&
       matchesLocation &&
       matchesRole
@@ -214,21 +212,8 @@ export function UserManagement() {
   }
 
   return (
-    <div className="flex h-screen flex-col">
-      <div className="border-b">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="outline">
-              <Filter className="mr-2 h-4 w-4" />
-              Export
-            </Button>
-            <Button onClick={() => setIsAddUserOpen(true)} size="sm">
-              <UserPlus className="mr-2 h-4 w-4" />
-              Add User
-            </Button>
-          </div>
-        </div>
-      </div>
+    <div className="flex flex-col">
+      <div className="border-b"></div>
 
       <div className="container flex-1 space-y-4 overflow-auto p-4">
         <Card>
@@ -242,38 +227,16 @@ export function UserManagement() {
                   Manage your contact center users, teams, and permissions
                 </CardDescription>
               </div>
-              {/* TODO: This isnt really the right use case for Tabs, and `axe` correctly flags this as an a11y violation because there isnt any TabContent being controlled here */}
-              <Tabs
-                className="w-[400px]"
-                defaultValue="all"
-                onValueChange={(value) => {
-                  const parsed = tabsSchema.safeParse(value);
-                  if (parsed.success) {
-                    void navigate({
-                      search: (prev) => ({ ...prev, tab: parsed.data }),
-                    });
-                  }
-                }}
-                value={tab}
-              >
-                <TabsList
-                  aria-label="User status filter"
-                  className="grid grid-cols-4"
-                >
-                  <TabsTrigger aria-controls={undefined} value="all">
-                    All
-                  </TabsTrigger>
-                  <TabsTrigger aria-controls={undefined} value="active">
-                    Active
-                  </TabsTrigger>
-                  <TabsTrigger aria-controls={undefined} value="away">
-                    Away
-                  </TabsTrigger>
-                  <TabsTrigger aria-controls={undefined} value="offline">
-                    Offline
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="outline">
+                  <Filter className="mr-2 h-4 w-4" />
+                  Export
+                </Button>
+                <Button onClick={() => setIsAddUserOpen(true)} size="sm">
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Add User
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
@@ -312,6 +275,33 @@ export function UserManagement() {
                     </Button>
                   )}
                 </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button size="sm" variant="outline">
+                      <Activity className="mr-2 h-4 w-4" />
+                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                      <ChevronDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-[200px]">
+                    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {statuses.map((t) => (
+                      <DropdownMenuItem
+                        className="flex items-center justify-between"
+                        key={t}
+                        onClick={() =>
+                          void navigate({
+                            search: (prev) => ({ ...prev, status: t }),
+                          })
+                        }
+                      >
+                        {t.charAt(0).toUpperCase() + t.slice(1)}
+                        {t === status && <Check className="h-4 w-4" />}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button size="sm" variant="outline">
@@ -406,21 +396,12 @@ export function UserManagement() {
                     Clear Selection ({selectedUsers.length})
                   </Button>
                 )}
-                <Button
-                  onClick={() => setIsAddUserOpen(true)}
-                  size="sm"
-                  variant="outline"
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add User
-                </Button>
               </div>
             </div>
 
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
-                  {/* <h1 className="sr-only">User Management</h1> */}
                   <TableRow>
                     <TableHead className="w-[40px]">
                       <span className="sr-only">Select users</span>
