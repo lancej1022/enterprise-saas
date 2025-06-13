@@ -73,7 +73,7 @@ const rolesSchema = z.enum(roles).optional();
 const teamsSchema = z.enum(teams).optional();
 const locationsSchema = z.enum(locations).optional();
 
-export const Route = createFileRoute("/(authenticated)/admin/users/")({
+export const Route = createFileRoute("/(authenticated)/admin/users")({
   component: UserManagement,
   validateSearch: z.object({
     search: z.string().optional(),
