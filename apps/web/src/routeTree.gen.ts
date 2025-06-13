@@ -13,11 +13,11 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignupImport } from './routes/signup'
 import { Route as LoginImport } from './routes/login'
-import { Route as authenticatedRouteImport } from './routes/(authenticated)/route'
-import { Route as authenticatedIndexImport } from './routes/(authenticated)/index'
-import { Route as authenticatedAdminUsersImport } from './routes/(authenticated)/admin/users'
-import { Route as authenticatedAdminTeamsIndexImport } from './routes/(authenticated)/admin/teams/index'
-import { Route as authenticatedAdminUsersAddUserImport } from './routes/(authenticated)/admin/users/add-user'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedAdminUsersImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminTeamsIndexImport } from './routes/_authenticated/admin/teams/index'
+import { Route as AuthenticatedAdminUsersAddUserImport } from './routes/_authenticated/admin/users/add-user'
 
 // Create/Update Routes
 
@@ -33,46 +33,46 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const authenticatedRouteRoute = authenticatedRouteImport.update({
-  id: '/(authenticated)',
+const AuthenticatedRouteRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
-const authenticatedIndexRoute = authenticatedIndexImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => authenticatedRouteRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
-const authenticatedAdminUsersRoute = authenticatedAdminUsersImport.update({
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersImport.update({
   id: '/admin/users',
   path: '/admin/users',
-  getParentRoute: () => authenticatedRouteRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
-const authenticatedAdminTeamsIndexRoute =
-  authenticatedAdminTeamsIndexImport.update({
+const AuthenticatedAdminTeamsIndexRoute =
+  AuthenticatedAdminTeamsIndexImport.update({
     id: '/admin/teams/',
     path: '/admin/teams/',
-    getParentRoute: () => authenticatedRouteRoute,
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
-const authenticatedAdminUsersAddUserRoute =
-  authenticatedAdminUsersAddUserImport.update({
+const AuthenticatedAdminUsersAddUserRoute =
+  AuthenticatedAdminUsersAddUserImport.update({
     id: '/add-user',
     path: '/add-user',
-    getParentRoute: () => authenticatedAdminUsersRoute,
+    getParentRoute: () => AuthenticatedAdminUsersRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(authenticated)': {
-      id: '/(authenticated)'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof authenticatedRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -89,103 +89,105 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
-    '/(authenticated)/': {
-      id: '/(authenticated)/'
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof authenticatedIndexImport
-      parentRoute: typeof authenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
-    '/(authenticated)/admin/users': {
-      id: '/(authenticated)/admin/users'
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
       path: '/admin/users'
       fullPath: '/admin/users'
-      preLoaderRoute: typeof authenticatedAdminUsersImport
-      parentRoute: typeof authenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedAdminUsersImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
-    '/(authenticated)/admin/users/add-user': {
-      id: '/(authenticated)/admin/users/add-user'
+    '/_authenticated/admin/users/add-user': {
+      id: '/_authenticated/admin/users/add-user'
       path: '/add-user'
       fullPath: '/admin/users/add-user'
-      preLoaderRoute: typeof authenticatedAdminUsersAddUserImport
-      parentRoute: typeof authenticatedAdminUsersImport
+      preLoaderRoute: typeof AuthenticatedAdminUsersAddUserImport
+      parentRoute: typeof AuthenticatedAdminUsersImport
     }
-    '/(authenticated)/admin/teams/': {
-      id: '/(authenticated)/admin/teams/'
+    '/_authenticated/admin/teams/': {
+      id: '/_authenticated/admin/teams/'
       path: '/admin/teams'
       fullPath: '/admin/teams'
-      preLoaderRoute: typeof authenticatedAdminTeamsIndexImport
-      parentRoute: typeof authenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedAdminTeamsIndexImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface authenticatedAdminUsersRouteChildren {
-  authenticatedAdminUsersAddUserRoute: typeof authenticatedAdminUsersAddUserRoute
+interface AuthenticatedAdminUsersRouteChildren {
+  AuthenticatedAdminUsersAddUserRoute: typeof AuthenticatedAdminUsersAddUserRoute
 }
 
-const authenticatedAdminUsersRouteChildren: authenticatedAdminUsersRouteChildren =
+const AuthenticatedAdminUsersRouteChildren: AuthenticatedAdminUsersRouteChildren =
   {
-    authenticatedAdminUsersAddUserRoute: authenticatedAdminUsersAddUserRoute,
+    AuthenticatedAdminUsersAddUserRoute: AuthenticatedAdminUsersAddUserRoute,
   }
 
-const authenticatedAdminUsersRouteWithChildren =
-  authenticatedAdminUsersRoute._addFileChildren(
-    authenticatedAdminUsersRouteChildren,
+const AuthenticatedAdminUsersRouteWithChildren =
+  AuthenticatedAdminUsersRoute._addFileChildren(
+    AuthenticatedAdminUsersRouteChildren,
   )
 
-interface authenticatedRouteRouteChildren {
-  authenticatedIndexRoute: typeof authenticatedIndexRoute
-  authenticatedAdminUsersRoute: typeof authenticatedAdminUsersRouteWithChildren
-  authenticatedAdminTeamsIndexRoute: typeof authenticatedAdminTeamsIndexRoute
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRouteWithChildren
+  AuthenticatedAdminTeamsIndexRoute: typeof AuthenticatedAdminTeamsIndexRoute
 }
 
-const authenticatedRouteRouteChildren: authenticatedRouteRouteChildren = {
-  authenticatedIndexRoute: authenticatedIndexRoute,
-  authenticatedAdminUsersRoute: authenticatedAdminUsersRouteWithChildren,
-  authenticatedAdminTeamsIndexRoute: authenticatedAdminTeamsIndexRoute,
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRouteWithChildren,
+  AuthenticatedAdminTeamsIndexRoute: AuthenticatedAdminTeamsIndexRoute,
 }
 
-const authenticatedRouteRouteWithChildren =
-  authenticatedRouteRoute._addFileChildren(authenticatedRouteRouteChildren)
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '/': typeof authenticatedIndexRoute
+  '': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/admin/users': typeof authenticatedAdminUsersRouteWithChildren
-  '/admin/users/add-user': typeof authenticatedAdminUsersAddUserRoute
-  '/admin/teams': typeof authenticatedAdminTeamsIndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
+  '/admin/teams': typeof AuthenticatedAdminTeamsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/': typeof authenticatedIndexRoute
-  '/admin/users': typeof authenticatedAdminUsersRouteWithChildren
-  '/admin/users/add-user': typeof authenticatedAdminUsersAddUserRoute
-  '/admin/teams': typeof authenticatedAdminTeamsIndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
+  '/admin/teams': typeof AuthenticatedAdminTeamsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/(authenticated)': typeof authenticatedRouteRouteWithChildren
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '/(authenticated)/': typeof authenticatedIndexRoute
-  '/(authenticated)/admin/users': typeof authenticatedAdminUsersRouteWithChildren
-  '/(authenticated)/admin/users/add-user': typeof authenticatedAdminUsersAddUserRoute
-  '/(authenticated)/admin/teams/': typeof authenticatedAdminTeamsIndexRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/_authenticated/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
+  '/_authenticated/admin/teams/': typeof AuthenticatedAdminTeamsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
+    | ''
     | '/login'
     | '/signup'
+    | '/'
     | '/admin/users'
     | '/admin/users/add-user'
     | '/admin/teams'
@@ -199,24 +201,24 @@ export interface FileRouteTypes {
     | '/admin/teams'
   id:
     | '__root__'
-    | '/(authenticated)'
+    | '/_authenticated'
     | '/login'
     | '/signup'
-    | '/(authenticated)/'
-    | '/(authenticated)/admin/users'
-    | '/(authenticated)/admin/users/add-user'
-    | '/(authenticated)/admin/teams/'
+    | '/_authenticated/'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/users/add-user'
+    | '/_authenticated/admin/teams/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  authenticatedRouteRoute: typeof authenticatedRouteRouteWithChildren
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  authenticatedRouteRoute: authenticatedRouteRouteWithChildren,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
 }
@@ -231,17 +233,17 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/(authenticated)",
+        "/_authenticated",
         "/login",
         "/signup"
       ]
     },
-    "/(authenticated)": {
-      "filePath": "(authenticated)/route.tsx",
+    "/_authenticated": {
+      "filePath": "_authenticated/route.tsx",
       "children": [
-        "/(authenticated)/",
-        "/(authenticated)/admin/users",
-        "/(authenticated)/admin/teams/"
+        "/_authenticated/",
+        "/_authenticated/admin/users",
+        "/_authenticated/admin/teams/"
       ]
     },
     "/login": {
@@ -250,24 +252,24 @@ export const routeTree = rootRoute
     "/signup": {
       "filePath": "signup.tsx"
     },
-    "/(authenticated)/": {
-      "filePath": "(authenticated)/index.tsx",
-      "parent": "/(authenticated)"
+    "/_authenticated/": {
+      "filePath": "_authenticated/index.tsx",
+      "parent": "/_authenticated"
     },
-    "/(authenticated)/admin/users": {
-      "filePath": "(authenticated)/admin/users.tsx",
-      "parent": "/(authenticated)",
+    "/_authenticated/admin/users": {
+      "filePath": "_authenticated/admin/users.tsx",
+      "parent": "/_authenticated",
       "children": [
-        "/(authenticated)/admin/users/add-user"
+        "/_authenticated/admin/users/add-user"
       ]
     },
-    "/(authenticated)/admin/users/add-user": {
-      "filePath": "(authenticated)/admin/users/add-user.tsx",
-      "parent": "/(authenticated)/admin/users"
+    "/_authenticated/admin/users/add-user": {
+      "filePath": "_authenticated/admin/users/add-user.tsx",
+      "parent": "/_authenticated/admin/users"
     },
-    "/(authenticated)/admin/teams/": {
-      "filePath": "(authenticated)/admin/teams/index.tsx",
-      "parent": "/(authenticated)"
+    "/_authenticated/admin/teams/": {
+      "filePath": "_authenticated/admin/teams/index.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

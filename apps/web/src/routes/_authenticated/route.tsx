@@ -16,7 +16,7 @@ import {
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 
 // Naming this file `route.tsx` creates a layout route that is used to wrap ALL the other routes nested under this directory
-export const Route = createFileRoute("/(authenticated)")({
+export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
 });
 

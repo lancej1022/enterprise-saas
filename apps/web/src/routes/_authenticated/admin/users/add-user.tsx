@@ -311,6 +311,6 @@ function AddUserDialog() {
   );
 }
 
-export const Route = createFileRoute("/(authenticated)/admin/users/add-user")({
+export const Route = createFileRoute("/_authenticated/admin/users/add-user")({
   component: AddUserDialog,
 });
