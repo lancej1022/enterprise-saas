@@ -11,13 +11,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -45,9 +38,8 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
-  ArrowLeft,
   Building,
   Calendar,
   Edit2,
@@ -127,14 +119,15 @@ const userData = {
   ],
 };
 
-export const Route = createFileRoute("/_authenticated/admin/users/$userId")({
+export const Route = createFileRoute("/_authenticated/admin/users_/$userId")({
   component: UserDetails,
 });
 
 function UserDetails() {
-  const userId = Route.useParams({
-    select: (params) => params.userId,
-  });
+  // TODO: will be used to retrieve the actual user data based on their ID
+  // const userId = Route.useParams({
+  //   select: (params) => params.userId,
+  // });
 
   const [user, setUser] = useState(userData);
   const [isEditing, setIsEditing] = useState(false);
@@ -158,72 +151,8 @@ function UserDetails() {
 
   return (
     <div className="flex flex-col">
-      <header className="border-b">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/dashboard/users">Users</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href={`/dashboard/users/${userId}`}>
-                  {user.firstName} {user.lastName}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-          <div className="flex items-center gap-2">
-            <Button asChild size="sm" variant="outline">
-              <Link search={(prev) => prev} to="/admin/users">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Users
-              </Link>
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="outline">
-                  <MoreHorizontal className="h-4 w-4" />
-                  <span className="sr-only">Actions</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setIsEditing(!isEditing)}>
-                  {isEditing ? (
-                    <>
-                      <User className="mr-2 h-4 w-4" />
-                      Cancel Editing
-                    </>
-                  ) : (
-                    <>
-                      <Edit2 className="mr-2 h-4 w-4" />
-                      Edit User
-                    </>
-                  )}
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <UserCog className="mr-2 h-4 w-4" />
-                  Manage Permissions
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-destructive focus:text-destructive"
-                  onClick={() => setIsDeleteDialogOpen(true)}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete User
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
-
       <div className="container flex-1 space-y-4 overflow-auto p-4">
+        <h1 className="text-center text-2xl font-bold">User Details</h1>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <Card className="md:col-span-1">
             <CardHeader className="text-center">
@@ -290,7 +219,7 @@ function UserDetails() {
                 </div>
                 <Separator />
                 <div>
-                  <h4 className="mb-2 text-sm font-medium">Skills</h4>
+                  <p className="mb-2 text-sm font-medium">Skills</p>
                   <div className="flex flex-wrap gap-1">
                     {user.skills.map((skill) => (
                       <Badge
@@ -309,11 +238,53 @@ function UserDetails() {
 
           <div className="space-y-4 md:col-span-2">
             <Tabs defaultValue="overview">
-              <TabsList className="mb-4 grid grid-cols-3">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="permissions">Permissions</TabsTrigger>
-                <TabsTrigger value="history">Call History</TabsTrigger>
-              </TabsList>
+              <div className="container flex h-16 items-center justify-between px-4">
+                <TabsList className="mb-4 grid grid-cols-3">
+                  <TabsTrigger value="overview">Overview</TabsTrigger>
+                  <TabsTrigger value="permissions">Permissions</TabsTrigger>
+                  <TabsTrigger value="history">Call History</TabsTrigger>
+                </TabsList>
+                <div className="flex items-center gap-2">
+                  {/* TODO: Should this really be nested inside a dropdown? */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button size="sm" variant="outline">
+                        <MoreHorizontal className="h-4 w-4" />
+                        <span>Actions</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() => setIsEditing(!isEditing)}
+                      >
+                        {isEditing ? (
+                          <>
+                            <User className="mr-2 h-4 w-4" />
+                            Cancel Editing
+                          </>
+                        ) : (
+                          <>
+                            <Edit2 className="mr-2 h-4 w-4" />
+                            Edit User
+                          </>
+                        )}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <UserCog className="mr-2 h-4 w-4" />
+                        Manage Permissions
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        className="text-destructive focus:text-destructive"
+                        onClick={() => setIsDeleteDialogOpen(true)}
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete User
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
 
               <TabsContent className="space-y-4" value="overview">
                 {isEditing ? (
@@ -525,9 +496,9 @@ function UserDetails() {
                       </div>
 
                       <div className="mt-6">
-                        <h3 className="mb-4 text-lg font-medium">
+                        <h2 className="mb-4 text-lg font-medium">
                           Recent Activity
-                        </h3>
+                        </h2>
                         <div className="space-y-4">
                           <div className="flex items-center justify-between rounded-lg bg-muted/30 p-3">
                             <div>
