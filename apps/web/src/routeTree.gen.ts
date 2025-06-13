@@ -17,6 +17,7 @@ import { Route as authenticatedRouteImport } from './routes/(authenticated)/rout
 import { Route as authenticatedIndexImport } from './routes/(authenticated)/index'
 import { Route as authenticatedAdminUsersIndexImport } from './routes/(authenticated)/admin/users/index'
 import { Route as authenticatedAdminTeamsIndexImport } from './routes/(authenticated)/admin/teams/index'
+import { Route as authenticatedAdminUsersAddUserIndexImport } from './routes/(authenticated)/admin/users/add-user/index'
 
 // Create/Update Routes
 
@@ -54,6 +55,13 @@ const authenticatedAdminTeamsIndexRoute =
   authenticatedAdminTeamsIndexImport.update({
     id: '/admin/teams/',
     path: '/admin/teams/',
+    getParentRoute: () => authenticatedRouteRoute,
+  } as any)
+
+const authenticatedAdminUsersAddUserIndexRoute =
+  authenticatedAdminUsersAddUserIndexImport.update({
+    id: '/admin/users/add-user/',
+    path: '/admin/users/add-user/',
     getParentRoute: () => authenticatedRouteRoute,
   } as any)
 
@@ -103,6 +111,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedAdminUsersIndexImport
       parentRoute: typeof authenticatedRouteImport
     }
+    '/(authenticated)/admin/users/add-user/': {
+      id: '/(authenticated)/admin/users/add-user/'
+      path: '/admin/users/add-user'
+      fullPath: '/admin/users/add-user'
+      preLoaderRoute: typeof authenticatedAdminUsersAddUserIndexImport
+      parentRoute: typeof authenticatedRouteImport
+    }
   }
 }
 
@@ -112,12 +127,15 @@ interface authenticatedRouteRouteChildren {
   authenticatedIndexRoute: typeof authenticatedIndexRoute
   authenticatedAdminTeamsIndexRoute: typeof authenticatedAdminTeamsIndexRoute
   authenticatedAdminUsersIndexRoute: typeof authenticatedAdminUsersIndexRoute
+  authenticatedAdminUsersAddUserIndexRoute: typeof authenticatedAdminUsersAddUserIndexRoute
 }
 
 const authenticatedRouteRouteChildren: authenticatedRouteRouteChildren = {
   authenticatedIndexRoute: authenticatedIndexRoute,
   authenticatedAdminTeamsIndexRoute: authenticatedAdminTeamsIndexRoute,
   authenticatedAdminUsersIndexRoute: authenticatedAdminUsersIndexRoute,
+  authenticatedAdminUsersAddUserIndexRoute:
+    authenticatedAdminUsersAddUserIndexRoute,
 }
 
 const authenticatedRouteRouteWithChildren =
@@ -129,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/admin/teams': typeof authenticatedAdminTeamsIndexRoute
   '/admin/users': typeof authenticatedAdminUsersIndexRoute
+  '/admin/users/add-user': typeof authenticatedAdminUsersAddUserIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -137,6 +156,7 @@ export interface FileRoutesByTo {
   '/': typeof authenticatedIndexRoute
   '/admin/teams': typeof authenticatedAdminTeamsIndexRoute
   '/admin/users': typeof authenticatedAdminUsersIndexRoute
+  '/admin/users/add-user': typeof authenticatedAdminUsersAddUserIndexRoute
 }
 
 export interface FileRoutesById {
@@ -147,13 +167,26 @@ export interface FileRoutesById {
   '/(authenticated)/': typeof authenticatedIndexRoute
   '/(authenticated)/admin/teams/': typeof authenticatedAdminTeamsIndexRoute
   '/(authenticated)/admin/users/': typeof authenticatedAdminUsersIndexRoute
+  '/(authenticated)/admin/users/add-user/': typeof authenticatedAdminUsersAddUserIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup' | '/admin/teams' | '/admin/users'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/admin/teams'
+    | '/admin/users'
+    | '/admin/users/add-user'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/' | '/admin/teams' | '/admin/users'
+  to:
+    | '/login'
+    | '/signup'
+    | '/'
+    | '/admin/teams'
+    | '/admin/users'
+    | '/admin/users/add-user'
   id:
     | '__root__'
     | '/(authenticated)'
@@ -162,6 +195,7 @@ export interface FileRouteTypes {
     | '/(authenticated)/'
     | '/(authenticated)/admin/teams/'
     | '/(authenticated)/admin/users/'
+    | '/(authenticated)/admin/users/add-user/'
   fileRoutesById: FileRoutesById
 }
 
@@ -197,7 +231,8 @@ export const routeTree = rootRoute
       "children": [
         "/(authenticated)/",
         "/(authenticated)/admin/teams/",
-        "/(authenticated)/admin/users/"
+        "/(authenticated)/admin/users/",
+        "/(authenticated)/admin/users/add-user/"
       ]
     },
     "/login": {
@@ -216,6 +251,10 @@ export const routeTree = rootRoute
     },
     "/(authenticated)/admin/users/": {
       "filePath": "(authenticated)/admin/users/index.tsx",
+      "parent": "/(authenticated)"
+    },
+    "/(authenticated)/admin/users/add-user/": {
+      "filePath": "(authenticated)/admin/users/add-user/index.tsx",
       "parent": "/(authenticated)"
     }
   }

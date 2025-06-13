@@ -28,7 +28,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  useNavigate,
+} from "@tanstack/react-router";
 import {
   Activity,
   ArrowUpDown,
@@ -45,10 +50,8 @@ import {
 } from "lucide-react";
 import { z } from "zod/v4";
 
-import { AddUserDialog } from "./-components/add-user-dialog";
-
 const statuses = ["All Statuses", "Active", "Away", "Offline"] as const;
-const statusSchema = z.enum(statuses).default("All Statuses");
+const statusSchema = z.enum(statuses).optional();
 
 const teams = [
   "All Teams",
@@ -66,9 +69,9 @@ const locations = [
   "Boston",
 ] as const;
 const roles = ["All Roles", "Agent", "Supervisor", "Administrator"] as const;
-const rolesSchema = z.enum(roles).default("All Roles");
-const teamsSchema = z.enum(teams).default("All Teams");
-const locationsSchema = z.enum(locations).default("All Locations");
+const rolesSchema = z.enum(roles).optional();
+const teamsSchema = z.enum(teams).optional();
+const locationsSchema = z.enum(locations).optional();
 
 export const Route = createFileRoute("/(authenticated)/admin/users/")({
   component: UserManagement,
@@ -143,8 +146,13 @@ const users = [
 export function UserManagement() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const { search = "", status, team, location, role } = Route.useSearch();
-  const [isAddUserOpen, setIsAddUserOpen] = useState(false);
+  const {
+    search = "",
+    status = "All Statuses",
+    team = "All Teams",
+    location = "All Locations",
+    role = "All Roles",
+  } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
 
   function setSearchQuery(value: string) {
@@ -232,9 +240,11 @@ export function UserManagement() {
                   <Filter className="mr-2 h-4 w-4" />
                   Export
                 </Button>
-                <Button onClick={() => setIsAddUserOpen(true)} size="sm">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Add User
+                <Button asChild size="sm">
+                  <Link to="/admin/users/add-user">
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Add User
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -292,7 +302,10 @@ export function UserManagement() {
                         key={t}
                         onClick={() =>
                           void navigate({
-                            search: (prev) => ({ ...prev, status: t }),
+                            search: (prev) => ({
+                              ...prev,
+                              status: t === "All Statuses" ? undefined : t,
+                            }),
                           })
                         }
                       >
@@ -321,7 +334,10 @@ export function UserManagement() {
                         // TODO: this logic was totally broken from v0, so need to get clever about implementing it
                         onClick={() =>
                           void navigate({
-                            search: (prev) => ({ ...prev, team: t }),
+                            search: (prev) => ({
+                              ...prev,
+                              team: t === "All Teams" ? undefined : t,
+                            }),
                           })
                         }
                       >
@@ -348,7 +364,11 @@ export function UserManagement() {
                         key={location}
                         onClick={() => {
                           void navigate({
-                            search: (prev) => ({ ...prev, location: loc }),
+                            search: (prev) => ({
+                              ...prev,
+                              location:
+                                loc === "All Locations" ? undefined : loc,
+                            }),
                           });
                         }}
                       >
@@ -375,7 +395,10 @@ export function UserManagement() {
                         key={role}
                         onClick={() =>
                           void navigate({
-                            search: (prev) => ({ ...prev, role: r }),
+                            search: (prev) => ({
+                              ...prev,
+                              role: r === "All Roles" ? undefined : r,
+                            }),
                           })
                         }
                       >
@@ -538,7 +561,7 @@ export function UserManagement() {
         </Card>
       </div>
 
-      <AddUserDialog onOpenChange={setIsAddUserOpen} open={isAddUserOpen} />
+      <Outlet />
     </div>
   );
 }

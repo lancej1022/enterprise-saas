@@ -1,16 +1,6 @@
-"use client";
-
 import type React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import {
   Dialog,
   DialogContent,
@@ -22,60 +12,66 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  createFileRoute,
+  useCanGoBack,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
 import { toast } from "sonner";
 
-const teams = [
-  { label: "Customer Support", value: "customer-support" },
-  { label: "Technical Support", value: "technical-support" },
-  { label: "Sales", value: "sales" },
-  { label: "Management", value: "management" },
-];
+// const teams = [
+//   { label: "Customer Support", value: "customer-support" },
+//   { label: "Technical Support", value: "technical-support" },
+//   { label: "Sales", value: "sales" },
+//   { label: "Management", value: "management" },
+// ];
 
-const locations = [
-  { label: "New York", value: "new-york" },
-  { label: "San Francisco", value: "san-francisco" },
-  { label: "Chicago", value: "chicago" },
-  { label: "Miami", value: "miami" },
-  { label: "Boston", value: "boston" },
-];
+// const locations = [
+//   { label: "New York", value: "new-york" },
+//   { label: "San Francisco", value: "san-francisco" },
+//   { label: "Chicago", value: "chicago" },
+//   { label: "Miami", value: "miami" },
+//   { label: "Boston", value: "boston" },
+// ];
 
-const phoneNumbers = [
-  { label: "+1 (555) 123-4567", value: "+1 (555) 123-4567" },
-  { label: "+1 (555) 987-6543", value: "+1 (555) 987-6543" },
-  { label: "+1 (555) 456-7890", value: "+1 (555) 456-7890" },
-  { label: "+1 (555) 234-5678", value: "+1 (555) 234-5678" },
-  { label: "+1 (555) 876-5432", value: "+1 (555) 876-5432" },
-];
+// const phoneNumbers = [
+//   { label: "+1 (555) 123-4567", value: "+1 (555) 123-4567" },
+//   { label: "+1 (555) 987-6543", value: "+1 (555) 987-6543" },
+//   { label: "+1 (555) 456-7890", value: "+1 (555) 456-7890" },
+//   { label: "+1 (555) 234-5678", value: "+1 (555) 234-5678" },
+//   { label: "+1 (555) 876-5432", value: "+1 (555) 876-5432" },
+// ];
 
-interface AddUserDialogProps {
-  onOpenChange: (open: boolean) => void;
-  open: boolean;
-}
-
-export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
+// TODO: migrate to Tanstack Form !!
+function AddUserDialog() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
-  const [team, setTeam] = useState("");
-  const [openTeamCombobox, setOpenTeamCombobox] = useState(false);
-  const [location, setLocation] = useState("");
-  const [openLocationCombobox, setOpenLocationCombobox] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [openPhoneCombobox, setOpenPhoneCombobox] = useState(false);
+  // const [team, setTeam] = useState("");
+  // const [openTeamCombobox, setOpenTeamCombobox] = useState(false);
+  // const [location, setLocation] = useState("");
+  // const [openLocationCombobox, setOpenLocationCombobox] = useState(false);
+  // const [phoneNumber, setPhoneNumber] = useState("");
+  // const [openPhoneCombobox, setOpenPhoneCombobox] = useState(false);
+  const router = useRouter();
+  const navigate = useNavigate();
+  const canGoBack = useCanGoBack();
+
+  function handleClose() {
+    if (canGoBack) {
+      router.history.back();
+    } else {
+      void navigate({ to: "/admin/users" });
+    }
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -84,21 +80,11 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
 
     toast.success(`${firstName} ${lastName} has been added successfully.`);
 
-    // Reset form
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setRole("");
-    setTeam("");
-    setLocation("");
-    setPhoneNumber("");
-
-    // Close dialog
-    onOpenChange(false);
+    handleClose();
   }
 
   return (
-    <Dialog onOpenChange={onOpenChange} open={open}>
+    <Dialog onOpenChange={handleClose} open={true}>
       <DialogContent className="sm:max-w-[500px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
@@ -140,9 +126,9 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="role">Role</Label>
+              <Label htmlFor="role-select">Role</Label>
               <Select onValueChange={setRole} required value={role}>
-                <SelectTrigger id="role">
+                <SelectTrigger id="role-select">
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -152,13 +138,14 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
+            {/* TODO: these comboboxes look kinda busted -- need to replace with the official ShadCN example from https://ui.shadcn.com/docs/components/combobox */}
+            {/* <div className="space-y-2">
               <Label htmlFor="team">Team</Label>
               <Popover
                 onOpenChange={setOpenTeamCombobox}
                 open={openTeamCombobox}
               >
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild id="team">
                   <Button
                     aria-expanded={openTeamCombobox}
                     className="w-full justify-between"
@@ -310,14 +297,10 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
                   </Command>
                 </PopoverContent>
               </Popover>
-            </div>
+            </div> */}
           </div>
           <DialogFooter>
-            <Button
-              onClick={() => onOpenChange(false)}
-              type="button"
-              variant="outline"
-            >
+            <Button onClick={handleClose} type="button" variant="outline">
               Cancel
             </Button>
             <Button type="submit">Create User</Button>
@@ -327,3 +310,7 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
     </Dialog>
   );
 }
+
+export const Route = createFileRoute("/(authenticated)/admin/users/add-user/")({
+  component: AddUserDialog,
+});
