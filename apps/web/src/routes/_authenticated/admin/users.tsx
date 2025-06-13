@@ -532,8 +532,10 @@ export function UserManagement() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem asChild>
-                                {/* @ts-expect-error -- link intentionally broken for now */}
-                                <Link to={`/admin/users/${user.id}`}>
+                                <Link
+                                  params={{ userId: user.id }}
+                                  to={`/admin/users/$userId`}
+                                >
                                   View Details
                                 </Link>
                               </DropdownMenuItem>

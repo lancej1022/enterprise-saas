@@ -18,6 +18,7 @@ import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index
 import { Route as AuthenticatedAdminUsersImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminTeamsImport } from './routes/_authenticated/admin/teams'
 import { Route as AuthenticatedAdminUsersAddUserImport } from './routes/_authenticated/admin/users/add-user'
+import { Route as AuthenticatedAdminUsersUserIdImport } from './routes/_authenticated/admin/users/$userId'
 
 // Create/Update Routes
 
@@ -60,6 +61,13 @@ const AuthenticatedAdminUsersAddUserRoute =
   AuthenticatedAdminUsersAddUserImport.update({
     id: '/add-user',
     path: '/add-user',
+    getParentRoute: () => AuthenticatedAdminUsersRoute,
+  } as any)
+
+const AuthenticatedAdminUsersUserIdRoute =
+  AuthenticatedAdminUsersUserIdImport.update({
+    id: '/$userId',
+    path: '/$userId',
     getParentRoute: () => AuthenticatedAdminUsersRoute,
   } as any)
 
@@ -109,6 +117,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/admin/users/$userId': {
+      id: '/_authenticated/admin/users/$userId'
+      path: '/$userId'
+      fullPath: '/admin/users/$userId'
+      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdImport
+      parentRoute: typeof AuthenticatedAdminUsersImport
+    }
     '/_authenticated/admin/users/add-user': {
       id: '/_authenticated/admin/users/add-user'
       path: '/add-user'
@@ -122,11 +137,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedAdminUsersRouteChildren {
+  AuthenticatedAdminUsersUserIdRoute: typeof AuthenticatedAdminUsersUserIdRoute
   AuthenticatedAdminUsersAddUserRoute: typeof AuthenticatedAdminUsersAddUserRoute
 }
 
 const AuthenticatedAdminUsersRouteChildren: AuthenticatedAdminUsersRouteChildren =
   {
+    AuthenticatedAdminUsersUserIdRoute: AuthenticatedAdminUsersUserIdRoute,
     AuthenticatedAdminUsersAddUserRoute: AuthenticatedAdminUsersAddUserRoute,
   }
 
@@ -157,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
   '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
 }
 
@@ -166,6 +184,7 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
   '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
 }
 
@@ -177,6 +196,7 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/_authenticated/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
   '/_authenticated/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
 }
 
@@ -189,6 +209,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin/teams'
     | '/admin/users'
+    | '/admin/users/$userId'
     | '/admin/users/add-user'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -197,6 +218,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin/teams'
     | '/admin/users'
+    | '/admin/users/$userId'
     | '/admin/users/add-user'
   id:
     | '__root__'
@@ -206,6 +228,7 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/_authenticated/admin/teams'
     | '/_authenticated/admin/users'
+    | '/_authenticated/admin/users/$userId'
     | '/_authenticated/admin/users/add-user'
   fileRoutesById: FileRoutesById
 }
@@ -263,8 +286,13 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/admin/users.tsx",
       "parent": "/_authenticated",
       "children": [
+        "/_authenticated/admin/users/$userId",
         "/_authenticated/admin/users/add-user"
       ]
+    },
+    "/_authenticated/admin/users/$userId": {
+      "filePath": "_authenticated/admin/users/$userId.tsx",
+      "parent": "/_authenticated/admin/users"
     },
     "/_authenticated/admin/users/add-user": {
       "filePath": "_authenticated/admin/users/add-user.tsx",

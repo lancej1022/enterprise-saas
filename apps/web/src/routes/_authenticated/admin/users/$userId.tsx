@@ -45,7 +45,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   Building,
@@ -127,11 +127,15 @@ const userData = {
   ],
 };
 
-interface UserDetailProps {
-  userId: string;
-}
+export const Route = createFileRoute("/_authenticated/admin/users/$userId")({
+  component: UserDetails,
+});
 
-export function UserDetail({ userId }: UserDetailProps) {
+function UserDetails() {
+  const userId = Route.useParams({
+    select: (params) => params.userId,
+  });
+
   const [user, setUser] = useState(userData);
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(userData);
