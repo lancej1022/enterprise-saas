@@ -1,0 +1,10 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "Go backend",
+  "scripts": {
+    "build": "go build -o dist/backend",
+    "dev": "air",
+    "test": "make test-db-up && go test ./... && make test-db-down"
+  }
+}

@@ -51,4 +51,4 @@ dist/
 # go
 .backend
 backend/database
-backend/tmp/main
+backend/tmp
