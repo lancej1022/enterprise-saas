@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import { ModeToggle } from "@/components/theme/mode-toggle";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -26,7 +27,7 @@ function AuthenticatedLayout() {
       <AppSidebar />
       <SidebarInset>
         <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
-          <div className="flex items-center gap-2 px-4">
+          <div className="flex w-full items-center gap-2 px-4">
             {/* TODO: wrap in a tooltip or something? */}
             <SidebarTrigger className="-ml-1" />
             <Separator
@@ -46,6 +47,9 @@ function AuthenticatedLayout() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+            <div className="ml-auto">
+              <ModeToggle />
+            </div>
           </div>
         </header>
         <Outlet />

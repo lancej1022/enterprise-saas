@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { type AuthContext } from "@/auth";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { type QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -37,12 +39,26 @@ export const Route = createRootRouteWithContext<{
 });
 
 function RootComponent() {
+  // Wasnt sure how to explicitly pass styles to the tanstack router devtools button, so this is a hack to add a margin to the button
+  useEffect(() => {
+    setTimeout(() => {
+      const devtoolsButton = document.querySelector(
+        'button[aria-label="Open TanStack Router Devtools"]',
+      );
+      if (devtoolsButton) {
+        devtoolsButton.classList.add("mr-[60px]");
+      }
+    }, 200); // wait for the render to complete
+  }, []);
+
   return (
     <>
       <HeadContent />
-      <Outlet />
-      <ReactQueryDevtools buttonPosition="top-right" />
-      <TanStackRouterDevtools position="bottom-right" />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Outlet />
+        <ReactQueryDevtools buttonPosition="bottom-right" />
+        <TanStackRouterDevtools position="bottom-right" />
+      </ThemeProvider>
     </>
   );
 }
