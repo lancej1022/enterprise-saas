@@ -1,20 +1,35 @@
 {
   "name": "auth-server",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
+    "build": "tsc && tsc-alias",
+    "check-types": "tsc --noEmit",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/src/index.js",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@hono/node-server": "^1.14.4",
-    "better-auth": "1.2.10",
-    "hono": "^4.8.2"
+    "@better-auth/expo": "^1.2.9",
+    "@hono/node-server": "^1.14.0",
+    "@orpc/client": "^1.5.0",
+    "@orpc/server": "^1.5.0",
+    "better-auth": "^1.2.9",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.38.4",
+    "hono": "^4.7.6",
+    "pg": "^8.14.1",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:^",
     "@types/node": "catalog:",
-    "tsx": "^4.7.1",
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.5",
+    "tsc-alias": "^1.8.11",
+    "tsx": "^4.19.2",
     "typescript": "catalog:"
   }
 }

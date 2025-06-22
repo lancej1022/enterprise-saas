@@ -1,14 +1,22 @@
 {
-  "extends": ["@acme/tsconfig/base.json"],
   "compilerOptions": {
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
+    "strict": true,
     "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "outDir": "./dist",
     "types": ["node"],
-    "outDir": "./dist"
+    "composite": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx"
   },
-  "exclude": ["node_modules"]
+  "tsc-alias": {
+    "resolveFullPaths": true
+  }
 }
