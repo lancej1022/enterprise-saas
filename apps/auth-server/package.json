@@ -11,7 +11,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@better-auth/expo": "^1.2.9",
@@ -19,17 +20,17 @@
     "@orpc/client": "^1.5.0",
     "@orpc/server": "^1.5.0",
     "better-auth": "^1.2.9",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.5.0",
     "drizzle-orm": "^0.38.4",
     "hono": "^4.7.6",
-    "pg": "^8.14.1",
+    "pg": "^8.16.2",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:*",
     "@acme/tsconfig": "workspace:^",
     "@types/node": "catalog:",
-    "@types/pg": "^8.11.11",
+    "@types/pg": "^8.15.4",
     "drizzle-kit": "^0.30.5",
     "eslint": "catalog:",
     "tsc-alias": "^1.8.11",
