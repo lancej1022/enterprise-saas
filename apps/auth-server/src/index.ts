@@ -26,7 +26,7 @@ app.use(
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
 const handler = new RPCHandler(appRouter);
-// @ts-ignore -- this is valid oRPC but TS is unhappy that not all paths have a `return`
+// @ts-expect-error -- this is valid oRPC but TS is unhappy that not all paths have a `return`. Need to review oRPC more...
 app.use("/rpc/*", async (c, next) => {
   const context = await createContext({ context: c });
   const { matched, response } = await handler.handle(c.req.raw, {
@@ -50,6 +50,7 @@ serve(
     port: 3000,
   },
   (info) => {
+    // eslint-disable-next-line no-console -- intentionally signaling that the server is running
     console.log(`Server is running on http://localhost:${info.port}`);
   },
 );

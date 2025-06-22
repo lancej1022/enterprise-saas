@@ -1,10 +1,10 @@
-import type { Context as HonoContext } from "hono";
+import { type Context as HonoContext } from "hono";
 
 import { auth } from "./auth";
 
-export type CreateContextOptions = {
+export interface CreateContextOptions {
   context: HonoContext;
-};
+}
 
 export async function createContext({ context }: CreateContextOptions) {
   const session = await auth.api.getSession({

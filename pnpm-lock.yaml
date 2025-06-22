@@ -99,6 +99,9 @@ importers:
         specifier: 'catalog:'
         version: 3.25.49
     devDependencies:
+      '@acme/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
       '@acme/tsconfig':
         specifier: workspace:^
         version: link:../../tooling/typescript
@@ -111,6 +114,9 @@ importers:
       drizzle-kit:
         specifier: ^0.30.5
         version: 0.30.6
+      eslint:
+        specifier: 'catalog:'
+        version: 9.28.0(jiti@2.4.2)
       tsc-alias:
         specifier: ^1.8.11
         version: 1.8.16

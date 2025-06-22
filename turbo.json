@@ -55,6 +55,10 @@
     "AUTH_DISCORD_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
+    "BETTER_AUTH_URL",
+    "BETTER_AUTH_SECRET",
+    "CORS_ORIGIN",
+    "DATABASE_URL",
     "PORT"
   ],
   "globalPassThroughEnv": [

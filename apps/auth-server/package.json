@@ -6,6 +6,7 @@
     "build": "tsc && tsc-alias",
     "check-types": "tsc --noEmit",
     "dev": "tsx watch src/index.ts",
+    "lint": "eslint .",
     "start": "node dist/src/index.js",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
@@ -25,10 +26,12 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@acme/eslint-config": "workspace:*",
     "@acme/tsconfig": "workspace:^",
     "@types/node": "catalog:",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.5",
+    "eslint": "catalog:",
     "tsc-alias": "^1.8.11",
     "tsx": "^4.19.2",
     "typescript": "catalog:"
