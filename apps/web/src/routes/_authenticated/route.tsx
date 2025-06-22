@@ -14,11 +14,26 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
 
 // Naming this file `route.tsx` creates a layout route that is used to wrap ALL the other routes nested under this directory
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
+  beforeLoad: ({ context, location }) => {
+    if (!context.auth?.isAuthenticated) {
+      throw redirect({
+        to: "/login",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
 });
 
 function AuthenticatedLayout() {

@@ -15,6 +15,15 @@ export const Route = createRootRouteWithContext<{
   auth: AuthContext | undefined;
   queryClient: QueryClient;
 }>()({
+  component: RootComponent,
+  notFoundComponent: () => {
+    return (
+      <div>
+        <p>This is the notFoundComponent configured on root route</p>
+        <Link to="/">Start Over</Link>
+      </div>
+    );
+  },
   head: () => ({
     // TODO: this is just placeholder stuff and we need something more official as the app matures
     meta: [
@@ -27,15 +36,6 @@ export const Route = createRootRouteWithContext<{
       },
     ],
   }),
-  component: RootComponent,
-  notFoundComponent: () => {
-    return (
-      <div>
-        <p>This is the notFoundComponent configured on root route</p>
-        <Link to="/">Start Over</Link>
-      </div>
-    );
-  },
 });
 
 function RootComponent() {
