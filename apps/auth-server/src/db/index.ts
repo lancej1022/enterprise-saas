@@ -10,7 +10,7 @@ export const db = drizzle(dbUrl);
 
 // This is where db seeding could occur
 // async function main() {
-//   const user: typeof usersTable.$inferInsert = {
+//   const user: typeof users.$inferInsert = {
 //     name: "John",
 //     emailVerified: false,
 //     //   TODO: is a JS date truly what we want...?
@@ -18,10 +18,10 @@ export const db = drizzle(dbUrl);
 //     updatedAt: new Date(),
 //     email: "john@example.com",
 //   };
-//   await db.insert(usersTable).values(user);
+//   await db.insert(users).values(user);
 //   // eslint-disable-next-line no-console -- intentional log
 //   console.log("New user created!");
-//   const users = await db.select().from(usersTable);
+//   const users = await db.select().from(users);
 //   // eslint-disable-next-line no-console -- intentional log
 //   console.log("Getting all users from the database: ", users);
 //   /*
@@ -33,14 +33,14 @@ export const db = drizzle(dbUrl);
 //     }[]
 //     */
 //   await db
-//     .update(usersTable)
+//     .update(users)
 //     .set({
 //       name: "Jane",
 //     })
-//     .where(eq(usersTable.email, user.email));
+//     .where(eq(users.email, user.email));
 //   // eslint-disable-next-line no-console -- intentional log
 //   console.log("User info updated!");
-//   await db.delete(usersTable).where(eq(usersTable.email, user.email));
+//   await db.delete(users).where(eq(users.email, user.email));
 //   // eslint-disable-next-line no-console -- intentional log
 //   console.log("User deleted!");
 // }
