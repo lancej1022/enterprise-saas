@@ -25,6 +25,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@acme/tsconfig": "workspace:^",
     "@types/node": "catalog:",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.5",

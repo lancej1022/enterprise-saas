@@ -26,6 +26,7 @@ app.use(
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
 const handler = new RPCHandler(appRouter);
+// @ts-ignore -- this is valid oRPC but TS is unhappy that not all paths have a `return`
 app.use("/rpc/*", async (c, next) => {
   const context = await createContext({ context: c });
   const { matched, response } = await handler.handle(c.req.raw, {
