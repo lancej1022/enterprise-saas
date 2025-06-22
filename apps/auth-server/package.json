@@ -1,0 +1,20 @@
+{
+  "name": "auth-server",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.4",
+    "better-auth": "1.2.10",
+    "hono": "^4.8.2"
+  },
+  "devDependencies": {
+    "@acme/tsconfig": "workspace:^",
+    "@types/node": "catalog:",
+    "tsx": "^4.7.1",
+    "typescript": "catalog:"
+  }
+}
