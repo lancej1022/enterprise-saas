@@ -28,15 +28,9 @@ import {
   Sparkles,
 } from "lucide-react";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    avatar: string;
-    email: string;
-    name: string;
-  };
-}) {
+export function NavUser() {
+  const { user } = useAuth();
+
   const { isMobile } = useSidebar();
   const router = useRouter();
   const { updateUser } = useAuth();
@@ -49,6 +43,11 @@ export function NavUser({
     void router.navigate({ to: "/login" });
   }
 
+  if (!user) {
+    void handleLogout();
+    return null;
+  }
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -59,7 +58,7 @@ export function NavUser({
               size="lg"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage alt={user.name} src={user.avatar} />
+                <AvatarImage alt={user.name ?? ""} src={user.image ?? ""} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -78,7 +77,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage alt={user.name} src={user.avatar} />
+                  <AvatarImage alt={user.name ?? ""} src={user.image ?? ""} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

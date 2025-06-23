@@ -26,14 +26,15 @@ test.describe("Signup Flow", () => {
 
     // Verify that we've been redirected to the home page
     await expect(page).toHaveURL("/");
-
-    // TODO: Verify that we're actually logged in by checking for user-specific content
-    await expect(page).not.toHaveURL("/signup");
-    await expect(page).not.toHaveURL("/login");
+    await expect(
+      page.getByRole("button", { name: new RegExp(testEmail, "i") }),
+    ).toBeVisible();
 
     // --- Log out via the left nav user menu ---
     // Open the user menu (sidebar footer, hardcoded to shadcn/m@example.com for now)
-    await page.getByRole("button", { name: /shadcn|m@example.com/i }).click();
+    await page
+      .getByRole("button", { name: new RegExp(testEmail, "i") })
+      .click();
     await page.getByRole("menuitem", { name: /log out/i }).click();
     // Wait for redirect to login page
     await page.waitForURL("/login");
