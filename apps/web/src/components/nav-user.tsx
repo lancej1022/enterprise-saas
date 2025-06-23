@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth, USER_KEY } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -16,6 +17,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "@tanstack/react-router";
 import {
   BadgeCheck,
   Bell,
@@ -35,6 +38,16 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const router = useRouter();
+  const { updateUser } = useAuth();
+
+  async function handleLogout() {
+    await authClient.signOut();
+    updateUser(null);
+    localStorage.removeItem(USER_KEY);
+    await router.invalidate();
+    void router.navigate({ to: "/login" });
+  }
 
   return (
     <SidebarMenu>
@@ -97,7 +110,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>

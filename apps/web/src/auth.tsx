@@ -21,7 +21,7 @@ export interface AuthContext {
 
 const AuthContext = React.createContext<AuthContext | null>(null);
 
-const USER_KEY = "auth.user";
+export const USER_KEY = "auth.user";
 
 // Only store user info in localStorage, tokens are in HTTP-only cookies
 function getStoredUser(): null | User {
