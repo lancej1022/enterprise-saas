@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Signup Flow", () => {
-  test("should successfully sign up a new user and redirect to home", async ({
+  test("should be able to sign up a new user, redirect to home, log out, and log in again with that same user", async ({
     page,
   }) => {
     await page.goto("/signup");
@@ -30,6 +30,22 @@ test.describe("Signup Flow", () => {
     // TODO: Verify that we're actually logged in by checking for user-specific content
     await expect(page).not.toHaveURL("/signup");
     await expect(page).not.toHaveURL("/login");
+
+    // --- Log out via the left nav user menu ---
+    // Open the user menu (sidebar footer, hardcoded to shadcn/m@example.com for now)
+    await page.getByRole("button", { name: /shadcn|m@example.com/i }).click();
+    await page.getByRole("menuitem", { name: /log out/i }).click();
+    // Wait for redirect to login page
+    await page.waitForURL("/login");
+    await expect(page).toHaveURL("/login");
+
+    // --- Log in again with the same credentials ---
+    await page.getByLabel("Email").fill(testEmail);
+    await page.getByLabel("Password").fill(testPassword);
+    await page.getByRole("button", { name: "Login", exact: true }).click();
+    await page.waitForLoadState("networkidle");
+    // Should be redirected to home/dashboard
+    await expect(page).toHaveURL("/");
   });
 
   test("should show validation errors for invalid input", async ({ page }) => {
