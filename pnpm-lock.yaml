@@ -21,6 +21,9 @@ catalogs:
     '@types/react-dom':
       specifier: 19.1.5
       version: 19.1.5
+    better-auth:
+      specifier: 1.2.9
+      version: 1.2.9
     eslint:
       specifier: ^9.28.0
       version: 9.28.0
@@ -70,7 +73,7 @@ importers:
     dependencies:
       '@better-auth/expo':
         specifier: ^1.2.9
-        version: 1.2.10(better-auth@1.2.10)
+        version: 1.2.10(better-auth@1.2.9)
       '@hono/node-server':
         specifier: ^1.14.0
         version: 1.14.4(hono@4.8.2)
@@ -81,8 +84,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.2(ws@8.18.2(bufferutil@4.0.8))
       better-auth:
-        specifier: ^1.2.9
-        version: 1.2.10
+        specifier: 'catalog:'
+        version: 1.2.9
       dotenv:
         specifier: ^16.5.0
         version: 16.5.0
@@ -412,6 +415,9 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.114.25
         version: 1.120.16(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      better-auth:
+        specifier: 'catalog:'
+        version: 1.2.9
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -4147,8 +4153,8 @@ packages:
     resolution: {integrity: sha512-4Bcg1P8xhUuqcii/S0Z9wiHIrQVPMermM1any+MX5GeGD7faD3/msQUDGLol9wOcz4/jbg/WJnGqoJF6LiBdtg==}
     engines: {node: '>=10.0.0'}
 
-  better-auth@1.2.10:
-    resolution: {integrity: sha512-nEj1RG4DdLUuJiV5CR93ORyPCptGRBwksaPPCkUtGo9ka+UIlTpaiKoTaTqVLLYlqwX4bOj9tJ32oBNdf2G3Kg==}
+  better-auth@1.2.9:
+    resolution: {integrity: sha512-WLqBXDzuaCQetQctLGC5oTfGmL32zUvxnM4Y+LZkhwseMaZWq5EKI+c/ZATgz2YkFt7726q659PF8CfB9P1VuA==}
 
   better-call@1.0.9:
     resolution: {integrity: sha512-Qfm0gjk0XQz0oI7qvTK1hbqTsBY4xV2hsHAxF8LZfUYl3RaECCIifXuVqtPpZJWvlCCMlQSvkvhhyuApGUba6g==}
@@ -8994,10 +9000,10 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@better-auth/expo@1.2.10(better-auth@1.2.10)':
+  '@better-auth/expo@1.2.10(better-auth@1.2.9)':
     dependencies:
       '@better-fetch/fetch': 1.1.18
-      better-auth: 1.2.10
+      better-auth: 1.2.9
       better-call: 1.0.9
       zod: 3.25.49
 
@@ -12021,7 +12027,7 @@ snapshots:
 
   basic-ftp@5.0.5: {}
 
-  better-auth@1.2.10:
+  better-auth@1.2.9:
     dependencies:
       '@better-auth/utils': 0.2.5
       '@better-fetch/fetch': 1.1.18

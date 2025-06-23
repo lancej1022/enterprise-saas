@@ -1,9 +1,9 @@
-import { useAuth, userSchema } from "@/auth";
+import { useAuth } from "@/auth";
 import { useAppForm } from "@/components/tanstack-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { apiClient } from "@/lib/api";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import {
   Link,
@@ -12,6 +12,7 @@ import {
   useRouter,
   useSearch,
 } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { z } from "zod/v4";
 
 const loginSchema = z.object({
@@ -32,6 +33,8 @@ export function LoginForm(props: React.ComponentProps<"form">) {
   const { updateUser } = useAuth();
   const router = useRouter();
 
+  const { signUp } = authClient;
+
   const form = useAppForm({
     defaultValues: {
       email: "",
@@ -42,17 +45,18 @@ export function LoginForm(props: React.ComponentProps<"form">) {
       onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      const res = await apiClient.kyInstance.post(
-        `${isSignup ? "signup" : "login"}`,
-        {
-          json: {
-            email: value.email,
-            password: value.password,
-          },
-        },
-      );
-      const data = userSchema.parse(await res.json());
-      updateUser(data);
+      // TODO: figure out how to also handle sign in
+      const res = await signUp.email({
+        email: value.email,
+        password: value.password,
+        name: value.email,
+      });
+      if (res.error) {
+        toast.error(res.error.message);
+        return;
+      }
+      // @ts-expect-error -- TODO: fix this
+      updateUser(res.data.user);
       // Force the router to update its context, which will update the `auth` context used by the router
       await router.invalidate();
       void navigate({ to: redirectPath || "/" });
@@ -135,8 +139,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
             />
           </div>
           <Button className="w-full" type="submit">
-            {/* TODO: toggle between login and signup */}
-            Login
+            {isSignup ? "Sign up" : "Login"}
           </Button>
           <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
             <span className="relative z-10 bg-background px-2 text-muted-foreground">

@@ -20,7 +20,7 @@ test.describe("Signup Flow", () => {
     await page.getByLabel("Email").fill(testEmail);
     await page.getByLabel("Password").fill(testPassword);
 
-    await page.getByRole("button", { name: "Login", exact: true }).click();
+    await page.getByRole("button", { name: "Sign up", exact: true }).click();
 
     await page.waitForLoadState("networkidle");
 
@@ -40,7 +40,7 @@ test.describe("Signup Flow", () => {
     await page.getByLabel("Email").fill("invalid-email");
     await page.getByLabel("Password").fill("short");
 
-    await page.getByRole("button", { name: "Login", exact: true }).click();
+    await page.getByRole("button", { name: "Sign up", exact: true }).click();
 
     // Wait a bit for validation to kick in
     await page.waitForTimeout(250);

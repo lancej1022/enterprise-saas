@@ -1,6 +1,7 @@
 import ky, { type KyInstance } from "ky";
 
-const API_BASE_URL = "http://localhost:8080/api";
+// TODO: eventually need to introduce an API gateway to hit both the Node + Go servers
+const API_BASE_URL = "http://localhost:8080/api"; // 8080 = go server
 
 // TODO: generate this from the OpenAPI spec
 class ApiClient {
