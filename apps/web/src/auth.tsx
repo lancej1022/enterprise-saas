@@ -2,11 +2,13 @@ import * as React from "react";
 import { z } from "zod/v4";
 
 export const userSchema = z.object({
-  created_at: z.string(),
+  createdAt: z.date(),
   email: z.string(),
+  emailVerified: z.boolean().default(false),
+  image: z.string().nullable().optional(),
+  name: z.string().nullable(),
   id: z.string(),
-  is_chirpy_red: z.boolean(),
-  updated_at: z.string(),
+  updatedAt: z.date(),
 });
 
 export type User = z.infer<typeof userSchema>;

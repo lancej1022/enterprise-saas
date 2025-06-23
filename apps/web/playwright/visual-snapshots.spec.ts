@@ -20,11 +20,12 @@ const router = createRouter({
 const routes = Object.keys(router.routesByPath);
 
 const mockUser = {
-  created_at: "2024-01-01T00:00:00Z",
+  createdAt: new Date("2024-01-01T00:00:00Z"),
   email: "test@example.com",
+  name: "Test User",
   id: "123e4567-e89b-12d3-a456-426614174000",
-  is_chirpy_red: false,
-  updated_at: "2024-01-01T00:00:00Z",
+  emailVerified: false,
+  updatedAt: new Date("2024-01-01T00:00:00Z"),
 } satisfies User;
 
 for (const route of routes) {

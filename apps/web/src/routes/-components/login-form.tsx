@@ -33,7 +33,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
   const { updateUser } = useAuth();
   const router = useRouter();
 
-  const { signUp } = authClient;
+  const { signUp, signIn } = authClient;
 
   const form = useAppForm({
     defaultValues: {
@@ -45,18 +45,30 @@ export function LoginForm(props: React.ComponentProps<"form">) {
       onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      // TODO: figure out how to also handle sign in
-      const res = await signUp.email({
-        email: value.email,
-        password: value.password,
-        name: value.email,
-      });
-      if (res.error) {
-        toast.error(res.error.message);
-        return;
+      if (isSignup) {
+        const res = await signUp.email({
+          email: value.email,
+          password: value.password,
+          name: value.email,
+        });
+        if (res.error) {
+          toast.error(res.error.message);
+          return;
+        }
+
+        updateUser(res.data.user);
+      } else {
+        const res = await signIn.email({
+          email: value.email,
+          password: value.password,
+        });
+        if (res.error) {
+          toast.error(res.error.message);
+          return;
+        }
+
+        updateUser(res.data.user);
       }
-      // @ts-expect-error -- TODO: fix this
-      updateUser(res.data.user);
       // Force the router to update its context, which will update the `auth` context used by the router
       await router.invalidate();
       void navigate({ to: redirectPath || "/" });
