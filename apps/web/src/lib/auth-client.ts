@@ -1,3 +1,4 @@
+import { organizationClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 
 if (typeof import.meta.env === "undefined") {
@@ -15,4 +16,12 @@ if (!BASE_URL) {
 
 export const authClient = createAuthClient({
   baseURL: BASE_URL,
+  plugins: [
+    organizationClient({
+      teams: {
+        enabled: true,
+        // maximumTeams: 10,
+      },
+    }),
+  ],
 });

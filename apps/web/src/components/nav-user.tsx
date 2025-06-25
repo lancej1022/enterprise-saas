@@ -44,7 +44,6 @@ export function NavUser() {
   }
 
   if (!user) {
-    void handleLogout();
     return null;
   }
 
