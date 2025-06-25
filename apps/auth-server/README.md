@@ -2,7 +2,9 @@
 
 ## Docker
 
-`docker run --name drizzle-postgres -e POSTGRES_PASSWORD=mypassword -d -p 5432:5432 postgres:17`
+<!-- OLD: `docker run --name drizzle-postgres -e POSTGRES_PASSWORD=mypassword -d -p 5432:5432 postgres:17` -->
+
+`docker compose up -d`
 
 1. The `--name` option assigns the container the name `drizzle-postgres`.
 2. The `-e POSTGRES_PASSWORD=` option sets the `POSTGRES_PASSWORD` environment variable with the specified value.

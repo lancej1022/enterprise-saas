@@ -52,3 +52,6 @@ dist/
 .backend
 backend/database
 backend/tmp
+
+# docker
+.data
