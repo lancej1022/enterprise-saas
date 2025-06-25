@@ -25,6 +25,7 @@ export const admin = ac.newRole({
 });
 
 export const owner = ac.newRole({
+  ...admin.statements,
   project: ["create", "update", "delete"],
 });
 
