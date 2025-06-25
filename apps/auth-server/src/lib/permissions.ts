@@ -25,6 +25,7 @@ export const admin = ac.newRole({
 });
 
 export const owner = ac.newRole({
+  // TODO: do we ever NOT want to do this in order to extend a role...?
   ...admin.statements,
   project: ["create", "update", "delete"],
 });
