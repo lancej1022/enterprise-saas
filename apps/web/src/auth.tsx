@@ -23,13 +23,13 @@ const AuthContext = React.createContext<AuthContext | null>(null);
 
 export const USER_KEY = "auth.user";
 
-// Only store user info in localStorage, tokens are in HTTP-only cookies
+// Only store user info in sessionStorage, tokens are in HTTP-only cookies
 function getStoredUser(): null | User {
-  const userStr = localStorage.getItem(USER_KEY);
-  if (userStr) {
+  const storedUser = sessionStorage.getItem(USER_KEY);
+  if (storedUser) {
     try {
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO: this will be replaced by a more real API in a near future commit
-      return JSON.parse(userStr) as User;
+      return JSON.parse(storedUser) as User;
     } catch {
       return null;
     }
@@ -37,11 +37,11 @@ function getStoredUser(): null | User {
   return null;
 }
 
-function updateLocalStorageUser(user: null | User) {
+function updatesessionStorageUser(user: null | User) {
   if (user) {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   } else {
-    localStorage.removeItem(USER_KEY);
+    sessionStorage.removeItem(USER_KEY);
   }
 }
 
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = React.useState(!!user);
 
   function updateUser(user: null | User) {
-    updateLocalStorageUser(user);
+    updatesessionStorageUser(user);
     setUser(user);
     setIsAuthenticated(!!user);
   }

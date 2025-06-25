@@ -38,7 +38,7 @@ export function NavUser() {
   async function handleLogout() {
     await authClient.signOut();
     updateUser(null);
-    localStorage.removeItem(USER_KEY);
+    sessionStorage.removeItem(USER_KEY);
     await router.invalidate();
     void router.navigate({ to: "/login" });
   }

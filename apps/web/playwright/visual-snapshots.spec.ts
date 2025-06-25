@@ -46,11 +46,11 @@ for (const route of routes) {
     if (path === "login" || path === "signup") {
       await page.goto(path);
     } else {
-      // TODO: this setup can be improved by reviewing the Playwright auth docs and just reusing the auth state instead of constantly setting the user in localStorage on each test
+      // TODO: this setup can be improved by reviewing the Playwright auth docs and just reusing the auth state instead of constantly setting the user in sessionStorage on each test
       await page.goto(path);
-      // Inject the mock user into localStorage before the auth check
+      // Inject the mock user into sessionStorage before the auth check
       await page.evaluate((user) => {
-        localStorage.setItem("auth.user", JSON.stringify(user));
+        sessionStorage.setItem("auth.user", JSON.stringify(user));
       }, mockUser);
 
       // Reload to trigger the auth context with the mocked user
