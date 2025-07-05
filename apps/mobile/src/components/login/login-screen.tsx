@@ -22,7 +22,7 @@ function Branding() {
 
 export function LoginScreen() {
   return (
-    <View className="flex min-h-screen flex-row items-center justify-center">
+    <View className="flex flex-row items-center justify-center">
       <View className="flex flex-1 flex-col gap-5">
         <Branding />
 
