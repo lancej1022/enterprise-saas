@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.6.0",
+    "@solved-contact/ui": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/match-sorter-utils": "^8.19.4",
     "@tanstack/react-form": "catalog:",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@solved-contact/eslint-config": "workspace:*",
     "@solved-contact/prettier-config": "workspace:*",
+    "@solved-contact/tsconfig": "workspace:*",
     "@tanstack/eslint-config": "^0.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",

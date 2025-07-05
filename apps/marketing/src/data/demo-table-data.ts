@@ -27,6 +27,7 @@ function newPerson(num: number): Person {
     age: faker.number.int(40),
     visits: faker.number.int(1000),
     progress: faker.number.int(100),
+    // @ts-expect-error - comes from tanstack start boilerplate...
     status: faker.helpers.shuffle<Person["status"]>([
       "relationship",
       "complicated",
@@ -38,6 +39,7 @@ function newPerson(num: number): Person {
 export function makeData(...lens: number[]) {
   function makeDataLevel(depth = 0): Person[] {
     const len = lens[depth];
+    // @ts-expect-error - comes from tanstack start boilerplate...
     return range(len).map((index): Person => {
       return {
         ...newPerson(index),

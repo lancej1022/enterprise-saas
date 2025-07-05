@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Button } from "@solved-contact/ui/components/button";
 
 import logo from "../logo.svg";
 
@@ -35,6 +36,7 @@ function App() {
           Learn TanStack
         </a>
       </header>
+      <Button>Click me</Button>
     </div>
   );
 }

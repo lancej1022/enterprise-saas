@@ -61,6 +61,7 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   if (rowA.columnFiltersMeta[columnId]) {
     dir = compareItems(
       rowA.columnFiltersMeta[columnId].itemRank,
+      // @ts-expect-error - comes from tanstack start boilerplate...
       rowB.columnFiltersMeta[columnId].itemRank,
     );
   }

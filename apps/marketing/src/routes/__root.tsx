@@ -10,7 +10,7 @@ import { type TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
 import { type TRPCRouter } from "~/integrations/trpc/router";
 import Header from "../components/Header";
-import TanStackQueryLayout from "../integrations/tanstack-query/layout.tsx";
+import TanStackQueryLayout from "../integrations/tanstack-query/layout";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
