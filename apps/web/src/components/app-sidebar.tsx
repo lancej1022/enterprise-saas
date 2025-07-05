@@ -6,13 +6,6 @@ import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar";
-import {
   AudioWaveform,
   BookOpen,
   Bot,
@@ -24,6 +17,14 @@ import {
   Settings2,
   SquareTerminal,
 } from "lucide-react";
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@acme/ui/components/sidebar";
 
 // This is sample data.
 const data = {

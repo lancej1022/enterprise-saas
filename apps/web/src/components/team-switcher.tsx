@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { ChevronsUpDown, Plus } from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,14 +11,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@acme/ui/components/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { ChevronsUpDown, Plus } from "lucide-react";
+} from "@acme/ui/components/sidebar";
 
 export function TeamSwitcher({
   teams,
@@ -59,7 +60,7 @@ export function TeamSwitcher({
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
+            <DropdownMenuLabel className="text-muted-foreground text-xs">
               Teams
             </DropdownMenuLabel>
             {teams.map((team, index) => (
@@ -80,7 +81,7 @@ export function TeamSwitcher({
               <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                 <Plus className="size-4" />
               </div>
-              <div className="font-medium text-muted-foreground">Add team</div>
+              <div className="text-muted-foreground font-medium">Add team</div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

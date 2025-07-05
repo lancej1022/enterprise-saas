@@ -1,43 +1,4 @@
 import { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Building,
@@ -53,6 +14,55 @@ import {
   UserCog,
 } from "lucide-react";
 import { toast } from "sonner";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@acme/ui/components/alert-dialog";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@acme/ui/components/avatar";
+import { Badge } from "@acme/ui/components/badge";
+import { Button } from "@acme/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@acme/ui/components/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@acme/ui/components/dropdown-menu";
+import { Input } from "@acme/ui/components/input";
+import { Label } from "@acme/ui/components/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@acme/ui/components/select";
+import { Separator } from "@acme/ui/components/separator";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@acme/ui/components/tabs";
 
 // Mock user data
 const userData = {
@@ -196,23 +206,23 @@ function UserDetails() {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center">
-                  <Mail className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Mail className="text-muted-foreground mr-2 h-4 w-4" />
                   <span className="text-sm">{user.email}</span>
                 </div>
                 <div className="flex items-center">
-                  <Phone className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Phone className="text-muted-foreground mr-2 h-4 w-4" />
                   <span className="text-sm">{user.phoneNumber}</span>
                 </div>
                 <div className="flex items-center">
-                  <Building className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Building className="text-muted-foreground mr-2 h-4 w-4" />
                   <span className="text-sm">{user.team}</span>
                 </div>
                 <div className="flex items-center">
-                  <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <MapPin className="text-muted-foreground mr-2 h-4 w-4" />
                   <span className="text-sm">{user.location}</span>
                 </div>
                 <div className="flex items-center">
-                  <Calendar className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Calendar className="text-muted-foreground mr-2 h-4 w-4" />
                   <span className="text-sm">
                     Joined {new Date(user.dateJoined).toLocaleDateString()}
                   </span>
@@ -469,27 +479,27 @@ function UserDetails() {
                     </CardHeader>
                     <CardContent>
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                        <div className="rounded-lg bg-muted/50 p-4 text-center">
+                        <div className="bg-muted/50 rounded-lg p-4 text-center">
                           <div className="text-2xl font-bold">
                             {user.callsHandled}
                           </div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-muted-foreground text-sm">
                             Calls Handled
                           </div>
                         </div>
-                        <div className="rounded-lg bg-muted/50 p-4 text-center">
+                        <div className="bg-muted/50 rounded-lg p-4 text-center">
                           <div className="text-2xl font-bold">
                             {user.avgCallTime}
                           </div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-muted-foreground text-sm">
                             Avg. Call Time
                           </div>
                         </div>
-                        <div className="rounded-lg bg-muted/50 p-4 text-center">
+                        <div className="bg-muted/50 rounded-lg p-4 text-center">
                           <div className="text-2xl font-bold">
                             {user.satisfactionScore}/5.0
                           </div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-muted-foreground text-sm">
                             Satisfaction Score
                           </div>
                         </div>
@@ -500,30 +510,30 @@ function UserDetails() {
                           Recent Activity
                         </h2>
                         <div className="space-y-4">
-                          <div className="flex items-center justify-between rounded-lg bg-muted/30 p-3">
+                          <div className="bg-muted/30 flex items-center justify-between rounded-lg p-3">
                             <div>
                               <div className="font-medium">Logged in</div>
-                              <div className="text-sm text-muted-foreground">
+                              <div className="text-muted-foreground text-sm">
                                 Today at 9:32 AM
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center justify-between rounded-lg bg-muted/30 p-3">
+                          <div className="bg-muted/30 flex items-center justify-between rounded-lg p-3">
                             <div>
                               <div className="font-medium">
                                 Completed call with John Smith
                               </div>
-                              <div className="text-sm text-muted-foreground">
+                              <div className="text-muted-foreground text-sm">
                                 Today at 10:15 AM
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center justify-between rounded-lg bg-muted/30 p-3">
+                          <div className="bg-muted/30 flex items-center justify-between rounded-lg p-3">
                             <div>
                               <div className="font-medium">
                                 Updated profile information
                               </div>
-                              <div className="text-sm text-muted-foreground">
+                              <div className="text-muted-foreground text-sm">
                                 Yesterday at 2:45 PM
                               </div>
                             </div>
@@ -547,7 +557,7 @@ function UserDetails() {
                     <div className="space-y-4">
                       {user.permissions.map((permission, index) => (
                         <div
-                          className="flex items-center justify-between rounded-lg bg-muted/30 p-3"
+                          className="bg-muted/30 flex items-center justify-between rounded-lg p-3"
                           key={index}
                         >
                           <div className="font-medium">{permission.name}</div>
@@ -581,12 +591,12 @@ function UserDetails() {
                     <div className="space-y-4">
                       {user.callHistory.map((call) => (
                         <div
-                          className="flex items-center justify-between rounded-lg bg-muted/30 p-3"
+                          className="bg-muted/30 flex items-center justify-between rounded-lg p-3"
                           key={call.id}
                         >
                           <div>
                             <div className="font-medium">{call.customer}</div>
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-muted-foreground text-sm">
                               {call.date} • {call.duration}
                             </div>
                           </div>

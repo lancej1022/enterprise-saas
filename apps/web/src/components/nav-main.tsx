@@ -1,10 +1,13 @@
 "use client";
 
+import { Link } from "@tanstack/react-router";
+import { ChevronRight, type LucideIcon } from "lucide-react";
+
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@acme/ui/components/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -14,9 +17,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
-import { Link } from "@tanstack/react-router";
-import { ChevronRight, type LucideIcon } from "lucide-react";
+} from "@acme/ui/components/sidebar";
 
 export function NavMain({
   items,

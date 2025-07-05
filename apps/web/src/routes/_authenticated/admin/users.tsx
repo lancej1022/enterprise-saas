@@ -1,33 +1,4 @@
 import { useRef, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   createFileRoute,
   Link,
@@ -49,6 +20,40 @@ import {
   X,
 } from "lucide-react";
 import { z } from "zod/v4";
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@acme/ui/components/avatar";
+import { Badge } from "@acme/ui/components/badge";
+import { Button } from "@acme/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@acme/ui/components/card";
+import { Checkbox } from "@acme/ui/components/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@acme/ui/components/dropdown-menu";
+import { Input } from "@acme/ui/components/input";
+import { Label } from "@acme/ui/components/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@acme/ui/components/table";
 
 const statuses = ["All Statuses", "Active", "Away", "Offline"] as const;
 const statusSchema = z.enum(statuses).optional();
@@ -253,7 +258,7 @@ export function UserManagement() {
             <div className="mb-4 flex items-center justify-between space-x-2">
               <div className="flex flex-1 items-center space-x-2">
                 <div className="relative max-w-sm flex-1">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Search className="text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4" />
                   <Label className="sr-only" htmlFor="search">
                     User search
                   </Label>
@@ -270,7 +275,7 @@ export function UserManagement() {
                   />
                   {search && (
                     <Button
-                      className="absolute right-0 top-0 h-full px-3"
+                      className="absolute top-0 right-0 h-full px-3"
                       onClick={() => {
                         if (inputRef.current) {
                           inputRef.current.value = "";
@@ -490,7 +495,7 @@ export function UserManagement() {
                               >
                                 {user.name}
                               </Link>
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-muted-foreground text-xs">
                                 {user.email}
                               </div>
                             </div>

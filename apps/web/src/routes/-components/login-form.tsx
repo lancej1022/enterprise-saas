@@ -1,7 +1,5 @@
 import { useAuth } from "@/auth";
 import { useAppForm } from "@/components/tanstack-form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import {
   Link,
@@ -10,10 +8,13 @@ import {
   useRouter,
   useSearch,
 } from "@tanstack/react-router";
+// TODO: replace with shadcn toast
 import { toast } from "sonner";
 import { z } from "zod/v4";
 
 import { Button } from "@acme/ui/components/button";
+import { Input } from "@acme/ui/components/input";
+import { Label } from "@acme/ui/components/label";
 import { cn } from "@acme/ui/lib/utils";
 
 const loginSchema = z.object({

@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 
+import { Input } from "@acme/ui/components/input";
+import { Label } from "@acme/ui/components/label";
+import { cn } from "@acme/ui/lib/utils";
+
 import { useFieldContext } from "./tanstack-form";
-import { Label } from "./ui/label";
 
 interface FormItemContextValue {
   id: string;
@@ -66,7 +67,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 
   return (
     <p
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-muted-foreground text-sm", className)}
       data-slot="form-description"
       id={formDescriptionId}
       {...props}
