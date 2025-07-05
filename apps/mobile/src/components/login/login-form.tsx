@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { useForm } from "@tanstack/react-form";
+import { z } from "zod/v4";
 
 // import Svg, { Path } from "react-native-svg";
 import { Button } from "~/components/ui/button";
@@ -7,6 +8,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Text } from "~/components/ui/text";
 import { P } from "~/components/ui/typography";
+import { authClient } from "~/lib/auth-client";
 import { Github } from "~/lib/icons/github";
 import { cn } from "~/lib/utils";
 
@@ -14,38 +16,44 @@ function HorizontalBar() {
   return <View className="h-[1px] flex-1 bg-border" />;
 }
 
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
-  // const { mutate, isPending } = useSignup();
-
   const form = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
-    // validators: { onBlur: signupBody },
-    onSubmit: (_data) => {
-      // console.log("data:", data);
-      // const { email, password } = data.value;
-      // TODO: is there a way to make the generated `orval` code accept `{email, password}` instead of `{data: {email, password} }`?
-      // mutate({ data: { email, password } });
+    validators: {
+      onBlur: loginSchema,
+      onSubmit: loginSchema,
     },
+    onSubmit: async ({ value }) => {
+      const res = await authClient.signIn.email({
+        email: value.email,
+        password: value.password,
+      });
+      if (res.error) {
+        // toast.error(res.error.message);
+        return;
+      }
+    },
+    // TODO: navigate to authenticated area
   });
 
   return (
-    // TODO: need to figure out how to make this trigger via `Enter` so web isnt borked
-    // This might be doable by embedding a child `form` element and handling the submit event -- https://discord.com/channels/719702312431386674/1277546385411149824/1277658808755159152
-    // but it will need to be tested against `expo` to see if that works
+    // @ts-expect-error -- TODO: not sure what the issue is here. Borked tsconfig?
     <View
       className={cn("flex flex-col gap-6", className)}
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+      onSubmit={() => {
         void form.handleSubmit();
       }}
-      // @ts-expect-error -- TODO: idk why this is throwing an error, but it works fine on web
-      role="form"
       {...props}
     >
       <View className="flex flex-col items-center gap-2 text-center">
@@ -70,14 +78,14 @@ export function LoginForm({
                   placeholder="m@example.com"
                   value={field.state.value}
                 />
-                {/* {field.state.meta.isTouched &&
+                {field.state.meta.isTouched &&
                   field.state.meta.errors.length > 0 && (
-                    <em>
+                    <Text className="text-sm text-red-500">
                       {field.state.meta.errors
                         .map((err) => err?.message)
                         .join(",")}
-                    </em>
-                  )} */}
+                    </Text>
+                  )}
               </>
             )}
             name="email"
@@ -104,14 +112,14 @@ export function LoginForm({
                   secureTextEntry={true}
                   value={field.state.value}
                 />
-                {/* {field.state.meta.isTouched &&
+                {field.state.meta.isTouched &&
                   field.state.meta.errors.length > 0 && (
-                    <em>
+                    <Text className="text-sm text-red-500">
                       {field.state.meta.errors
                         .map((err) => err?.message)
                         .join(",")}
-                    </em>
-                  )} */}
+                    </Text>
+                  )}
               </>
             )}
             name="password"
@@ -120,11 +128,10 @@ export function LoginForm({
         <Button
           className="w-full"
           // TODO: this isnt accessible -- need to use aria-disabled or something
-          // disabled={isPending}
-          // // eslint-disable-next-line @typescript-eslint/unbound-method
-          // onPress={form.handleSubmit}
-          // @ts-expect-error -- TODO: not sure if `type` is valid or not
-          type="submit"
+          disabled={form.state.isSubmitting}
+          onPress={() => {
+            void form.handleSubmit();
+          }}
         >
           <Text>Login</Text>
         </Button>

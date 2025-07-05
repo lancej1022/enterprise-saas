@@ -1,7 +1,5 @@
 import { Image, View } from "react-native";
 
-// import { GalleryVerticalEnd } from "lucide-react-native";
-
 import { Text } from "~/components/ui/text";
 import { GalleryVerticalEnd } from "~/lib/icons/gallery-vertical-end";
 import { LoginForm } from "./login-form";
@@ -17,7 +15,7 @@ function Branding() {
         {/* TODO: this seems like its the wrong size for some reason... */}
         <GalleryVerticalEnd className="size-4 text-primary-foreground" />
       </View>
-      <Text>Chat app</Text>
+      <Text>Solved Contact</Text>
     </View>
   );
 }

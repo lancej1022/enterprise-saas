@@ -44,6 +44,7 @@
     "@rn-primitives/tooltip": "1.2.0",
     "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",
+    "better-auth": "catalog:",
     "expo": "53.0.9",
     "expo-constants": "17.1.6",
     "expo-dev-client": "5.1.8",
