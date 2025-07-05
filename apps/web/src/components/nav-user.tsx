@@ -1,7 +1,5 @@
 "use client";
 
-import { useAuth, USER_KEY } from "@/auth";
-import { authClient } from "@/lib/auth-client";
 import { useRouter } from "@tanstack/react-router";
 import {
   BadgeCheck,
@@ -32,6 +30,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@acme/ui/components/sidebar";
+
+import { useAuth, USER_KEY } from "~/auth";
+import { authClient } from "~/lib/auth-client";
 
 export function NavUser() {
   const { user } = useAuth();

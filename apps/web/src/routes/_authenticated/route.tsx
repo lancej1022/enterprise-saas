@@ -1,5 +1,3 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import { ModeToggle } from "@/components/theme/mode-toggle";
 import {
   createFileRoute,
   Link,
@@ -21,6 +19,9 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@acme/ui/components/sidebar";
+
+import { AppSidebar } from "~/components/app-sidebar";
+import { ModeToggle } from "~/components/theme/mode-toggle";
 
 // Naming this file `route.tsx` creates a layout route that is used to wrap ALL the other routes nested under this directory
 export const Route = createFileRoute("/_authenticated")({

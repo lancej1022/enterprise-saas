@@ -1,9 +1,9 @@
-import { type User } from "@/auth";
 import AxeBuilder from "@axe-core/playwright"; // 1
 import { expect, test } from "@playwright/test";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 
+import { type User } from "~/auth";
 import { routeTree } from "../src/routeTree.gen";
 
 const queryClient = new QueryClient();

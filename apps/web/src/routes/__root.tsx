@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import { type AuthContext } from "@/auth";
-import { ThemeProvider } from "@/components/theme/theme-provider";
 import { type QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -10,6 +8,9 @@ import {
   Outlet,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+
+import { type AuthContext } from "~/auth";
+import { ThemeProvider } from "~/components/theme/theme-provider";
 
 export const Route = createRootRouteWithContext<{
   auth: AuthContext | undefined;

@@ -1,10 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   AudioWaveform,
   BookOpen,
@@ -25,6 +21,11 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@acme/ui/components/sidebar";
+
+import { NavMain } from "~/components/nav-main";
+import { NavProjects } from "~/components/nav-projects";
+import { NavUser } from "~/components/nav-user";
+import { TeamSwitcher } from "~/components/team-switcher";
 
 // This is sample data.
 const data = {
