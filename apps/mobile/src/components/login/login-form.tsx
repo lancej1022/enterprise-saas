@@ -7,6 +7,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Text } from "~/components/ui/text";
 import { P } from "~/components/ui/typography";
+import { Github } from "~/lib/icons/github";
 import { cn } from "~/lib/utils";
 
 function HorizontalBar() {
@@ -135,7 +136,7 @@ export function LoginForm({
           <HorizontalBar />
         </View>
         <Button className="flex w-full flex-row" variant="outline">
-          {/* <GitHubIcon /> */}
+          <Github />
           <Text className="ml-2">Login with GitHub</Text>
         </Button>
       </View>

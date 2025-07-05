@@ -3,6 +3,7 @@ import { Image, View } from "react-native";
 // import { GalleryVerticalEnd } from "lucide-react-native";
 
 import { Text } from "~/components/ui/text";
+import { GalleryVerticalEnd } from "~/lib/icons/gallery-vertical-end";
 import { LoginForm } from "./login-form";
 
 function Branding() {
@@ -13,8 +14,8 @@ function Branding() {
       className="flex flex-row items-center justify-center gap-2 text-center font-medium"
     >
       <View className="flex h-6 w-6 flex-row items-center justify-center self-center rounded-md bg-primary text-primary-foreground">
-        {/* TODO: this doesnt appear as white on mobile for some reason? Not sure if its a theme issue*/}
-        {/* <GalleryVerticalEnd className="size-4 text-primary-foreground" /> */}
+        {/* TODO: this seems like its the wrong size for some reason... */}
+        <GalleryVerticalEnd className="size-4 text-primary-foreground" />
       </View>
       <Text>Chat app</Text>
     </View>
