@@ -72,7 +72,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
 export default function TabsLayout() {
   return (
     <Tabs tabBar={(props) => <CustomTabBar {...props} />}>
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
+      <Tabs.Screen name="index" options={{ headerShown: false }} />
       {/* Add the other screens as needed */}
       {/* <Tabs.Screen name="team" options={{ title: "Team" }} /> */}
       {/* <Tabs.Screen name="keypad" options={{ title: "Keypad" }} /> */}
