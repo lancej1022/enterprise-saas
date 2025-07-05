@@ -3,8 +3,6 @@
 import * as React from "react";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
-import { Label } from "@solved-contact/ui/components/label";
-import { cn } from "@solved-contact/ui/lib/utils";
 import {
   Controller,
   FormProvider,
@@ -14,6 +12,8 @@ import {
   type FieldPath,
   type FieldValues,
 } from "react-hook-form";
+import { Label } from "@solved-contact/ui/components/label";
+import { cn } from "@solved-contact/ui/lib/utils";
 
 const Form = FormProvider;
 

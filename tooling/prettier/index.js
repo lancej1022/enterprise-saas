@@ -19,7 +19,6 @@ const config = {
     "^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
     "^(expo(.*)$)|^(expo$)",
     "<THIRD_PARTY_MODULES>",
-    "",
     // "<TYPES>^@solved-contact",
     "^@solved-contact/(.*)$",
     "",

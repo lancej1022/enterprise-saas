@@ -1,6 +1,7 @@
-import * as LabelPrimitive from '@rn-primitives/label';
-import * as React from 'react';
-import { cn } from '~/lib/utils';
+import * as React from "react";
+import * as LabelPrimitive from "@rn-primitives/label";
+
+import { cn } from "~/lib/utils";
 
 function Label({
   className,
@@ -14,7 +15,7 @@ function Label({
 }) {
   return (
     <LabelPrimitive.Root
-      className='web:cursor-default'
+      className="web:cursor-default"
       onLongPress={onLongPress}
       onPress={onPress}
       onPressIn={onPressIn}
@@ -22,8 +23,8 @@ function Label({
     >
       <LabelPrimitive.Text
         className={cn(
-          'text-sm text-foreground native:text-base font-medium leading-none web:peer-disabled:cursor-not-allowed web:peer-disabled:opacity-70',
-          className
+          "native:text-base web:peer-disabled:cursor-not-allowed web:peer-disabled:opacity-70 text-sm font-medium leading-none text-foreground",
+          className,
         )}
         {...props}
       />

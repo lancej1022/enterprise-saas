@@ -1,7 +1,8 @@
-import * as TablePrimitive from '@rn-primitives/table';
-import * as React from 'react';
-import { cn } from '~/lib/utils';
-import { TextClassContext } from '~/components/ui/text';
+import * as React from "react";
+import * as TablePrimitive from "@rn-primitives/table";
+
+import { TextClassContext } from "~/components/ui/text";
+import { cn } from "~/lib/utils";
 
 function Table({
   className,
@@ -10,7 +11,10 @@ function Table({
   ref?: React.RefObject<TablePrimitive.RootRef>;
 }) {
   return (
-    <TablePrimitive.Root className={cn('w-full caption-bottom text-sm', className)} {...props} />
+    <TablePrimitive.Root
+      className={cn("w-full caption-bottom text-sm", className)}
+      {...props}
+    />
   );
 }
 
@@ -21,7 +25,10 @@ function TableHeader({
   ref?: React.RefObject<TablePrimitive.HeaderRef>;
 }) {
   return (
-    <TablePrimitive.Header className={cn('border-border [&_tr]:border-b', className)} {...props} />
+    <TablePrimitive.Header
+      className={cn("border-border [&_tr]:border-b", className)}
+      {...props}
+    />
   );
 }
 
@@ -34,7 +41,10 @@ function TableBody({
 }) {
   return (
     <TablePrimitive.Body
-      className={cn('flex-1 border-border [&_tr:last-child]:border-0', className)}
+      className={cn(
+        "flex-1 border-border [&_tr:last-child]:border-0",
+        className,
+      )}
       style={[{ minHeight: 2 }, style]}
       {...props}
     />
@@ -49,7 +59,10 @@ function TableFooter({
 }) {
   return (
     <TablePrimitive.Footer
-      className={cn('bg-muted/50 font-medium [&>tr]:last:border-b-0', className)}
+      className={cn(
+        "bg-muted/50 font-medium [&>tr]:last:border-b-0",
+        className,
+      )}
       {...props}
     />
   );
@@ -64,8 +77,8 @@ function TableRow({
   return (
     <TablePrimitive.Row
       className={cn(
-        'flex-row border-border border-b web:transition-colors web:hover:bg-muted/50 web:data-[state=selected]:bg-muted',
-        className
+        "web:transition-colors web:hover:bg-muted/50 web:data-[state=selected]:bg-muted flex-row border-b border-border",
+        className,
       )}
       {...props}
     />
@@ -79,11 +92,11 @@ function TableHead({
   ref?: React.RefObject<TablePrimitive.HeadRef>;
 }) {
   return (
-    <TextClassContext.Provider value='text-muted-foreground'>
+    <TextClassContext.Provider value="text-muted-foreground">
       <TablePrimitive.Head
         className={cn(
-          'h-12 px-4 text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
-          className
+          "h-12 justify-center px-4 text-left font-medium [&:has([role=checkbox])]:pr-0",
+          className,
         )}
         {...props}
       />
@@ -99,10 +112,21 @@ function TableCell({
 }) {
   return (
     <TablePrimitive.Cell
-      className={cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className)}
+      className={cn(
+        "p-4 align-middle [&:has([role=checkbox])]:pr-0",
+        className,
+      )}
       {...props}
     />
   );
 }
 
-export { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow };
+export {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+};
