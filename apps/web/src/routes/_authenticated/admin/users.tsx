@@ -1,5 +1,38 @@
 import { useRef, useState } from "react";
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@solved-contact/ui/components/avatar";
+import { Badge } from "@solved-contact/ui/components/badge";
+import { Button } from "@solved-contact/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@solved-contact/ui/components/card";
+import { Checkbox } from "@solved-contact/ui/components/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@solved-contact/ui/components/dropdown-menu";
+import { Input } from "@solved-contact/ui/components/input";
+import { Label } from "@solved-contact/ui/components/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@solved-contact/ui/components/table";
+import {
   createFileRoute,
   Link,
   Outlet,
@@ -20,40 +53,6 @@ import {
   X,
 } from "lucide-react";
 import { z } from "zod/v4";
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@acme/ui/components/avatar";
-import { Badge } from "@acme/ui/components/badge";
-import { Button } from "@acme/ui/components/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@acme/ui/components/card";
-import { Checkbox } from "@acme/ui/components/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@acme/ui/components/dropdown-menu";
-import { Input } from "@acme/ui/components/input";
-import { Label } from "@acme/ui/components/label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@acme/ui/components/table";
 
 const statuses = ["All Statuses", "Active", "Away", "Offline"] as const;
 const statusSchema = z.enum(statuses).optional();
@@ -94,7 +93,7 @@ const users = [
   {
     id: "1",
     name: "Sarah Johnson",
-    email: "sarah.johnson@acme.com",
+    email: "sarah.johnson@solved-contact.com",
     role: "Agent",
     status: "Active",
     team: "Customer Support",
@@ -105,7 +104,7 @@ const users = [
   {
     id: "2",
     name: "Michael Chen",
-    email: "michael.chen@acme.com",
+    email: "michael.chen@solved-contact.com",
     role: "Supervisor",
     status: "Active",
     team: "Technical Support",
@@ -116,7 +115,7 @@ const users = [
   {
     id: "3",
     name: "Jessica Williams",
-    email: "jessica.williams@acme.com",
+    email: "jessica.williams@solved-contact.com",
     role: "Agent",
     status: "Away",
     team: "Sales",
@@ -127,7 +126,7 @@ const users = [
   {
     id: "4",
     name: "David Rodriguez",
-    email: "david.rodriguez@acme.com",
+    email: "david.rodriguez@solved-contact.com",
     role: "Administrator",
     status: "Active",
     team: "Management",
@@ -138,7 +137,7 @@ const users = [
   {
     id: "5",
     name: "Emily Taylor",
-    email: "emily.taylor@acme.com",
+    email: "emily.taylor@solved-contact.com",
     role: "Agent",
     status: "Offline",
     team: "Customer Support",

@@ -1,5 +1,25 @@
 "use client";
 
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@solved-contact/ui/components/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@solved-contact/ui/components/dropdown-menu";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@solved-contact/ui/components/sidebar";
 import { useRouter } from "@tanstack/react-router";
 import {
   BadgeCheck,
@@ -9,27 +29,6 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@acme/ui/components/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@acme/ui/components/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@acme/ui/components/sidebar";
 
 import { useAuth, USER_KEY } from "~/auth";
 import { authClient } from "~/lib/auth-client";

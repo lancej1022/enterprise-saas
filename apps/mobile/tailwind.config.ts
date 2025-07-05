@@ -2,7 +2,7 @@
 import nativewind from "nativewind/preset";
 import { type Config } from "tailwindcss";
 
-import baseConfig from "@acme/tailwind-config/native";
+import baseConfig from "@solved-contact/tailwind-config/native";
 
 export default {
   content: ["./src/**/*.{ts,tsx}"],

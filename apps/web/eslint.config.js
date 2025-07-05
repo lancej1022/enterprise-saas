@@ -1,6 +1,6 @@
-import baseConfig from "@acme/eslint-config/base";
-import reactConfig from "@acme/eslint-config/react";
-import webConfig from "@acme/eslint-config/web";
+import baseConfig from "@solved-contact/eslint-config/base";
+import reactConfig from "@solved-contact/eslint-config/react";
+import webConfig from "@solved-contact/eslint-config/web";
 
 /** @type {import('typescript-eslint').Config} */
 export default [

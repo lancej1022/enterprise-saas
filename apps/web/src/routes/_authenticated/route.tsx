@@ -1,24 +1,23 @@
 import {
-  createFileRoute,
-  Link,
-  Outlet,
-  redirect,
-} from "@tanstack/react-router";
-
-import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@acme/ui/components/breadcrumb";
-import { Separator } from "@acme/ui/components/separator";
+} from "@solved-contact/ui/components/breadcrumb";
+import { Separator } from "@solved-contact/ui/components/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@acme/ui/components/sidebar";
+} from "@solved-contact/ui/components/sidebar";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
 
 import { AppSidebar } from "~/components/app-sidebar";
 import { ModeToggle } from "~/components/theme/mode-toggle";

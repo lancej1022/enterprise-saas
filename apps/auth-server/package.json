@@ -27,8 +27,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/tsconfig": "workspace:^",
+    "@solved-contact/eslint-config": "workspace:*",
+    "@solved-contact/tsconfig": "workspace:^",
     "@types/node": "catalog:",
     "@types/pg": "^8.15.4",
     "drizzle-kit": "^0.30.5",

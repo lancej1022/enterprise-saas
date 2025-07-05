@@ -2,6 +2,13 @@
 
 import * as React from "react";
 import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@solved-contact/ui/components/sidebar";
+import {
   AudioWaveform,
   BookOpen,
   Bot,
@@ -13,14 +20,6 @@ import {
   Settings2,
   SquareTerminal,
 } from "lucide-react";
-
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@acme/ui/components/sidebar";
 
 import { NavMain } from "~/components/nav-main";
 import { NavProjects } from "~/components/nav-projects";

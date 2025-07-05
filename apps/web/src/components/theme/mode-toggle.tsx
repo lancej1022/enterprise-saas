@@ -1,18 +1,17 @@
-import { Moon, Sun } from "lucide-react";
-
-import { Button } from "@acme/ui/components/button";
+import { Button } from "@solved-contact/ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@acme/ui/components/dropdown-menu";
+} from "@solved-contact/ui/components/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@acme/ui/components/tooltip";
+} from "@solved-contact/ui/components/tooltip";
+import { Moon, Sun } from "lucide-react";
 
 import { useTheme } from "./theme-provider";
 

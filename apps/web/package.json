@@ -16,10 +16,10 @@
     "desktop:build": "tauri build"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
     "@axe-core/playwright": "4.10.2",
     "@playwright/test": "^1.52.0",
+    "@solved-contact/eslint-config": "workspace:*",
+    "@solved-contact/tsconfig": "workspace:*",
     "@tanstack/react-query-devtools": "catalog:",
     "@tanstack/react-router-devtools": "^1.114.27",
     "@tanstack/router-plugin": "^1.114.27",
@@ -36,7 +36,7 @@
     "vite": "catalog:"
   },
   "dependencies": {
-    "@acme/ui": "workspace:*",
+    "@solved-contact/ui": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",

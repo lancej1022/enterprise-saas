@@ -10,11 +10,11 @@
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
-    "auth:generate": "pnpm -F @acme/auth generate",
-    "db:push": "turbo -F @acme/db push",
-    "db:studio": "turbo -F @acme/db studio",
+    "auth:generate": "pnpm -F @solved-contact/auth generate",
+    "db:push": "turbo -F @solved-contact/db push",
+    "db:studio": "turbo -F @solved-contact/db studio",
     "dev": "turbo watch dev --continue",
-    "dev:next": "turbo watch dev -F @acme/nextjs...",
+    "dev:next": "turbo watch dev -F @solved-contact/nextjs...",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
     "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
@@ -28,12 +28,12 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@acme/prettier-config": "workspace:*",
+    "@solved-contact/prettier-config": "workspace:*",
     "@turbo/gen": "^2.5.4",
     "husky": "9.1.7",
     "prettier": "catalog:",
     "turbo": "^2.5.4",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@solved-contact/prettier-config"
 }

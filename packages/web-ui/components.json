@@ -11,10 +11,10 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@acme/ui/components",
-    "utils": "@acme/ui/lib/utils",
-    "hooks": "@acme/ui/hooks",
-    "lib": "@acme/ui/lib",
-    "ui": "@acme/ui/components"
+    "components": "@solved-contact/ui/components",
+    "utils": "@solved-contact/ui/lib/utils",
+    "hooks": "@solved-contact/ui/hooks",
+    "lib": "@solved-contact/ui/lib",
+    "ui": "@solved-contact/ui/components"
   }
 }

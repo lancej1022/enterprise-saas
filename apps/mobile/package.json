@@ -1,5 +1,5 @@
 {
-  "name": "@acme/mobile",
+  "name": "@solved-contact/mobile",
   "version": "0.1.0",
   "private": true,
   "main": "index.ts",
@@ -66,13 +66,13 @@
     "superjson": "catalog:"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tailwind-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
     "@babel/core": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
     "@babel/runtime": "^7.27.4",
+    "@solved-contact/eslint-config": "workspace:*",
+    "@solved-contact/prettier-config": "workspace:*",
+    "@solved-contact/tailwind-config": "workspace:*",
+    "@solved-contact/tsconfig": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "@types/react": "catalog:",
     "eslint": "catalog:",
@@ -80,5 +80,5 @@
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@solved-contact/prettier-config"
 }

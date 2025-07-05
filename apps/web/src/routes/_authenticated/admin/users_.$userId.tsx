@@ -1,4 +1,52 @@
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@solved-contact/ui/components/alert-dialog";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@solved-contact/ui/components/avatar";
+import { Badge } from "@solved-contact/ui/components/badge";
+import { Button } from "@solved-contact/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@solved-contact/ui/components/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@solved-contact/ui/components/dropdown-menu";
+import { Input } from "@solved-contact/ui/components/input";
+import { Label } from "@solved-contact/ui/components/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@solved-contact/ui/components/select";
+import { Separator } from "@solved-contact/ui/components/separator";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@solved-contact/ui/components/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Building,
@@ -15,61 +63,12 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@acme/ui/components/alert-dialog";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@acme/ui/components/avatar";
-import { Badge } from "@acme/ui/components/badge";
-import { Button } from "@acme/ui/components/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@acme/ui/components/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@acme/ui/components/dropdown-menu";
-import { Input } from "@acme/ui/components/input";
-import { Label } from "@acme/ui/components/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@acme/ui/components/select";
-import { Separator } from "@acme/ui/components/separator";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@acme/ui/components/tabs";
-
 // Mock user data
 const userData = {
   id: "1",
   firstName: "Sarah",
   lastName: "Johnson",
-  email: "sarah.johnson@acme.com",
+  email: "sarah.johnson@solved-contact.com",
   role: "Agent",
   status: "Active",
   team: "Customer Support",

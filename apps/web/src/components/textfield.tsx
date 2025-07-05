@@ -3,10 +3,9 @@
 import React from "react";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
-
-import { Input } from "@acme/ui/components/input";
-import { Label } from "@acme/ui/components/label";
-import { cn } from "@acme/ui/lib/utils";
+import { Input } from "@solved-contact/ui/components/input";
+import { Label } from "@solved-contact/ui/components/label";
+import { cn } from "@solved-contact/ui/lib/utils";
 
 import { useFieldContext } from "./tanstack-form";
 
