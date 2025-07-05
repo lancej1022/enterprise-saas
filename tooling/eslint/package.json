@@ -6,7 +6,8 @@
   "exports": {
     "./base": "./base.js",
     "./web": "./web.js",
-    "./react": "./react.js"
+    "./react": "./react.js",
+    "./native": "./native.js"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo node_modules",
@@ -23,6 +24,7 @@
     "eslint-plugin-perfectionist": "4.14.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.0.0-rc.1",
+    "eslint-plugin-react-native": "5.0.0",
     "eslint-plugin-turbo": "^2.5.4",
     "eslint-plugin-unused-imports": "^4.1.4",
     "typescript-eslint": "^8.33.1"
