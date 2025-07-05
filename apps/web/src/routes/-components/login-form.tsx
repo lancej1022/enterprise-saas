@@ -3,7 +3,6 @@ import { useAppForm } from "@/components/tanstack-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
 import {
   Link,
   useLocation,
@@ -15,6 +14,7 @@ import { toast } from "sonner";
 import { z } from "zod/v4";
 
 import { Button } from "@acme/ui/components/button";
+import { cn } from "@acme/ui/lib/utils";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
