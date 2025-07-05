@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-
-import { useTRPC } from "~/integrations/trpc/react";
+import { useTRPC } from "#/integrations/trpc/react";
 
 export const Route = createFileRoute("/demo/tanstack-query")({
   loader: async ({ context }) => {

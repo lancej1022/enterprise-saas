@@ -1,13 +1,12 @@
 import * as React from "react";
 import { Platform, Text, View, type TextProps } from "react-native";
 import * as MenubarPrimitive from "@rn-primitives/menubar";
-
-import { TextClassContext } from "~/components/ui/text";
-import { Check } from "~/lib/icons/Check";
-import { ChevronDown } from "~/lib/icons/ChevronDown";
-import { ChevronRight } from "~/lib/icons/ChevronRight";
-import { ChevronUp } from "~/lib/icons/ChevronUp";
-import { cn } from "~/lib/utils";
+import { TextClassContext } from "#/components/ui/text";
+import { Check } from "#/lib/icons/Check";
+import { ChevronDown } from "#/lib/icons/ChevronDown";
+import { ChevronRight } from "#/lib/icons/ChevronRight";
+import { ChevronUp } from "#/lib/icons/ChevronUp";
+import { cn } from "#/lib/utils";
 
 const MenubarMenu = MenubarPrimitive.Menu;
 

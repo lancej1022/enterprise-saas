@@ -1,16 +1,15 @@
 import { View } from "react-native";
 import { useForm } from "@tanstack/react-form";
-import { z } from "zod/v4";
-
 // import Svg, { Path } from "react-native-svg";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { Text } from "~/components/ui/text";
-import { P } from "~/components/ui/typography";
-import { authClient } from "~/lib/auth-client";
-import { Github } from "~/lib/icons/github";
-import { cn } from "~/lib/utils";
+import { Button } from "#/components/ui/button";
+import { Input } from "#/components/ui/input";
+import { Label } from "#/components/ui/label";
+import { Text } from "#/components/ui/text";
+import { P } from "#/components/ui/typography";
+import { authClient } from "#/lib/auth-client";
+import { Github } from "#/lib/icons/github";
+import { cn } from "#/lib/utils";
+import { z } from "zod/v4";
 
 function HorizontalBar() {
   return <View className="h-[1px] flex-1 bg-border" />;

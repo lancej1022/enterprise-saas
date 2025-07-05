@@ -4,6 +4,8 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
+import { AppSidebar } from "#/components/app-sidebar";
+import { ModeToggle } from "#/components/theme/mode-toggle";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,9 +20,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@solved-contact/ui/components/sidebar";
-
-import { AppSidebar } from "~/components/app-sidebar";
-import { ModeToggle } from "~/components/theme/mode-toggle";
 
 // Naming this file `route.tsx` creates a layout route that is used to wrap ALL the other routes nested under this directory
 export const Route = createFileRoute("/_authenticated")({
@@ -42,7 +41,7 @@ function AuthenticatedLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
           <div className="flex w-full items-center gap-2 px-4">
             {/* TODO: wrap in a tooltip or something? */}
             <SidebarTrigger className="-ml-1" />

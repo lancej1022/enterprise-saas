@@ -2,10 +2,9 @@ import * as React from "react";
 import { Platform, View, type ViewProps } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import * as AlertDialogPrimitive from "@rn-primitives/alert-dialog";
-
-import { buttonTextVariants, buttonVariants } from "~/components/ui/button";
-import { TextClassContext } from "~/components/ui/text";
-import { cn } from "~/lib/utils";
+import { buttonTextVariants, buttonVariants } from "#/components/ui/button";
+import { TextClassContext } from "#/components/ui/text";
+import { cn } from "#/lib/utils";
 
 const AlertDialog = AlertDialogPrimitive.Root;
 

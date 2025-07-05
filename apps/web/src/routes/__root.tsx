@@ -8,9 +8,8 @@ import {
   Outlet,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-
-import { type AuthContext } from "~/auth";
-import { ThemeProvider } from "~/components/theme/theme-provider";
+import { type AuthContext } from "#/auth";
+import { ThemeProvider } from "#/components/theme/theme-provider";
 
 export const Route = createRootRouteWithContext<{
   auth: AuthContext | undefined;

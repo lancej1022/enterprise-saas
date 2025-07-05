@@ -5,7 +5,7 @@ import { useColorScheme } from "nativewind";
 
 import "../styles.css";
 
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "#/lib/auth-client";
 
 const queryClient = new QueryClient();
 

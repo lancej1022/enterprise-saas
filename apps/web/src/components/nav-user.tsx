@@ -1,5 +1,16 @@
 "use client";
 
+import { useRouter } from "@tanstack/react-router";
+import { useAuth, USER_KEY } from "#/auth";
+import { authClient } from "#/lib/auth-client";
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  Sparkles,
+} from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -20,18 +31,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@solved-contact/ui/components/sidebar";
-import { useRouter } from "@tanstack/react-router";
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
-
-import { useAuth, USER_KEY } from "~/auth";
-import { authClient } from "~/lib/auth-client";
 
 export function NavUser() {
   const { user } = useAuth();

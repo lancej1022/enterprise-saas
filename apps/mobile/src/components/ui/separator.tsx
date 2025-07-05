@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as SeparatorPrimitive from "@rn-primitives/separator";
-
-import { cn } from "~/lib/utils";
+import { cn } from "#/lib/utils";
 
 function Separator({
   className,

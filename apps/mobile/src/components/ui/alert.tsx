@@ -1,11 +1,10 @@
 import * as React from "react";
 import { View, type ViewProps } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import { Text } from "#/components/ui/text";
+import { cn } from "#/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { type LucideIcon } from "lucide-react-native";
-
-import { Text } from "~/components/ui/text";
-import { cn } from "~/lib/utils";
 
 const alertVariants = cva(
   "relative w-full rounded-lg border border-border bg-background p-4 shadow shadow-foreground/10",

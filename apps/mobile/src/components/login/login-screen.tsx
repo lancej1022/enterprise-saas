@@ -1,7 +1,7 @@
 import { Image, View } from "react-native";
+import { Text } from "#/components/ui/text";
+import { GalleryVerticalEnd } from "#/lib/icons/gallery-vertical-end";
 
-import { Text } from "~/components/ui/text";
-import { GalleryVerticalEnd } from "~/lib/icons/gallery-vertical-end";
 import { LoginForm } from "./login-form";
 
 function Branding() {

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Text, View, type TextProps, type ViewProps } from "react-native";
-
-import { TextClassContext } from "~/components/ui/text";
-import { cn } from "~/lib/utils";
+import { TextClassContext } from "#/components/ui/text";
+import { cn } from "#/lib/utils";
 
 function Card({
   className,

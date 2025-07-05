@@ -1,4 +1,4 @@
-// "If you changed the colors in the ~/global.css file, update the ~/lib/constants.ts file with the new colors. Each color has a commented css variable name next to it."
+// "If you changed the colors in the #/global.css file, update the #/lib/constants.ts file with the new colors. Each color has a commented css variable name next to it."
 // ^^ https://www.reactnativereusables.com/getting-started/initial-setup/
 export const NAV_THEME = {
   light: {

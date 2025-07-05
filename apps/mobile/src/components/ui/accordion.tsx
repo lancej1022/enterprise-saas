@@ -12,10 +12,9 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import * as AccordionPrimitive from "@rn-primitives/accordion";
-
-import { TextClassContext } from "~/components/ui/text";
-import { ChevronDown } from "~/lib/icons/ChevronDown";
-import { cn } from "~/lib/utils";
+import { TextClassContext } from "#/components/ui/text";
+import { ChevronDown } from "#/lib/icons/ChevronDown";
+import { cn } from "#/lib/utils";
 
 function Accordion({
   children,

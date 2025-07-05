@@ -7,7 +7,7 @@
     "rootDirs": ["."],
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "#/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules", "dist", "playwright-report"]
