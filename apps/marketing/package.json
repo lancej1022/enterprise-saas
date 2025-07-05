@@ -36,7 +36,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^",
+    "@acme/eslint-config": "workspace:*",
+    "@acme/prettier-config": "workspace:*",
     "@tanstack/eslint-config": "^0.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
@@ -49,5 +50,6 @@
     "vite": "catalog:",
     "vitest": "^3.0.5",
     "web-vitals": "^4.2.4"
-  }
+  },
+  "prettier": "@acme/prettier-config"
 }

@@ -1,24 +1,23 @@
-import { useEffect, useState } from 'react'
-
-import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 
 function getNames() {
-  return fetch('/api/demo-names').then((res) => res.json())
+  return fetch("/api/demo-names").then((res) => res.json());
 }
 
-export const Route = createFileRoute('/demo/start/api-request')({
+export const Route = createFileRoute("/demo/start/api-request")({
   component: Home,
-})
+});
 
 function Home() {
-  const [names, setNames] = useState<string[]>([])
+  const [names, setNames] = useState<string[]>([]);
   useEffect(() => {
-    void getNames().then(setNames)
-  }, [])
+    void getNames().then(setNames);
+  }, []);
 
   return (
     <div className="p-4">
-      <div>{names.join(', ')}</div>
+      <div>{names.join(", ")}</div>
     </div>
-  )
+  );
 }

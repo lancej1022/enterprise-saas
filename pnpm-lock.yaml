@@ -242,8 +242,11 @@ importers:
         version: 3.25.49
     devDependencies:
       '@acme/eslint-config':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../tooling/eslint
+      '@acme/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
       '@tanstack/eslint-config':
         specifier: ^0.1.0
         version: 0.1.0(@typescript-eslint/utils@8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
