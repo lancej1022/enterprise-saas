@@ -1,0 +1,10 @@
+---
+description: React Native UI components
+alwaysApply: false
+---
+
+- Utilize Expo SDK features and APIs as needed
+- Always use Tailwind for styling
+- When creating new files, always use kebab-case
+- The component library is from @<https://www.reactnativereusables.com/getting-started/introduction/>, which is a React-native port of ShadCN. The components can be found in `mobile/src/components/ui`
+- New icons can be added as needed in `mobile/src/lib/icons`
