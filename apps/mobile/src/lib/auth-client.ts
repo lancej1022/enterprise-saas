@@ -2,12 +2,15 @@ import * as SecureStore from "expo-secure-store";
 import { expoClient } from "@better-auth/expo/client";
 import { createAuthClient } from "better-auth/react";
 
+import { getBaseUrl } from "./base-url";
+
+const baseUrl = getBaseUrl();
+
 export const authClient = createAuthClient({
-  // TODO: what to set this to?
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: fix this
-  baseURL: process.env.EXPO_PUBLIC_SERVER_URL,
+  baseURL: baseUrl,
   plugins: [
     expoClient({
+      // scheme: "your.bundle.identifier",
       storagePrefix: "my-better-t-app",
       storage: SecureStore,
     }),

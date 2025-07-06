@@ -38,12 +38,12 @@ export function LoginForm({
         email: value.email,
         password: value.password,
       });
+
       if (res.error) {
         // toast.error(res.error.message);
         return;
       }
     },
-    // TODO: navigate to authenticated area
   });
 
   return (
@@ -111,7 +111,7 @@ export function LoginForm({
                   secureTextEntry={true}
                   value={field.state.value}
                 />
-                {field.state.meta.isTouched &&
+                {field.state.meta.isBlurred &&
                   field.state.meta.errors.length > 0 && (
                     <Text className="text-sm text-red-500">
                       {field.state.meta.errors
