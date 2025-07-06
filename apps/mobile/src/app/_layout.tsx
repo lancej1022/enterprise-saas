@@ -18,9 +18,6 @@ import { setAndroidNavigationBar } from "#/lib/android-navigation-bar";
 import { authClient } from "#/lib/auth-client";
 import { NAV_THEME } from "#/lib/constants";
 
-// import { ThemeProvider as NativewindThemeProvider } from "#/providers/ThemeProvider";
-// import { ThemeToggle as NativewindThemeToggle } from "#/providers/ThemeToggle";
-
 const queryClient = new QueryClient();
 
 function useSetAndroidNavigationBar() {
@@ -45,13 +42,14 @@ const usePlatformSpecificSetup = Platform.select({
   android: useSetAndroidNavigationBar,
   default: noop,
 });
+
 // This is the main layout of the app
 // It wraps your pages with the providers they need
 export default function RootLayout() {
   usePlatformSpecificSetup();
   const { isDarkColorScheme, colorScheme } = useColorScheme();
   // TODO: This doesnt seem to consistently re-render after the `login` is successful. Might need to review LoginForm
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
 
   // useEffect(() => {
   //   void authClient.signOut();
@@ -61,38 +59,36 @@ export default function RootLayout() {
   console.log("session:", session);
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <NativewindThemeProvider> */}
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <StatusBar />
         {/*
           The Stack component displays the current page.
           It also allows you to configure your screens 
         */}
-        <Stack
-          screenOptions={{
-            contentStyle: {
-              backgroundColor: colorScheme == "dark" ? "#09090B" : "#FFFFFF",
-            },
-          }}
-        >
-          <Stack.Protected guard={!!session}>
-            <Stack.Screen
-              name="(tabs)"
-              options={{
-                title: "Solved Contact",
-                headerRight: () => <ThemeToggle />,
-                // headerRight: () => <NativewindThemeToggle />,
-              }}
-            />
-          </Stack.Protected>
-          <Stack.Protected guard={!session}>
-            <Stack.Screen name="login" options={{ headerShown: false }} />
-          </Stack.Protected>
-
-          {/* Expo Router includes all routes by default. Adding Stack.Protected creates exceptions for these screens. */}
-        </Stack>
+        {/* TODO: probably need some sort of better loading state here... */}
+        {isPending ? null : (
+          <Stack
+            screenOptions={{
+              contentStyle: {
+                backgroundColor: colorScheme == "dark" ? "#09090B" : "#FFFFFF",
+              },
+            }}
+          >
+            <Stack.Protected guard={!!session}>
+              <Stack.Screen
+                name="(tabs)"
+                options={{
+                  title: "Solved Contact",
+                  headerRight: () => <ThemeToggle />,
+                }}
+              />
+            </Stack.Protected>
+            <Stack.Protected guard={!session}>
+              <Stack.Screen name="login" options={{ headerShown: false }} />
+            </Stack.Protected>
+          </Stack>
+        )}
       </ThemeProvider>
-      {/* </NativewindThemeProvider> */}
     </QueryClientProvider>
   );
 }

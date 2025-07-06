@@ -1,5 +1,3 @@
-import { vars } from "nativewind";
-
 // "If you changed the colors in the #/global.css file, update the #/lib/constants.ts file with the new colors. Each color has a commented css variable name next to it."
 // ^^ https://www.reactnativereusables.com/getting-started/initial-setup/
 export const NAV_THEME = {
@@ -19,21 +17,4 @@ export const NAV_THEME = {
     primary: "hsl(0 0% 98%)", // primary
     text: "hsl(0 0% 98%)", // foreground
   },
-};
-
-// TODO: This `themes` was taken from the nativewind dark-mode example as part of debugging, but seems like the real issue with theme switching
-// was not specifying the `darkMode: "class"` in the tailwind.config.ts file. This file is PROBABLY not needed for dark/light mode switching.
-export const themes = {
-  light: vars({
-    "--color-primary": "#000000", // black
-    "--color-secondary": "rgba(0, 0, 0, 0.1)", // gray-500
-    "--color-background": "#ffffff", // white
-    "--color-text": "#000000", // black text
-  }),
-  dark: vars({
-    "--color-primary": "#ffffff", // white
-    "--color-secondary": "rgba(255, 255, 255, 0.2)", // gray-400
-    "--color-background": "#000000", // black
-    "--color-text": "#ffffff", // white text
-  }),
 };
