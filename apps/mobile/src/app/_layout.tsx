@@ -18,6 +18,9 @@ import { setAndroidNavigationBar } from "#/lib/android-navigation-bar";
 import { authClient } from "#/lib/auth-client";
 import { NAV_THEME } from "#/lib/constants";
 
+// import { ThemeProvider as NativewindThemeProvider } from "#/providers/ThemeProvider";
+// import { ThemeToggle as NativewindThemeToggle } from "#/providers/ThemeToggle";
+
 const queryClient = new QueryClient();
 
 function useSetAndroidNavigationBar() {
@@ -58,6 +61,7 @@ export default function RootLayout() {
   console.log("session:", session);
   return (
     <QueryClientProvider client={queryClient}>
+      {/* <NativewindThemeProvider> */}
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <StatusBar />
         {/*
@@ -77,6 +81,7 @@ export default function RootLayout() {
               options={{
                 title: "Solved Contact",
                 headerRight: () => <ThemeToggle />,
+                // headerRight: () => <NativewindThemeToggle />,
               }}
             />
           </Stack.Protected>
@@ -87,6 +92,7 @@ export default function RootLayout() {
           {/* Expo Router includes all routes by default. Adding Stack.Protected creates exceptions for these screens. */}
         </Stack>
       </ThemeProvider>
+      {/* </NativewindThemeProvider> */}
     </QueryClientProvider>
   );
 }
