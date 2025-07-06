@@ -30,7 +30,6 @@ export function LoginForm({
       password: "",
     },
     validators: {
-      onBlur: loginSchema,
       onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
@@ -111,7 +110,7 @@ export function LoginForm({
                   secureTextEntry={true}
                   value={field.state.value}
                 />
-                {field.state.meta.isBlurred &&
+                {field.state.meta.isTouched &&
                   field.state.meta.errors.length > 0 && (
                     <Text className="text-sm text-red-500">
                       {field.state.meta.errors
