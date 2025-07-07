@@ -1,5 +1,7 @@
 import { View } from "react-native";
 import { useForm } from "@tanstack/react-form";
+import { z } from "zod/v4";
+
 // import Svg, { Path } from "react-native-svg";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
@@ -9,7 +11,6 @@ import { P } from "#/components/ui/typography";
 import { authClient } from "#/lib/auth-client";
 import { Github } from "#/lib/icons/github";
 import { cn } from "#/lib/utils";
-import { z } from "zod/v4";
 
 function HorizontalBar() {
   return <View className="h-[1px] flex-1 bg-border" />;
@@ -107,6 +108,7 @@ export function LoginForm({
                   id={field.name}
                   onBlur={field.handleBlur}
                   onChangeText={field.handleChange}
+                  placeholder="password"
                   secureTextEntry={true}
                   value={field.state.value}
                 />

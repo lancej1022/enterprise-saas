@@ -1,0 +1,10 @@
+appId: your.bundle.identifier
+---
+- launchApp:
+    clearState: true
+- tapOn: "m@example.com"
+- inputText: "1234@gmail.com"
+- tapOn: "password"
+- inputText: "aaaaaaaa"
+- tapOn: "Login"
+- assertVisible: "Customer support"
