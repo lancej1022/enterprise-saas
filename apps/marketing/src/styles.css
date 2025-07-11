@@ -1,6 +1,0 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-
-@import "@solved-contact/ui/globals.css";
-
-@source "../../../packages/web-ui/**/*.{ts,tsx}"; /* Any components in ui package*/
