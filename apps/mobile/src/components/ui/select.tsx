@@ -2,6 +2,7 @@ import * as React from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import * as SelectPrimitive from "@rn-primitives/select";
+
 import { Check } from "#/lib/icons/Check";
 import { ChevronDown } from "#/lib/icons/ChevronDown";
 import { ChevronUp } from "#/lib/icons/ChevronUp";

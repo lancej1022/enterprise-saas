@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { useColorScheme } from "#/lib/useColorScheme";
 
 import "../styles.css";
@@ -13,6 +14,7 @@ import {
   ThemeProvider,
   type Theme,
 } from "@react-navigation/native";
+
 import { ThemeToggle } from "#/components/theme-toggle/theme-toggle";
 import { setAndroidNavigationBar } from "#/lib/android-navigation-bar";
 import { authClient } from "#/lib/auth-client";

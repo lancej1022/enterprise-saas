@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Platform, Text, View, type TextProps } from "react-native";
 import * as MenubarPrimitive from "@rn-primitives/menubar";
+
 import { TextClassContext } from "#/components/ui/text";
 import { Check } from "#/lib/icons/Check";
 import { ChevronDown } from "#/lib/icons/ChevronDown";

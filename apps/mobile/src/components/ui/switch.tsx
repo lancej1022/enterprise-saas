@@ -7,6 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import * as SwitchPrimitives from "@rn-primitives/switch";
+
 import { useColorScheme } from "#/lib/useColorScheme";
 import { cn } from "#/lib/utils";
 

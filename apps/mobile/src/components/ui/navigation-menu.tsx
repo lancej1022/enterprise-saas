@@ -10,9 +10,10 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import * as NavigationMenuPrimitive from "@rn-primitives/navigation-menu";
+import { cva } from "class-variance-authority";
+
 import { ChevronDown } from "#/lib/icons/ChevronDown";
 import { cn } from "#/lib/utils";
-import { cva } from "class-variance-authority";
 
 function NavigationMenu({
   className,
