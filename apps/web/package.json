@@ -10,10 +10,7 @@
     "serve": "vite preview",
     "start": "vite",
     "test": "playwright test",
-    "typecheck": "tsc --noEmit",
-    "tauri": "tauri",
-    "desktop:dev": "tauri dev",
-    "desktop:build": "tauri build"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",
@@ -23,7 +20,6 @@
     "@tanstack/react-query-devtools": "catalog:",
     "@tanstack/react-router-devtools": "^1.114.27",
     "@tanstack/router-plugin": "^1.114.27",
-    "@tauri-apps/cli": "^2.4.0",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -33,7 +29,8 @@
     "tailwindcss": "4.0.15",
     "tw-animate-css": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vite-tsconfig-paths": "5.1.4"
   },
   "dependencies": {
     "@solved-contact/ui": "workspace:*",
@@ -41,6 +38,7 @@
     "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "catalog:",
+    "@tanstack/react-router-with-query": "catalog:",
     "better-auth": "catalog:",
     "date-fns": "4.1.0",
     "ky": "1.8.1",
