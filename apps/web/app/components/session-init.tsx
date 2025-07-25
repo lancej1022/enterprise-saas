@@ -32,7 +32,7 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
       // TODO: is this safe since it comes from useSession, rather than the cookies? Or are we fine as long as `userId` + `email` are cookie based, while the rest isnt...?
       user: sessionData?.user,
     };
-  }, [cookies.userid, cookies.email, sessionData]);
+  }, [cookies.userid, cookies.email, sessionData?.user]);
 
   const session = useMemo(() => {
     return {
@@ -51,9 +51,11 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
       /**
        * key is a hack - it shouldn't be needed, but for some reason on logout,
        * when the session is changed to undefined, the router doesn't re-render.
+       *
+       * TODO: this creates potential re-render flaws, especially if `data` changes unexpectedly. Consider refactoring this away from the original Ztunes implementation and closer to the "typical" tanstack router implementation.
        */
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- taken from ztunes
-      key={data?.userID}
+      key={data?.user || data?.userID}
       router={router}
     >
       {children}

@@ -6,6 +6,8 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const authFile = path.join(__dirname, "./.auth/user.json");
 
 test.describe("Unauthenticated state on login and signup pages", () => {
+  // these tests are not parallelizable because the signup test MUST run last, since it changes the auth state
+  // test.describe.configure({ mode: "default" });
   test.use({ storageState: { cookies: [], origins: [] } });
 
   test("should show validation errors for invalid input", async ({ page }) => {
