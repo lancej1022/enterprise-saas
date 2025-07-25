@@ -1,8 +1,6 @@
 "use client";
 
 import { useRouter } from "@tanstack/react-router";
-import { useAuth, USER_KEY } from "#/auth";
-import { authClient } from "#/lib/auth-client";
 import {
   BadgeCheck,
   Bell,
@@ -32,23 +30,18 @@ import {
   useSidebar,
 } from "@solved-contact/ui/components/sidebar";
 
-export function NavUser() {
-  const { user } = useAuth();
+import { authClient } from "../../auth/client";
 
+export function NavUser() {
   const { isMobile } = useSidebar();
   const router = useRouter();
-  const { updateUser } = useAuth();
+  const { data } = router.options.context.session;
+  const user = data?.user;
 
   async function handleLogout() {
     await authClient.signOut();
-    updateUser(null);
-    sessionStorage.removeItem(USER_KEY);
     await router.invalidate();
     void router.navigate({ to: "/login" });
-  }
-
-  if (!user) {
-    return null;
   }
 
   return (
@@ -61,12 +54,14 @@ export function NavUser() {
               size="lg"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage alt={user.name ?? ""} src={user.image ?? ""} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarImage alt={user?.name ?? ""} src={user?.image ?? ""} />
+                <AvatarFallback className="rounded-lg">
+                  {user?.name.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">{user?.name}</span>
+                <span className="truncate text-xs">{user?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -80,12 +75,12 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage alt={user.name ?? ""} src={user.image ?? ""} />
+                  <AvatarImage alt={user?.name ?? ""} src={user?.image ?? ""} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">{user?.name}</span>
+                  <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

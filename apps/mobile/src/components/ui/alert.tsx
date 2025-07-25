@@ -8,7 +8,7 @@ import { Text } from "#/components/ui/text";
 import { cn } from "#/lib/utils";
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border border-border bg-background p-4 shadow shadow-foreground/10",
+  "border-border bg-background shadow-foreground/10 relative w-full rounded-lg border p-4 shadow",
   {
     variants: {
       variant: {
@@ -44,7 +44,7 @@ function Alert({
       role="alert"
       {...props}
     >
-      <View className="absolute left-3.5 top-4 -translate-y-0.5">
+      <View className="absolute top-4 left-3.5 -translate-y-0.5">
         <Icon
           color={variant === "destructive" ? colors.notification : colors.text}
           size={iconSize}
@@ -62,7 +62,7 @@ function AlertTitle({
   return (
     <Text
       className={cn(
-        "mb-1 pl-7 text-base font-medium leading-none tracking-tight text-foreground",
+        "text-foreground mb-1 pl-7 text-base leading-none font-medium tracking-tight",
         className,
       )}
       {...props}
@@ -76,7 +76,7 @@ function AlertDescription({
 }: React.ComponentProps<typeof Text>) {
   return (
     <Text
-      className={cn("pl-7 text-sm leading-relaxed text-foreground", className)}
+      className={cn("text-foreground pl-7 text-sm leading-relaxed", className)}
       {...props}
     />
   );

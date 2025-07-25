@@ -51,7 +51,7 @@ function AccordionItem({
       layout={LinearTransition.duration(200)}
     >
       <AccordionPrimitive.Item
-        className={cn("border-b border-border", className)}
+        className={cn("border-border border-b", className)}
         value={value}
         {...props}
       />
@@ -93,7 +93,7 @@ function AccordionTrigger({
           >
             {children}
             <Animated.View style={chevronStyle}>
-              <ChevronDown className={"shrink-0 text-foreground"} size={18} />
+              <ChevronDown className={"text-foreground shrink-0"} size={18} />
             </Animated.View>
           </Trigger>
         </AccordionPrimitive.Trigger>

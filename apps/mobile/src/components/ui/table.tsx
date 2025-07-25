@@ -42,7 +42,7 @@ function TableBody({
   return (
     <TablePrimitive.Body
       className={cn(
-        "flex-1 border-border [&_tr:last-child]:border-0",
+        "border-border flex-1 [&_tr:last-child]:border-0",
         className,
       )}
       style={[{ minHeight: 2 }, style]}
@@ -77,7 +77,7 @@ function TableRow({
   return (
     <TablePrimitive.Row
       className={cn(
-        "web:transition-colors web:hover:bg-muted/50 web:data-[state=selected]:bg-muted flex-row border-b border-border",
+        "web:transition-colors web:hover:bg-muted/50 web:data-[state=selected]:bg-muted border-border flex-row border-b",
         className,
       )}
       {...props}

@@ -3,6 +3,9 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "noEmit": false,
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]

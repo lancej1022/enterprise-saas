@@ -8,133 +8,298 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { createServerRootRoute } from '@tanstack/react-start/server'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as SignupImport } from './routes/signup'
-import { Route as LoginImport } from './routes/login'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
-import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedAdminUsersImport } from './routes/_authenticated/admin/users'
-import { Route as AuthenticatedAdminTeamsImport } from './routes/_authenticated/admin/teams'
-import { Route as AuthenticatedAdminUsersUserIdImport } from './routes/_authenticated/admin/users_.$userId'
-import { Route as AuthenticatedAdminUsersAddUserImport } from './routes/_authenticated/admin/users/add-user'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedCartRouteImport } from './routes/_authenticated/cart'
+import { Route as AuthenticatedArtistRouteImport } from './routes/_authenticated/artist'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminTeamsRouteImport } from './routes/_authenticated/admin/teams'
+import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users_.$userId'
+import { Route as AuthenticatedAdminUsersAddUserRouteImport } from './routes/_authenticated/admin/users/add-user'
+import { ServerRoute as ApiZeroPushServerRouteImport } from './routes/api/zero/push'
+import { ServerRoute as ApiAuthRefreshServerRouteImport } from './routes/api/auth/refresh'
+import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
-// Create/Update Routes
+const rootServerRouteImport = createServerRootRoute()
 
-const SignupRoute = SignupImport.update({
+const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LoginRoute = LoginImport.update({
+const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthenticatedRouteRoute = AuthenticatedRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersImport.update({
+const AuthenticatedCartRoute = AuthenticatedCartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedArtistRoute = AuthenticatedArtistRouteImport.update({
+  id: '/artist',
+  path: '/artist',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-
-const AuthenticatedAdminTeamsRoute = AuthenticatedAdminTeamsImport.update({
+const AuthenticatedAdminTeamsRoute = AuthenticatedAdminTeamsRouteImport.update({
   id: '/admin/teams',
   path: '/admin/teams',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-
 const AuthenticatedAdminUsersUserIdRoute =
-  AuthenticatedAdminUsersUserIdImport.update({
+  AuthenticatedAdminUsersUserIdRouteImport.update({
     id: '/admin/users_/$userId',
     path: '/admin/users/$userId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-
 const AuthenticatedAdminUsersAddUserRoute =
-  AuthenticatedAdminUsersAddUserImport.update({
+  AuthenticatedAdminUsersAddUserRouteImport.update({
     id: '/add-user',
     path: '/add-user',
     getParentRoute: () => AuthenticatedAdminUsersRoute,
   } as any)
+const ApiZeroPushServerRoute = ApiZeroPushServerRouteImport.update({
+  id: '/api/zero/push',
+  path: '/api/zero/push',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiAuthRefreshServerRoute = ApiAuthRefreshServerRouteImport.update({
+  id: '/api/auth/refresh',
+  path: '/api/auth/refresh',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/artist': typeof AuthenticatedArtistRoute
+  '/cart': typeof AuthenticatedCartRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/admin/teams': typeof AuthenticatedAdminTeamsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
+}
+export interface FileRoutesByTo {
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/artist': typeof AuthenticatedArtistRoute
+  '/cart': typeof AuthenticatedCartRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/admin/teams': typeof AuthenticatedAdminTeamsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/_authenticated/artist': typeof AuthenticatedArtistRoute
+  '/_authenticated/cart': typeof AuthenticatedCartRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/admin/teams': typeof AuthenticatedAdminTeamsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
+  '/_authenticated/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
+  '/_authenticated/admin/users_/$userId': typeof AuthenticatedAdminUsersUserIdRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/login'
+    | '/signup'
+    | '/artist'
+    | '/cart'
+    | '/'
+    | '/admin/teams'
+    | '/admin/users'
+    | '/admin/users/add-user'
+    | '/admin/users/$userId'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/login'
+    | '/signup'
+    | '/artist'
+    | '/cart'
+    | '/'
+    | '/admin/teams'
+    | '/admin/users'
+    | '/admin/users/add-user'
+    | '/admin/users/$userId'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/login'
+    | '/signup'
+    | '/_authenticated/artist'
+    | '/_authenticated/cart'
+    | '/_authenticated/'
+    | '/_authenticated/admin/teams'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/users/add-user'
+    | '/_authenticated/admin/users_/$userId'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
+}
+export interface FileServerRoutesByFullPath {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
+  '/api/zero/push': typeof ApiZeroPushServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
+  '/api/zero/push': typeof ApiZeroPushServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
+  '/api/zero/push': typeof ApiZeroPushServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/api/auth/$' | '/api/auth/refresh' | '/api/zero/push'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/api/auth/$' | '/api/auth/refresh' | '/api/zero/push'
+  id: '__root__' | '/api/auth/$' | '/api/auth/refresh' | '/api/zero/push'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
+  ApiAuthRefreshServerRoute: typeof ApiAuthRefreshServerRoute
+  ApiZeroPushServerRoute: typeof ApiZeroPushServerRoute
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteImport
-      parentRoute: typeof rootRoute
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexImport
-      parentRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/teams': {
-      id: '/_authenticated/admin/teams'
-      path: '/admin/teams'
-      fullPath: '/admin/teams'
-      preLoaderRoute: typeof AuthenticatedAdminTeamsImport
-      parentRoute: typeof AuthenticatedRouteImport
+    '/_authenticated/cart': {
+      id: '/_authenticated/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof AuthenticatedCartRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/artist': {
+      id: '/_authenticated/artist'
+      path: '/artist'
+      fullPath: '/artist'
+      preLoaderRoute: typeof AuthenticatedArtistRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
       path: '/admin/users'
       fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersImport
-      parentRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/users/add-user': {
-      id: '/_authenticated/admin/users/add-user'
-      path: '/add-user'
-      fullPath: '/admin/users/add-user'
-      preLoaderRoute: typeof AuthenticatedAdminUsersAddUserImport
-      parentRoute: typeof AuthenticatedAdminUsersImport
+    '/_authenticated/admin/teams': {
+      id: '/_authenticated/admin/teams'
+      path: '/admin/teams'
+      fullPath: '/admin/teams'
+      preLoaderRoute: typeof AuthenticatedAdminTeamsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/users_/$userId': {
       id: '/_authenticated/admin/users_/$userId'
       path: '/admin/users/$userId'
       fullPath: '/admin/users/$userId'
-      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdImport
-      parentRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/users/add-user': {
+      id: '/_authenticated/admin/users/add-user'
+      path: '/add-user'
+      fullPath: '/admin/users/add-user'
+      preLoaderRoute: typeof AuthenticatedAdminUsersAddUserRouteImport
+      parentRoute: typeof AuthenticatedAdminUsersRoute
     }
   }
 }
-
-// Create and export the route tree
+declare module '@tanstack/react-start/server' {
+  interface ServerFileRoutesByPath {
+    '/api/zero/push': {
+      id: '/api/zero/push'
+      path: '/api/zero/push'
+      fullPath: '/api/zero/push'
+      preLoaderRoute: typeof ApiZeroPushServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/api/auth/refresh': {
+      id: '/api/auth/refresh'
+      path: '/api/auth/refresh'
+      fullPath: '/api/auth/refresh'
+      preLoaderRoute: typeof ApiAuthRefreshServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+  }
+}
 
 interface AuthenticatedAdminUsersRouteChildren {
   AuthenticatedAdminUsersAddUserRoute: typeof AuthenticatedAdminUsersAddUserRoute
@@ -151,6 +316,8 @@ const AuthenticatedAdminUsersRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedArtistRoute: typeof AuthenticatedArtistRoute
+  AuthenticatedCartRoute: typeof AuthenticatedCartRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedAdminTeamsRoute: typeof AuthenticatedAdminTeamsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRouteWithChildren
@@ -158,6 +325,8 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedArtistRoute: AuthenticatedArtistRoute,
+  AuthenticatedCartRoute: AuthenticatedCartRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedAdminTeamsRoute: AuthenticatedAdminTeamsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRouteWithChildren,
@@ -167,137 +336,19 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-export interface FileRoutesByFullPath {
-  '': typeof AuthenticatedRouteRouteWithChildren
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/admin/teams': typeof AuthenticatedAdminTeamsRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
-  '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
-  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
-}
-
-export interface FileRoutesByTo {
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/admin/teams': typeof AuthenticatedAdminTeamsRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
-  '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
-  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/_authenticated/admin/teams': typeof AuthenticatedAdminTeamsRoute
-  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
-  '/_authenticated/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
-  '/_authenticated/admin/users_/$userId': typeof AuthenticatedAdminUsersUserIdRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/login'
-    | '/signup'
-    | '/'
-    | '/admin/teams'
-    | '/admin/users'
-    | '/admin/users/add-user'
-    | '/admin/users/$userId'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/login'
-    | '/signup'
-    | '/'
-    | '/admin/teams'
-    | '/admin/users'
-    | '/admin/users/add-user'
-    | '/admin/users/$userId'
-  id:
-    | '__root__'
-    | '/_authenticated'
-    | '/login'
-    | '/signup'
-    | '/_authenticated/'
-    | '/_authenticated/admin/teams'
-    | '/_authenticated/admin/users'
-    | '/_authenticated/admin/users/add-user'
-    | '/_authenticated/admin/users_/$userId'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  LoginRoute: typeof LoginRoute
-  SignupRoute: typeof SignupRoute
-}
-
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/_authenticated",
-        "/login",
-        "/signup"
-      ]
-    },
-    "/_authenticated": {
-      "filePath": "_authenticated/route.tsx",
-      "children": [
-        "/_authenticated/",
-        "/_authenticated/admin/teams",
-        "/_authenticated/admin/users",
-        "/_authenticated/admin/users_/$userId"
-      ]
-    },
-    "/login": {
-      "filePath": "login.tsx"
-    },
-    "/signup": {
-      "filePath": "signup.tsx"
-    },
-    "/_authenticated/": {
-      "filePath": "_authenticated/index.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/admin/teams": {
-      "filePath": "_authenticated/admin/teams.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/admin/users": {
-      "filePath": "_authenticated/admin/users.tsx",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/admin/users/add-user"
-      ]
-    },
-    "/_authenticated/admin/users/add-user": {
-      "filePath": "_authenticated/admin/users/add-user.tsx",
-      "parent": "/_authenticated/admin/users"
-    },
-    "/_authenticated/admin/users_/$userId": {
-      "filePath": "_authenticated/admin/users_.$userId.tsx",
-      "parent": "/_authenticated"
-    }
-  }
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+  ApiAuthRefreshServerRoute: ApiAuthRefreshServerRoute,
+  ApiZeroPushServerRoute: ApiZeroPushServerRoute,
 }
-ROUTE_MANIFEST_END */
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()

@@ -1,64 +1,100 @@
-import { useEffect } from "react";
-import { type QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { type ReactNode } from "react";
+import { QueryClientProvider } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
-  Link,
   Outlet,
+  Scripts,
+  useRouter,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { type AuthContext } from "#/auth";
-import { ThemeProvider } from "#/components/theme/theme-provider";
+import { CookiesProvider } from "react-cookie";
+import { must } from "shared/must";
 
-export const Route = createRootRouteWithContext<{
-  auth: AuthContext | undefined;
-  queryClient: QueryClient;
-}>()({
-  component: RootComponent,
-  notFoundComponent: () => {
+import { DefaultCatchBoundary } from "#/components/catch-boundary";
+import { SessionInit } from "#/components/session-init";
+import { ZeroInit } from "#/components/zero-init";
+import { type RouterContext } from "#/router";
+
+export const Route = createRootRouteWithContext<RouterContext>()({
+  errorComponent: (props) => {
     return (
-      <div>
-        <p>This is the notFoundComponent configured on root route</p>
-        <Link to="/">Start Over</Link>
-      </div>
+      <RootDocument>
+        <DefaultCatchBoundary {...props} />
+      </RootDocument>
     );
   },
   head: () => ({
-    // TODO: this is just placeholder stuff and we need something more official as the app matures
     meta: [
       {
-        name: "description",
-        content: "My App is a web application",
+        charSet: "utf-8",
       },
       {
-        title: "My App",
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      {
+        title: "Solved Contact",
       },
     ],
   }),
+  notFoundComponent: () => <div>Not Found</div>,
+  component: RootComponent,
 });
 
 function RootComponent() {
-  // Wasnt sure how to explicitly pass styles to the tanstack router devtools button, so this is a hack to add a margin to the button
-  useEffect(() => {
-    setTimeout(() => {
-      const devtoolsButton = document.querySelector(
-        'button[aria-label="Open TanStack Router Devtools"]',
-      );
-      if (devtoolsButton) {
-        devtoolsButton.classList.add("mr-[60px]");
-      }
-    }, 200); // wait for the render to complete
-  }, []);
-
+  const { queryClient } = useRouter().options.context;
   return (
-    <>
-      <HeadContent />
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Outlet />
-        <ReactQueryDevtools buttonPosition="bottom-right" />
+    <RootDocument>
+      <CookiesProvider>
+        <SessionInit>
+          <ZeroInit>
+            <QueryClientProvider client={queryClient}>
+              <Outlet />
+            </QueryClientProvider>
+          </ZeroInit>
+        </SessionInit>
+      </CookiesProvider>
+    </RootDocument>
+  );
+}
+
+if (typeof import.meta.env === "undefined") {
+  // @ts-expect-error -- this is a hack to make sure `import.meta.env` doesnt crash playwright
+  import.meta.env = {};
+}
+
+const serverURL = must(
+  // TODO: the only reason we need the `process.env` fallback is because playwright somehow trips over `import.meta.env`
+  import.meta.env.VITE_PUBLIC_SERVER || process.env.VITE_PUBLIC_SERVER,
+  "VITE_PUBLIC_SERVER is required",
+);
+
+function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  return (
+    // TODO: language should be dynamic based on the user's preferences
+    <html lang="en-US">
+      <head>
+        <link href={serverURL} rel="preconnect" />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+          html {
+            font-family: sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+          }
+        `,
+          }}
+        />
+        <HeadContent />
+      </head>
+      <body>
+        {children}
         <TanStackRouterDevtools position="bottom-right" />
-      </ThemeProvider>
-    </>
+        <Scripts />
+      </body>
+    </html>
   );
 }

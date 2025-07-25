@@ -4,8 +4,7 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
-import { AppSidebar } from "#/components/app-sidebar";
-import { ModeToggle } from "#/components/theme/mode-toggle";
+import { createServerFn } from "@tanstack/react-start";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -21,11 +20,19 @@ import {
   SidebarTrigger,
 } from "@solved-contact/ui/components/sidebar";
 
+import { AppSidebar } from "#/components/app-sidebar";
+import { Cart } from "#/components/cart";
+import { ModeToggle } from "#/components/theme/mode-toggle";
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function -- taken from ztunes
+export const getAuthFromHeaders = createServerFn().handler(async () => {});
+
 // Naming this file `route.tsx` creates a layout route that is used to wrap ALL the other routes nested under this directory
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
+  staleTime: Infinity,
   beforeLoad: ({ context, location }) => {
-    if (!context.auth?.isAuthenticated) {
+    if (!context.session.data) {
       throw redirect({
         to: "/login",
         search: {
@@ -41,9 +48,9 @@ function AuthenticatedLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex w-full items-center gap-2 px-4">
-            {/* TODO: wrap in a tooltip or something? */}
+            {/* TODO: wrap in a tooltip to explain what this does */}
             <SidebarTrigger className="-ml-1" />
             <Separator
               className="mr-2 data-[orientation=vertical]:h-4"
@@ -66,6 +73,7 @@ function AuthenticatedLayout() {
               <ModeToggle />
             </div>
           </div>
+          <Cart />
         </header>
         <Outlet />
       </SidebarInset>

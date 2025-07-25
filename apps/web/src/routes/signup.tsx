@@ -6,7 +6,7 @@ export const Route = createFileRoute("/signup")({
   component: LoginPage,
 
   beforeLoad: ({ context }) => {
-    if (context.auth?.isAuthenticated) {
+    if (context.session.data) {
       throw redirect({ to: "/" });
     }
   },

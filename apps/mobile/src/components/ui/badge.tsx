@@ -6,16 +6,16 @@ import { TextClassContext } from "#/components/ui/text";
 import { cn } from "#/lib/utils";
 
 const badgeVariants = cva(
-  "web:inline-flex web:transition-colors web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 items-center rounded-full border border-border px-2.5 py-0.5",
+  "web:inline-flex web:transition-colors web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 border-border items-center rounded-full border px-2.5 py-0.5",
   {
     variants: {
       variant: {
         default:
-          "web:hover:opacity-80 border-transparent bg-primary active:opacity-80",
+          "web:hover:opacity-80 bg-primary border-transparent active:opacity-80",
         secondary:
-          "web:hover:opacity-80 border-transparent bg-secondary active:opacity-80",
+          "web:hover:opacity-80 bg-secondary border-transparent active:opacity-80",
         destructive:
-          "web:hover:opacity-80 border-transparent bg-destructive active:opacity-80",
+          "web:hover:opacity-80 bg-destructive border-transparent active:opacity-80",
         outline: "text-foreground",
       },
     },

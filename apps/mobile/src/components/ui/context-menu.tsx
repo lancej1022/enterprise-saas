@@ -39,13 +39,13 @@ function ContextMenuSubTrigger({
   return (
     <TextClassContext.Provider
       value={cn(
-        "native:text-lg select-none text-sm text-primary",
+        "native:text-lg text-primary text-sm select-none",
         open && "native:text-accent-foreground",
       )}
     >
       <ContextMenuPrimitive.SubTrigger
         className={cn(
-          "web:cursor-default web:select-none web:focus:bg-accent web:hover:bg-accent native:py-2 web:outline-none flex flex-row items-center gap-2 rounded-sm px-2 py-1.5 active:bg-accent",
+          "web:cursor-default web:select-none web:focus:bg-accent web:hover:bg-accent native:py-2 web:outline-none active:bg-accent flex flex-row items-center gap-2 rounded-sm px-2 py-1.5",
           open && "bg-accent",
           inset && "pl-8",
           className,
@@ -53,7 +53,7 @@ function ContextMenuSubTrigger({
         {...props}
       >
         {children}
-        <Icon className="ml-auto text-foreground" size={18} />
+        <Icon className="text-foreground ml-auto" size={18} />
       </ContextMenuPrimitive.SubTrigger>
     </TextClassContext.Provider>
   );
@@ -69,7 +69,7 @@ function ContextMenuSubContent({
   return (
     <ContextMenuPrimitive.SubContent
       className={cn(
-        "z-50 mt-1 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover p-1 shadow-md shadow-foreground/5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        "border-border bg-popover shadow-foreground/5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 mt-1 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md",
         open
           ? "web:animate-in web:fade-in-0 web:zoom-in-95"
           : "web:animate-out web:fade-out-0 web:zoom-out",
@@ -111,7 +111,7 @@ function ContextMenuContent({
       >
         <ContextMenuPrimitive.Content
           className={cn(
-            "web:data-[side=bottom]:slide-in-from-top-2 web:data-[side=left]:slide-in-from-right-2 web:data-[side=right]:slide-in-from-left-2 web:data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover p-1 shadow-md shadow-foreground/5",
+            "web:data-[side=bottom]:slide-in-from-top-2 web:data-[side=left]:slide-in-from-right-2 web:data-[side=right]:slide-in-from-left-2 web:data-[side=top]:slide-in-from-bottom-2 border-border bg-popover shadow-foreground/5 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md",
             open
               ? "web:animate-in web:fade-in-0 web:zoom-in-95"
               : "web:animate-out web:fade-out-0 web:zoom-out-95",
@@ -137,7 +137,7 @@ function ContextMenuItem({
     <TextClassContext.Provider value="select-none text-sm native:text-lg text-popover-foreground web:group-focus:text-accent-foreground">
       <ContextMenuPrimitive.Item
         className={cn(
-          "web:cursor-default native:py-2 web:outline-none web:focus:bg-accent web:hover:bg-accent group relative flex flex-row items-center gap-2 rounded-sm px-2 py-1.5 active:bg-accent",
+          "web:cursor-default native:py-2 web:outline-none web:focus:bg-accent web:hover:bg-accent active:bg-accent group relative flex flex-row items-center gap-2 rounded-sm px-2 py-1.5",
           inset && "pl-8",
           props.disabled && "web:pointer-events-none opacity-50",
           className,
@@ -159,7 +159,7 @@ function ContextMenuCheckboxItem({
   return (
     <ContextMenuPrimitive.CheckboxItem
       className={cn(
-        "web:cursor-default web:group native:py-2 web:outline-none web:focus:bg-accent relative flex flex-row items-center rounded-sm py-1.5 pl-8 pr-2 active:bg-accent",
+        "web:cursor-default web:group native:py-2 web:outline-none web:focus:bg-accent active:bg-accent relative flex flex-row items-center rounded-sm py-1.5 pr-2 pl-8",
         props.disabled && "web:pointer-events-none opacity-50",
         className,
       )}
@@ -186,7 +186,7 @@ function ContextMenuRadioItem({
   return (
     <ContextMenuPrimitive.RadioItem
       className={cn(
-        "web:cursor-default web:group native:py-2 web:outline-none web:focus:bg-accent relative flex flex-row items-center rounded-sm py-1.5 pl-8 pr-2 active:bg-accent",
+        "web:cursor-default web:group native:py-2 web:outline-none web:focus:bg-accent active:bg-accent relative flex flex-row items-center rounded-sm py-1.5 pr-2 pl-8",
         props.disabled && "web:pointer-events-none opacity-50",
         className,
       )}
@@ -194,7 +194,7 @@ function ContextMenuRadioItem({
     >
       <View className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
         <ContextMenuPrimitive.ItemIndicator>
-          <View className="h-2 w-2 rounded-full bg-foreground" />
+          <View className="bg-foreground h-2 w-2 rounded-full" />
         </ContextMenuPrimitive.ItemIndicator>
       </View>
       {children}
@@ -214,7 +214,7 @@ function ContextMenuLabel({
   return (
     <ContextMenuPrimitive.Label
       className={cn(
-        "native:text-base web:cursor-default px-2 py-1.5 text-sm font-semibold text-foreground",
+        "native:text-base web:cursor-default text-foreground px-2 py-1.5 text-sm font-semibold",
         inset && "pl-8",
         className,
       )}
@@ -231,7 +231,7 @@ function ContextMenuSeparator({
 }) {
   return (
     <ContextMenuPrimitive.Separator
-      className={cn("-mx-1 my-1 h-px bg-border", className)}
+      className={cn("bg-border -mx-1 my-1 h-px", className)}
       {...props}
     />
   );
@@ -241,7 +241,7 @@ function ContextMenuShortcut({ className, ...props }: TextProps) {
   return (
     <Text
       className={cn(
-        "native:text-sm ml-auto text-xs tracking-widest text-muted-foreground",
+        "native:text-sm text-muted-foreground ml-auto text-xs tracking-widest",
         className,
       )}
       {...props}

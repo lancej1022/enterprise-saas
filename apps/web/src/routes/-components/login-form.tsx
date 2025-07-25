@@ -2,12 +2,9 @@ import {
   Link,
   useLocation,
   useNavigate,
-  useRouter,
   useSearch,
 } from "@tanstack/react-router";
-import { useAuth } from "#/auth";
-import { useAppForm } from "#/components/tanstack-form";
-import { authClient } from "#/lib/auth-client";
+import { authClient } from "auth/client";
 // TODO: replace with shadcn toast
 import { toast } from "sonner";
 import { z } from "zod/v4";
@@ -16,8 +13,10 @@ import { Input } from "@solved-contact/ui/components/input";
 import { Label } from "@solved-contact/ui/components/label";
 import { cn } from "@solved-contact/ui/lib/utils";
 
+import { useAppForm } from "#/components/tanstack-form";
+
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
@@ -31,10 +30,6 @@ export function LoginForm(props: React.ComponentProps<"form">) {
     from: isSignup ? "/signup" : "/login",
     select: (search) => ("redirect" in search ? search.redirect : undefined),
   });
-  const { updateUser } = useAuth();
-  const router = useRouter();
-
-  const { signUp, signIn } = authClient;
 
   const form = useAppForm({
     defaultValues: {
@@ -47,7 +42,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
     },
     onSubmit: async ({ value }) => {
       if (isSignup) {
-        const res = await signUp.email({
+        const res = await authClient.signUp.email({
           email: value.email,
           password: value.password,
           name: value.email,
@@ -56,23 +51,19 @@ export function LoginForm(props: React.ComponentProps<"form">) {
           toast.error(res.error.message);
           return;
         }
-
-        updateUser(res.data.user);
       } else {
-        const res = await signIn.email({
+        const res = await authClient.signIn.email({
           email: value.email,
           password: value.password,
+          // callbackURL,
         });
         if (res.error) {
           toast.error(res.error.message);
           return;
         }
-
-        updateUser(res.data.user);
       }
-      // Force the router to update its context, which will update the `auth` context used by the router
-      await router.invalidate();
-      void navigate({ to: redirectPath || "/" });
+      // TODO: should this be `void` instead?
+      await navigate({ to: redirectPath || "/" });
     },
   });
 
@@ -89,7 +80,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
           <h1 className="text-2xl font-bold">
             {isSignup ? "Sign up for an account" : "Login to your account"}
           </h1>
-          <p className="text-balance text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm text-balance">
             {isSignup
               ? "Enter your email below to create an account"
               : "Enter your email below to login to your account"}
@@ -154,8 +145,8 @@ export function LoginForm(props: React.ComponentProps<"form">) {
           <Button className="w-full" type="submit">
             {isSignup ? "Sign up" : "Login"}
           </Button>
-          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-            <span className="relative z-10 bg-background px-2 text-muted-foreground">
+          <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
+            <span className="bg-background text-muted-foreground relative z-10 px-2">
               Or continue with
             </span>
           </div>

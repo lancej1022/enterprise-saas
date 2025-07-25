@@ -7,13 +7,13 @@ import { TextClassContext } from "#/components/ui/text";
 import { cn } from "#/lib/utils";
 
 const toggleVariants = cva(
-  "web:group web:inline-flex web:ring-offset-background web:transition-colors web:hover:bg-muted web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 items-center justify-center rounded-md active:bg-muted",
+  "web:group web:inline-flex web:ring-offset-background web:transition-colors web:hover:bg-muted web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 active:bg-muted items-center justify-center rounded-md",
   {
     variants: {
       variant: {
         default: "bg-transparent",
         outline:
-          "web:hover:bg-accent border border-input bg-transparent active:bg-accent",
+          "web:hover:bg-accent border-input active:bg-accent border bg-transparent",
       },
       size: {
         default: "native:h-12 native:px-[12] h-10 px-3",
@@ -29,7 +29,7 @@ const toggleVariants = cva(
 );
 
 const toggleTextVariants = cva(
-  "native:text-base text-sm font-medium text-foreground",
+  "native:text-base text-foreground text-sm font-medium",
   {
     variants: {
       variant: {

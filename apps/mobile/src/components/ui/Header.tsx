@@ -26,7 +26,7 @@ export function Header({
 }: HeaderProps) {
   return (
     <View>
-      <View className="flex-row items-center justify-between px-4 pb-4 pt-8">
+      <View className="flex-row items-center justify-between px-4 pt-8 pb-4">
         {/* Left: Avatar */}
         <View className="flex-row items-center gap-3">
           <Avatar alt="avatar">
@@ -39,7 +39,7 @@ export function Header({
             )}
             {/* Online dot */}
             <View
-              className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-green-500"
+              className="border-background absolute right-0 bottom-0 h-3 w-3 rounded-full border-2 bg-green-500"
               style={{ position: "absolute", bottom: 0, right: 0 }}
             />
           </Avatar>
@@ -67,7 +67,7 @@ export function Header({
             </Badge>
           )}
           {subtitle && (
-            <Text className="ml-1 text-lg text-muted-foreground">
+            <Text className="text-muted-foreground ml-1 text-lg">
               {subtitle}
             </Text>
           )}

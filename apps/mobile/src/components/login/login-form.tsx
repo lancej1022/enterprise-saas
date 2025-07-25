@@ -13,7 +13,7 @@ import { Github } from "#/lib/icons/github";
 import { cn } from "#/lib/utils";
 
 function HorizontalBar() {
-  return <View className="h-[1px] flex-1 bg-border" />;
+  return <View className="bg-border h-[1px] flex-1" />;
 }
 
 const loginSchema = z.object({
@@ -59,7 +59,7 @@ export function LoginForm({
         <Text aria-level={1} className="text-2xl font-bold" role="heading">
           Login to your account
         </Text>
-        <P className="text-balance text-sm text-muted-foreground">
+        <P className="text-muted-foreground text-sm text-balance">
           Enter your email below to login to your account
         </P>
       </View>
@@ -135,9 +135,9 @@ export function LoginForm({
         >
           <Text>Login</Text>
         </Button>
-        <View className="z-10 flex flex-row items-center justify-around gap-2 bg-background">
+        <View className="bg-background z-10 flex flex-row items-center justify-around gap-2">
           <HorizontalBar />
-          <Text className="relative z-10 bg-background px-2 text-center text-sm text-muted-foreground">
+          <Text className="bg-background text-muted-foreground relative z-10 px-2 text-center text-sm">
             Or continue with
           </Text>
           <HorizontalBar />

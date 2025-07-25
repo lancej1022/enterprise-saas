@@ -14,7 +14,7 @@ function Checkbox({
   return (
     <CheckboxPrimitive.Root
       className={cn(
-        "web:peer native:h-[20] native:w-[20] native:rounded web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 h-4 w-4 shrink-0 rounded-sm border border-primary disabled:cursor-not-allowed disabled:opacity-50",
+        "web:peer native:h-[20] native:w-[20] native:rounded web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 border-primary h-4 w-4 shrink-0 rounded-sm border disabled:cursor-not-allowed disabled:opacity-50",
         props.checked && "bg-primary",
         className,
       )}

@@ -1,39 +1,51 @@
 {
-  "name": "create-t3-turbo",
+  "name": "@solved-contact/monorepo",
   "private": true,
   "engines": {
     "node": ">=22.14.0",
-    "pnpm": ">=10.11.1"
+    "pnpm": ">=10.6.4"
   },
-  "packageManager": "pnpm@10.11.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
-    "auth:generate": "pnpm -F @solved-contact/auth generate",
-    "db:push": "turbo -F @solved-contact/db push",
-    "db:studio": "turbo -F @solved-contact/db studio",
-    "dev": "turbo watch dev --continue",
-    "dev:next": "turbo watch dev -F @solved-contact/nextjs...",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
     "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
-    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
-    "lint:ws": "pnpm dlx sherif@latest",
+    "lint:ws": "pnpm dlx sherif@latest -i tailwindcss",
     "postinstall": "pnpm lint:ws",
+    "prepare": "husky",
+    "dev": "turbo dev",
+    "build": "turbo build",
     "typecheck": "turbo run typecheck",
-    "ui-add": "turbo run ui-add",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "prepare": "husky"
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F server dev",
+    "db:push": "turbo -F server db:push",
+    "db:studio": "turbo -F server db:studio",
+    "db:generate": "turbo -F server db:generate",
+    "db:migrate": "turbo -F server db:migrate"
   },
   "devDependencies": {
     "@solved-contact/prettier-config": "workspace:*",
     "@turbo/gen": "^2.5.4",
-    "husky": "9.1.7",
+    "husky": "^9.1.7",
     "prettier": "catalog:",
-    "turbo": "^2.5.4",
-    "typescript": "catalog:"
+    "turbo": "^2.5.4"
+  },
+  "packageManager": "pnpm@10.6.4",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@rocicorp/zero-sqlite3",
+      "@tailwindcss/oxide",
+      "esbuild"
+    ],
+    "ignoredBuiltDependencies": [
+      "protobufjs"
+    ]
   },
   "prettier": "@solved-contact/prettier-config"
 }

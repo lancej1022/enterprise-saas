@@ -31,7 +31,7 @@ app.use(
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
 const handler = new RPCHandler(appRouter);
-// @ts-expect-error -- this is valid oRPC but TS is unhappy that not all paths have a `return`. Need to review oRPC more...
+// @ts-expect-error - TODO: fix the "not all code paths return a value" error
 app.use("/rpc/*", async (c, next) => {
   const context = await createContext({ context: c });
   const { matched, response } = await handler.handle(c.req.raw, {

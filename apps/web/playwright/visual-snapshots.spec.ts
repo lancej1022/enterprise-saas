@@ -1,10 +1,14 @@
 import AxeBuilder from "@axe-core/playwright"; // 1
 import { expect, test } from "@playwright/test";
+import { type Zero } from "@rocicorp/zero";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
-import { type User } from "#/auth";
+import { type Mutators } from "zero/mutators";
+import { type Schema } from "zero/schema";
 
-import { routeTree } from "../src/routeTree.gen";
+import { type SessionContextType } from "#/components/session-init";
+import { routeTree } from "#/routeTree.gen";
+import { orpc } from "#/utils/orpc";
 
 const queryClient = new QueryClient();
 
@@ -13,49 +17,63 @@ const router = createRouter({
   routeTree,
   context: {
     queryClient,
-    auth: undefined,
+    orpc,
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- taken from ztunes
+    session: undefined as unknown as SessionContextType,
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- taken from ztunes
+    zero: undefined as unknown as Zero<Schema, Mutators>,
   },
 });
 
 const routes = Object.keys(router.routesByPath);
 
-const mockUser = {
-  createdAt: new Date("2024-01-01T00:00:00Z"),
-  email: "test@example.com",
-  name: "Test User",
-  id: "123e4567-e89b-12d3-a456-426614174000",
-  emailVerified: false,
-  updatedAt: new Date("2024-01-01T00:00:00Z"),
-} satisfies User;
+test.describe("Visual snapshots of unauthenticated routes", () => {
+  test.use({ storageState: { cookies: [], origins: [] } });
+  const unAuthenticatedPaths = ["/login", "/signup"];
+
+  for (const path of unAuthenticatedPaths) {
+    test(`Visual snapshot and accessibility check of route: ${path}`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+
+      await page.waitForLoadState("networkidle");
+
+      // Need to remove slashes from the route path otherwise the generated filename is invalid
+      const screenshotName = path.slice(1).replace(/\//g, "-");
+      await expect(page).toHaveScreenshot(screenshotName + ".png");
+
+      const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+      expect(accessibilityScanResults.violations).toEqual([]);
+    });
+  }
+});
 
 for (const route of routes) {
+  if (route.includes("login") || route.includes("signup")) {
+    continue;
+  }
+
   test(`Visual snapshot and accessibility check of route: ${route}`, async ({
     page,
   }) => {
     // Skip routes with path parameters for simplicity
     // You could replace parameters with actual values if needed
-    if (route.includes(":")) {
+    if (route.includes(":") || route.includes("$")) {
+      // eslint-disable-next-line no-console -- for debugging
+      console.log("Skipping route with path parameters:", route);
       test.skip();
       return;
     }
 
     // Normalize empty route to root path
-    const path = route === "" ? "/" : route;
+    let path = route === "" ? "/" : route;
 
-    // For the login and signup routes there is no need to be authenticated to grab the screenshot
-    if (path === "login" || path === "signup") {
-      await page.goto(path);
-    } else {
-      // TODO: this setup can be improved by reviewing the Playwright auth docs and just reusing the auth state instead of constantly setting the user in sessionStorage on each test
-      await page.goto(path);
-      // Inject the mock user into sessionStorage before the auth check
-      await page.evaluate((user) => {
-        sessionStorage.setItem("auth.user", JSON.stringify(user));
-      }, mockUser);
-
-      // Reload to trigger the auth context with the mocked user
-      await page.reload();
+    if (path === "/artist") {
+      // eminem artist id
+      path = "artist?id=b95ce3ff-3d05-4e87-9e01-c97b66af13d4";
     }
+    await page.goto(path);
 
     await page.waitForLoadState("networkidle");
 

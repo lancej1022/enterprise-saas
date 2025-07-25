@@ -1,14 +1,23 @@
 {
   "extends": ["@solved-contact/tsconfig/base.json"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "lib": ["ESNext", "DOM"],
-    "types": ["vite/client"],
-    "rootDirs": ["."],
     "baseUrl": ".",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["./vite-env.d.ts", "vite/client"],
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "rootDirs": ["."],
     "paths": {
       "#/*": ["./src/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "playwright-report"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "playwright-report",
+    ".vercel",
+    ".tanstack"
+  ]
 }

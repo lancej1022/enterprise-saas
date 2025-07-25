@@ -2,51 +2,50 @@
   "$schema": "https://turborepo.org/schema.json",
   "ui": "tui",
   "tasks": {
-    "topo": {
-      "dependsOn": ["^topo"]
-    },
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".cache/tsbuildinfo.json", "dist/**"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
     },
     "dev": {
       "dependsOn": ["^dev"],
       "cache": false,
-      "persistent": false
+      "persistent": true
+    },
+    "db:push": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:migrate": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:generate": {
+      "cache": false,
+      "persistent": true
     },
     "format": {
       "outputs": [".cache/.prettiercache"],
       "outputLogs": "new-only"
     },
     "lint": {
-      "dependsOn": ["^topo", "^build"],
+      "dependsOn": ["^lint", "^build"],
       "outputs": [".cache/.eslintcache"]
     },
     "test": {
-      "dependsOn": ["^topo", "^build", "build"],
+      "dependsOn": ["^build", "build"],
       "outputs": ["test-results"]
     },
     "typecheck": {
-      "dependsOn": ["^topo", "^build"],
+      "dependsOn": ["^build"],
       "outputs": [".cache/tsbuildinfo.json"]
-    },
-    "clean": {
-      "cache": false
-    },
-    "//#clean": {
-      "cache": false
-    },
-    "push": {
-      "cache": false,
-      "interactive": true
-    },
-    "studio": {
-      "cache": false,
-      "persistent": true
-    },
-    "ui-add": {
-      "cache": false,
-      "interactive": true
     }
   },
   "globalEnv": [
@@ -60,7 +59,12 @@
     "EXPO_PUBLIC_SERVER_URL",
     "CORS_ORIGIN",
     "DATABASE_URL",
-    "PORT"
+    "PORT",
+    "DEV_PG_ADDRESS",
+    "DEV_PG_PASSWORD",
+    "PG_URL",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",

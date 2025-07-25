@@ -5,7 +5,14 @@ import webConfig from "@solved-contact/eslint-config/web";
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: ["./src/routeTree.gen.ts"],
+    ignores: [
+      "./src/routeTree.gen.ts",
+      ".tanstack",
+      ".output",
+      ".nitro",
+      ".vercel",
+      "./zero/schema.gen.ts",
+    ],
   },
   ...baseConfig,
   ...reactConfig,

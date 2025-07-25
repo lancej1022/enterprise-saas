@@ -3,7 +3,7 @@ import baseConfig from "@solved-contact/eslint-config/base";
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: ["./src/routeTree.gen.ts"],
+    ignores: ["dist"],
   },
   ...baseConfig,
 ];

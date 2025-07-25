@@ -11,9 +11,9 @@ function Branding() {
       // href="#"
       className="flex flex-row items-center justify-center gap-2 text-center font-medium"
     >
-      <View className="flex h-6 w-6 flex-row items-center justify-center self-center rounded-md bg-primary text-primary-foreground">
+      <View className="bg-primary text-primary-foreground flex h-6 w-6 flex-row items-center justify-center self-center rounded-md">
         {/* TODO: this seems like its the wrong size for some reason... */}
-        <GalleryVerticalEnd className="size-4 text-primary-foreground" />
+        <GalleryVerticalEnd className="text-primary-foreground size-4" />
       </View>
       <Text>Solved Contact</Text>
     </View>
@@ -35,7 +35,7 @@ export function LoginScreen() {
           </View>
         </View>
       </View>
-      <View className="relative hidden bg-muted lg:flex lg:flex-shrink lg:flex-grow">
+      <View className="bg-muted relative hidden lg:flex lg:flex-shrink lg:flex-grow">
         <Image
           // TODO: specify an image source
           // source={require('@chat-app/assets/placeholder.svg')} TODO: add placeholder image

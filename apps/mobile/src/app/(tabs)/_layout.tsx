@@ -48,7 +48,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
               {/* TODO: How to invert the color of the icon based on the theme? */}
               <Icon color={isFocused ? "#A259FF" : "#B0AFC6"} size={26} />
               {tab.badge && (
-                <View className="absolute -right-3 -top-1.5 flex h-[16px] w-[16px] items-center justify-center rounded-full bg-[#FF3B30]">
+                <View className="absolute -top-1.5 -right-3 flex h-[16px] w-[16px] items-center justify-center rounded-full bg-[#FF3B30]">
                   <Text className="text-xs font-bold text-white">
                     {tab.badge}
                   </Text>

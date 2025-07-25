@@ -4,7 +4,7 @@ import { LoginScreen } from "#/components/login/login-screen";
 
 export default function Login() {
   return (
-    <SafeAreaView className="flex-1 justify-center bg-background">
+    <SafeAreaView className="bg-background flex-1 justify-center">
       <LoginScreen />
     </SafeAreaView>
   );

@@ -11,5 +11,6 @@ Seems like you need to run `android` or `ios` before the `dev` version of the sc
 ## Debugging broken builds
 
 1. `npx expo install --check` <!-- this will validate the right dependencies are installed for a given expo version  -->
-2. `npx expo prebuild --clean` <!-- Seems to clean out any old ios/android stuff so they dont pollute new builds -->
-3. `expo run:android --device` <!-- This will allow you to reinstall the app on your emulator device  -->
+2. Delete ALL node_modules at root + `mobile`, delete ios directories, etc -> reinstall via `pnpm i`
+3. `npx expo prebuild --clean` <!-- Seems to clean out any old ios/android stuff so they dont pollute new builds -->
+4. `expo run:android --device` <!-- This will allow you to reinstall the app on your emulator device  -->

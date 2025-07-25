@@ -1,6 +1,10 @@
 {
-  "extends": ["@solved-contact/tsconfig/base.json"],
+  "extends": ["@solved-contact/tsconfig/base.json", "expo/tsconfig.base"],
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
     "baseUrl": ".",
     "paths": {
       "#/*": ["./src/*"]

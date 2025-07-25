@@ -1,14 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
 node_modules
-.pnp
-.pnp.js
-
-# testing
-coverage
-test-results
-playwright-report
+.turbo
 
 # nitro
 .nitro/
@@ -22,37 +13,37 @@ apps/mobile/ios
 apps/mobile/android
 
 # production
-build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+dist
 
 # local env files
 .env
 .env*.local
 
-# vercel
-.vercel
-
-# typescript
-dist/
+# native
 .cache
+.expo
+expo-env.d.ts
+ios
+android
+
+# web
 .tanstack
+.env
+.vercel
+.nitro
+.output
 
-# turbo
-.turbo
+# playwright
+playwright-report
+test-results
+# TODO: why does this seem to require the `**/` prefix?
+**/playwright/.auth
 
+# Docker
+.data
 # go
 .backend
 backend/database
 backend/tmp
 
-# docker
-.data
+.DS_Store
