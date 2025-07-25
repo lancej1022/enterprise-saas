@@ -10,7 +10,7 @@
     "target": "ES2022",
     "rootDirs": ["."],
     "paths": {
-      "#/*": ["./src/*"]
+      "#/*": ["./app/*"]
     }
   },
   "exclude": [

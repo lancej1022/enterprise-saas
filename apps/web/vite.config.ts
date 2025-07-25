@@ -10,7 +10,7 @@ export default defineConfig({
     tanstackStart({
       target: "vercel",
       tsr: {
-        srcDirectory: "src",
+        srcDirectory: "app",
       },
       spa: {
         enabled: true,

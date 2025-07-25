@@ -6,7 +6,7 @@ import webConfig from "@solved-contact/eslint-config/web";
 export default [
   {
     ignores: [
-      "./src/routeTree.gen.ts",
+      "./app/routeTree.gen.ts",
       ".tanstack",
       ".output",
       ".nitro",

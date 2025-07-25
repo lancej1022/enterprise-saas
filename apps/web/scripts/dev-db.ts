@@ -25,6 +25,7 @@ function main() {
     );
     try {
       exec(
+        // TODO: try mapping 5333:5432 !
         // TODO: originally this was using `5432:5432` but it conflicted with hono. I need to review whether this is the right way to allow Zero to connect to the same PG database!
         `docker run --rm --name ztunes -e POSTGRES_PASSWORD=${devPgPassword} -p 5433:5433 postgres -c wal_level=logical`,
       );
