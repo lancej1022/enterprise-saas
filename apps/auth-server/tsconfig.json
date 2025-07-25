@@ -8,7 +8,7 @@
     "noEmit": false,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "#/*": ["./src/*"]
     },
     "outDir": "./dist",
     "types": ["node"],

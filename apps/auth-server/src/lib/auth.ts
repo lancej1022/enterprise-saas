@@ -1,4 +1,3 @@
-import { must } from "@/shared/must";
 import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -10,6 +9,7 @@ import {
 } from "better-auth/plugins";
 import cookie from "cookie";
 
+import { must } from "#/shared/must";
 import { db } from "../db";
 import * as schema from "../db/schema/auth";
 import { ac, admin, member, owner } from "./permissions";
