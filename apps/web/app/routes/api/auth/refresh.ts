@@ -51,6 +51,7 @@ function authorized(userid: string, email: string, jwt: string) {
   return createResponse(200, userid, email, jwt);
 }
 
+// eslint-disable-next-line max-params -- taken from ztunes
 function createResponse(
   status: number,
   userid: string,

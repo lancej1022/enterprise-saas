@@ -102,6 +102,7 @@ export default tseslint.config(
       // `prefer-nullish-coalescing` can lead to bugs in cases where `||` is needed
       "@typescript-eslint/prefer-nullish-coalescing": "off",
       "import/consistent-type-specifier-style": ["error", "prefer-inline"],
+      "max-params": ["error", 3],
       "no-restricted-imports": [
         "error",
         {
