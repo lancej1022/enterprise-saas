@@ -24,3 +24,17 @@ Generate a drizzle schema based on the Better auth config -- `npx @better-auth/c
 1. `pnpm exec drizzle-kit generate` -> Generate migrations (this should be run AFTER the better auth CLI generate from the above step^^)
 2. DOESNT SEEM TO WORK: `npx drizzle-kit migrate` -> apply migrations
 3. `pnpm exec drizzle-kit push` -> applies migrations, but less safely
+
+### Seeding
+
+Seeding the database is done using the `db:seed` script for auth logic, and the zero stuff within `/web` has its own logic
+that will eventually be moved into this directory
+
+The full flow in a FRESH db is basically:
+
+1. `docker compose up -d`
+2. `pnpm drizzle-kit push`
+3. `[DB URL ENV GOES HERE] pnpm db:seed`
+4. `pnpm --filter=web dev` -- seeds the artist data and all that
+
+THEN need to manually enter the db via drizzle studio and update the password where `accountId = 1` -> "d00a5564e215b86b8293d7d54137bf1b:3bf4e0c76dbf56cd29991fb51bf666adc9cab05bc303cebc38548a3d4b5f2a620d7ad91f64ef99ea6a7f8828e137afe7bf7ea5d84a8dde19373d092cf49aa281"
