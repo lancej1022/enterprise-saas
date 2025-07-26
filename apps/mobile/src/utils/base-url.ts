@@ -17,7 +17,7 @@ export function getBaseUrl() {
   const localhost = debuggerHost?.split(":")[0] || "localhost";
 
   if (!localhost) {
-    // return "https://turbo.t3.gg";
+    console.error("Failed to get localhost:", localhost);
     throw new Error(
       "Failed to get localhost. Please point to your production server.",
     );

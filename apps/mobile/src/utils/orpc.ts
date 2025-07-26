@@ -7,6 +7,7 @@ import { type appRouter } from "@solved-contact/auth-server/routers";
 import { authClient } from "#/lib/auth-client";
 
 export const link = new RPCLink({
+  // TODO: why can't android connect to this...?
   url: `${process.env.EXPO_PUBLIC_SERVER_URL}/rpc`,
   headers() {
     const headers = new Map<string, string>();

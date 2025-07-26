@@ -8,6 +8,7 @@ import {
   organization,
 } from "better-auth/plugins";
 import cookie from "cookie";
+import { eq } from "drizzle-orm";
 
 import { must } from "#/shared/must";
 import { db } from "../db";
@@ -23,22 +24,48 @@ export const auth = betterAuth({
     usePlural: true,
   }),
 
-  // databaseHooks: {
-  //   session: {
-  //     create: {
-  //       before: async (session) => {
-  //         // TODO: have to decide how to retrieve the active organization of the user
-  //         const organization = await getActiveOrganization(session.userId);
-  //         return {
-  //           data: {
-  //             ...session,
-  //             activeOrganizationId: organization.id,
-  //           },
-  //         };
-  //       },
-  //     },
-  //   },
-  // },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user, _ctx) => {
+          // TODO: check if org name is already taken OR just create a randomized name
+          await auth.api.createOrganization({
+            body: {
+              name: `${user.name}${Math.random()} organization`,
+              slug: `${user.name}${Math.random()}-organization`,
+              userId: user.id,
+            },
+          });
+        },
+        // TODO: Check if the org name is already taken and throw (or something) if so? OR just create a randomized org in the `after` hook? eg companyName-uuidHere
+        // before: async (user, ctx) => {
+        //   // Modify the user object before it is created
+        //   return Promise.resolve(true);
+        //   // return {
+        //   //   data: {
+        //   //     ...user,
+        //   //     firstName: user.name.split(" ")[0],
+        //   //     lastName: user.name.split(" ")[1],
+        //   //   },
+        //   // };
+        // },
+      },
+    },
+    session: {
+      create: {
+        before: async (session) => {
+          // Get the user's first organization as the active organization
+          const organization = await getActiveOrganization(session.userId);
+          return {
+            data: {
+              ...session,
+              activeOrganizationId: organization?.id || null,
+            },
+          };
+        },
+      },
+    },
+  },
   trustedOrigins: [...corsOrigins, "my-better-t-app://"],
   emailAndPassword: {
     enabled: true,
@@ -74,10 +101,14 @@ export const auth = betterAuth({
       //     },
       //   };
       // },
-      // afterCreate: async ({ organization, member, user }, request) => {
+      // // @ts-expect-error -- debugging
+      // afterCreate: ({ organization, member, user }, request) => {
+      //   console.log("organization created", organization);
+      //   console.log("member created", member);
+      //   console.log("user created", user);
       //   // Run custom logic after organization is created
       //   // e.g., create default resources, send notifications
-      //   await setupDefaultResources(organization.id);
+      //   // await setupDefaultResources(organization.id);
       // },
       teams: {
         enabled: true,
@@ -124,7 +155,7 @@ export const auth = betterAuth({
           }),
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- taken from ztunes
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- from ztunes
         if (session && token) {
           setCookies(headers, {
             userid: session.user.id,
@@ -163,4 +194,25 @@ export function setCookies(
   for (const [key, value] of Object.entries(cookies)) {
     headers.append("Set-Cookie", cookie.serialize(key, value, opts));
   }
+}
+
+// TODO: expand this logic so it doesnt just always return the first org.
+// Probably need to persist the user's most recent org or something somehow?
+async function getActiveOrganization(userId: string) {
+  // Get the user's first organization by joining members and organizations tables
+  const userOrganizations = await db
+    .select({
+      id: schema.organizations.id,
+      name: schema.organizations.name,
+    })
+    .from(schema.members)
+    .innerJoin(
+      schema.organizations,
+      eq(schema.members.organizationId, schema.organizations.id),
+    )
+    .where(eq(schema.members.userId, userId))
+    .limit(1);
+
+  // Return the first organization or null if user has no organizations
+  return userOrganizations[0] || null;
 }

@@ -45,6 +45,7 @@ export const Route = createFileRoute("/_authenticated/")({
 function Home() {
   const router = useRouter();
   const { zero, orpc } = router.options.context;
+
   const privateData = useTanstackQuery(orpc.privateData.queryOptions());
   const healthCheck = useTanstackQuery(orpc.healthCheck.queryOptions());
 

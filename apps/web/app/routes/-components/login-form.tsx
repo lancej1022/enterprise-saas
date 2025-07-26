@@ -21,6 +21,7 @@ const loginSchema = z.object({
 });
 
 export function LoginForm(props: React.ComponentProps<"form">) {
+  // TODO: Invariant failed: Could not find an active match from "/signup" seems to be caused, potentially because of the unclear redirect logic?
   const navigate = useNavigate();
   const pathname = useLocation({
     select: (location) => location.pathname,
@@ -62,8 +63,11 @@ export function LoginForm(props: React.ComponentProps<"form">) {
           return;
         }
       }
-      // TODO: should this be `void` instead?
-      await navigate({ to: redirectPath || "/" });
+
+      await navigate({
+        // from: isSignup ? "/signup" : "/login",
+        to: redirectPath || "/",
+      });
     },
   });
 

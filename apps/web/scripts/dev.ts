@@ -71,7 +71,7 @@ async function main() {
     {
       command: `wait-on tcp:${devPgAddress} && sleep 1 && npx drizzle-kit push --force && npm run seed`,
       name: "seed-script",
-      prefixColor: "#ff5515",
+      prefixColor: "#005fec",
     },
     {
       command: `wait-on tcp:${devPgAddress} && sleep 1 && npm run dev:zero`,
