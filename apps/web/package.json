@@ -10,7 +10,7 @@
     "dev:ui": "tsx scripts/dev-ui.ts",
     "dev:clean": "tsx scripts/clean.ts",
     "format": "prettier --write . --ignore-path ../../.gitignore --ignore-path .prettierignore",
-    "lint": "eslint .",
+    "lint": "eslint . --cache --cache-location ./.cache/.eslintcache",
     "seed": "tsx scripts/seed.ts",
     "generate-zero-schema": "drizzle-zero generate --format -o zero/schema.gen.ts",
     "build": "vite build",
