@@ -7,7 +7,7 @@
     "check-types": "tsc --noEmit",
     "dev": "tsx watch src/index.ts",
     "format": "prettier --write . --ignore-path ../../.gitignore --ignore-path .prettierignore",
-    "lint": "eslint .",
+    "lint": "eslint . --cache --cache-location ./.cache/.eslintcache",
     "start": "node dist/src/index.js",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",

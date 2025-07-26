@@ -11,7 +11,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "format": "prettier --write . --ignore-path ../../.gitignore --ignore-path .prettierignore",
-    "lint": "eslint",
+    "lint": "eslint . --cache --cache-location ./.cache/.eslintcache",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
