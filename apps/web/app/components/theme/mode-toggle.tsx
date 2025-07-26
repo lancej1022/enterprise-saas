@@ -1,3 +1,4 @@
+import { Moon, Sun } from "lucide-react";
 import { Button } from "@solved-contact/ui/components/button";
 import {
   DropdownMenu,
@@ -11,12 +12,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@solved-contact/ui/components/tooltip";
-import { Moon, Sun } from "lucide-react";
-
-import { useTheme } from "./theme-provider";
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  function toggleTheme(theme: "dark" | "light" | "system") {
+    localStorage.theme = theme;
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+
+      root.classList.add(systemTheme);
+      return;
+    }
+
+    root.classList.add(theme);
+  }
 
   return (
     <DropdownMenu>
@@ -37,13 +51,13 @@ export function ModeToggle() {
         </Tooltip>
       </TooltipProvider>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={() => toggleTheme("light")}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={() => toggleTheme("dark")}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={() => toggleTheme("system")}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

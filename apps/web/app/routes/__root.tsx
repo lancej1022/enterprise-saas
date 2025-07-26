@@ -4,6 +4,7 @@ import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
+  ScriptOnce,
   Scripts,
   useRouter,
 } from "@tanstack/react-router";
@@ -91,6 +92,13 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
+        {/* TODO: I dont think i need `scriptsOnce` -- can probably just use a normal script tag? */}
+        <ScriptOnce>
+          {`document.documentElement.classList.toggle(
+            'dark',
+            localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            )`}
+        </ScriptOnce>
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
