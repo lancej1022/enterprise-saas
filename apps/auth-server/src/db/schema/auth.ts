@@ -28,6 +28,7 @@ export const sessions = pgTable("sessions", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   activeOrganizationId: text("active_organization_id"),
+  activeTeamId: text("active_team_id"),
 });
 
 export const accounts = pgTable("accounts", {
@@ -86,7 +87,6 @@ export const members = pgTable("members", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   role: text("role").default("member").notNull(),
-  teamId: text("team_id"),
   createdAt: timestamp("created_at").notNull(),
 });
 
@@ -113,4 +113,13 @@ export const teams = pgTable("teams", {
     .references(() => organizations.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at"),
+});
+
+export const teamMembers = pgTable("team_members", {
+  id: text("id").primaryKey(),
+  teamId: text("team_id").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at"),
 });

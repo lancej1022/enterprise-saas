@@ -5,7 +5,7 @@ packages:
   - backend
 
 catalog:
-  "@better-auth/expo": ^1.2.10
+  "@better-auth/expo": 1.3.3
   "@orpc/client": ^1.5.0
   "@orpc/server": ^1.5.0
   "@orpc/tanstack-query": ^1.5.0
@@ -21,7 +21,7 @@ catalog:
   "@types/react": ^19.0.12
   "@types/react-dom": ^19.0.4
   "@vitejs/plugin-react": 4.5.1
-  better-auth: 1.2.12
+  better-auth: 1.3.3
   clsx: ^2.1.1
   class-variance-authority: 0.7.1
   eslint: 9.28.0
@@ -35,7 +35,7 @@ catalog:
   typescript: 5.8.3
   tw-animate-css: 1.3.4
   vite: 6.3.5
-  zod: 3.25.49
+  zod: 4.0.5
 
 onlyBuiltDependencies:# TODO: I cant remember why I added this?
   - esbuild

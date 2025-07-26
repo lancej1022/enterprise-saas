@@ -479,16 +479,6 @@ export const schema = {
             "role"
           >,
         },
-        teamId: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            ZeroSchema,
-            "members",
-            "teamId"
-          >,
-          serverName: "team_id",
-        },
         createdAt: {
           type: "number",
           optional: false,
@@ -654,8 +644,64 @@ export const schema = {
           >,
           serverName: "active_organization_id",
         },
+        activeTeamId: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "sessions",
+            "activeTeamId"
+          >,
+          serverName: "active_team_id",
+        },
       },
       primaryKey: ["id"],
+    },
+    teamMembers: {
+      name: "teamMembers",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "teamMembers",
+            "id"
+          >,
+        },
+        teamId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "teamMembers",
+            "teamId"
+          >,
+          serverName: "team_id",
+        },
+        userId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "teamMembers",
+            "userId"
+          >,
+          serverName: "user_id",
+        },
+        createdAt: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "teamMembers",
+            "createdAt"
+          >,
+          serverName: "created_at",
+        },
+      },
+      primaryKey: ["id"],
+      serverName: "team_members",
     },
     teams: {
       name: "teams",

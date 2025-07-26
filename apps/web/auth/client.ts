@@ -14,7 +14,7 @@ if (!BASE_URL) {
 }
 
 export const authClient = createAuthClient({
-  baseURL: BASE_URL, // TODO: make sure this points to the hono auth server!
+  baseURL: BASE_URL,
   plugins: [
     organizationClient({
       teams: {

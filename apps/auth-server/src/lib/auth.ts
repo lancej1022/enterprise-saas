@@ -62,6 +62,23 @@ export const auth = betterAuth({
     openAPI(),
     organization({
       ac,
+      // beforeCreate: async ({ organization, user }, request) => {
+      //   // Run custom logic before organization is created
+      //   // Optionally modify the organization data
+      //   return {
+      //     data: {
+      //       ...organization,
+      //       metadata: {
+      //         customField: "value",
+      //       },
+      //     },
+      //   };
+      // },
+      // afterCreate: async ({ organization, member, user }, request) => {
+      //   // Run custom logic after organization is created
+      //   // e.g., create default resources, send notifications
+      //   await setupDefaultResources(organization.id);
+      // },
       teams: {
         enabled: true,
         // TODO: limit teams per organization based on enterprise plans

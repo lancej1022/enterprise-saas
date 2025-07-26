@@ -21,6 +21,6 @@ Generate a drizzle schema based on the Better auth config -- `npx @better-auth/c
 
 ## Drizzle
 
-`npx drizzle-kit generate` -> Generate migrations (this should be run AFTER the better auth CLI generate from the above step^^)
-
-`npx drizzle-kit migrate` -> apply migrations
+1. `pnpm exec drizzle-kit generate` -> Generate migrations (this should be run AFTER the better auth CLI generate from the above step^^)
+2. DOESNT SEEM TO WORK: `npx drizzle-kit migrate` -> apply migrations
+3. `pnpm exec drizzle-kit push` -> applies migrations, but less safely

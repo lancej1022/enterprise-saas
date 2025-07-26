@@ -92,12 +92,25 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        {/* TODO: I dont think i need `scriptsOnce` -- can probably just use a normal script tag? */}
+        {/* TODO: Because this logic is purely client-side, it causes a hydration mismatch. Need to switch to a cookie/SSR solution to avoid that without
+        relying on `suppressHydrationWarning`. */}
         <ScriptOnce>
-          {`document.documentElement.classList.toggle(
-            'dark',
-            localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-            )`}
+          {`
+            const theme = localStorage.theme;
+            const root = window.document.documentElement;
+
+            if (theme === "system") {
+              const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+                .matches
+                ? "dark"
+                : "light";
+
+              root.classList.add(systemTheme);
+              console.log("system theme: ", systemTheme);
+            } else {
+              root.classList.add(theme);
+            }
+            `}
         </ScriptOnce>
         {children}
         <TanStackRouterDevtools position="bottom-right" />

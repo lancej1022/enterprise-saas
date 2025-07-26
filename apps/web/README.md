@@ -1,26 +1,3 @@
-# ztunes
-
-A sync-based ecommerce app with 88k artists and 200k albums from the 1990's.
-
-Built with:
-
-- [Zero](https://zerosync.dev/)
-- [TanStack Start](https://tanstack.com/)
-- [Drizzle](https://orm.drizzle.team/)
-- [Better Auth](https://www.better-auth.com/)
-- [Fly.io](https://fly.io/)
-
-Live demo: https://ztunes.rocicorp.dev
-
-# Features
-
-- All navigtions and mutations are literally instant (next-frame)
-- < 1s cold cache LCP, anywhere on Earth
-- < 0.5s warm cache LCP
-- Instant search results over 1k most popular artists, with later asynchronous results over all data
-- Async search results don't jostle UI – the initial local results are always the best results, sorted first
-- Fine-grained read and write permissions (for the shopping cart)
-
 # Get started
 
 1. Install [Docker](https://docker.com/) (note orbStack doesn't work yet – sorry, [let us know](https://discord.rocicorp.dev/) if you know the fix)
@@ -28,25 +5,25 @@ Live demo: https://ztunes.rocicorp.dev
 3. Run:
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-# Tour of the code
+## Tour of the code
 
-## Database
+### Database
 
 The database is Postgres, run under Docker during dev (see `scripts/dev-db.ts`).
 
 In production, point it at any Postgres database using the `ZERO_UPSTREAM_DB` and `PG_URL` env vars.
 
-## Schema
+## Schema and Migrations
 
 The schema is managed using Drizzle (see `db/schema.ts`).
 
-[`drizzle-zero`](https://github.com/BriefHQ/drizzle-zero) is used to generate the Zero schema (in `zero/schema.gen.ts`). You do not need to worry about the Zero schema at all - it is completely automated. The only exception is to set up read permissions (see `zero/schema.ts`).
+[`drizzle-zero`](https://github.com/BriefHQ/drizzle-zero) is used to generate the Zero schema (in `zero/schema.gen.ts`). Since the ACTUAL drizzle schema comes from `/apps/auth-server`, any time that schema changes YOU NEED TO RUN `generate-zero-schema` package.json script!
 
-The Zero schema is auto-generated during dev when the Drizzle schema changes.
+TODO: The Zero schema is auto-generated during dev when the Drizzle schema changes, but its not aware of the auth server. Need to fix this
 
 The Drizzle schema is **not** automatically pushed to your dev db because that could destroy data. To push your Drizzle schema changes during dev just use the normal `npx drizzle-kit push`.
 
@@ -155,7 +132,7 @@ See `fly.toml` to deploy to your own account.
 
 ## Continuous Integration
 
-We continuously deploy ztunes using Github CI. See `deploy.yml` for how this is done.
+See `deploy.yml` for how this is done.
 
 One important thing to observe here is that the order of updates does matter. We recommend, as a default:
 
