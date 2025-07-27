@@ -15,10 +15,6 @@ export function Cart() {
     },
   );
 
-  if (!session.data) {
-    return null;
-  }
-
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- taken from ztunes
   return <Link to="/cart">Cart ({items.length ?? 0})</Link>;
 }

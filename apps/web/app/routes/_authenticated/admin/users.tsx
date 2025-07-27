@@ -1,4 +1,32 @@
 import { useRef, useState } from "react";
+import { type Zero } from "@rocicorp/zero";
+import { useQuery } from "@rocicorp/zero/react";
+// import { useQuery as useTanstackQuery } from "@tanstack/react-query";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import { authClient } from "auth/client";
+import {
+  Activity,
+  ArrowUpDown,
+  Building,
+  Check,
+  ChevronDown,
+  Filter,
+  MoreHorizontal,
+  Phone,
+  Search,
+  UserPlus,
+  Users,
+  X,
+} from "lucide-react";
+import { type Mutators } from "zero/mutators";
+import { type Schema } from "zero/schema";
+import { z } from "zod/v4";
 import {
   Avatar,
   AvatarFallback,
@@ -32,27 +60,6 @@ import {
   TableHeader,
   TableRow,
 } from "@solved-contact/ui/components/table";
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  useNavigate,
-} from "@tanstack/react-router";
-import {
-  Activity,
-  ArrowUpDown,
-  Building,
-  Check,
-  ChevronDown,
-  Filter,
-  MoreHorizontal,
-  Phone,
-  Search,
-  UserPlus,
-  Users,
-  X,
-} from "lucide-react";
-import { z } from "zod/v4";
 
 const statuses = ["All Statuses", "Active", "Away", "Offline"] as const;
 const statusSchema = z.enum(statuses).optional();
@@ -77,6 +84,20 @@ const rolesSchema = z.enum(roles).optional();
 const teamsSchema = z.enum(teams).optional();
 const locationsSchema = z.enum(locations).optional();
 
+const limit = 20;
+
+function query(z: Zero<Schema, Mutators>, organizationId: string | undefined) {
+  if (!organizationId) {
+    console.error("no organization id");
+    return z.query.members.where("id", "IS", null); // TODO: return empty query if no organization
+  }
+
+  return z.query.members
+    .where("organizationId", "=", organizationId)
+    .orderBy("createdAt", "desc")
+    .limit(limit);
+}
+
 export const Route = createFileRoute("/_authenticated/admin/users")({
   component: UserManagement,
   validateSearch: z.object({
@@ -87,65 +108,6 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
     role: rolesSchema,
   }),
 });
-
-// Mock data
-const users = [
-  {
-    id: "1",
-    name: "Sarah Johnson",
-    email: "sarah.johnson@solved-contact.com",
-    role: "Agent",
-    status: "Active",
-    team: "Customer Support",
-    location: "New York",
-    phoneNumber: "+1 (555) 123-4567",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: "2",
-    name: "Michael Chen",
-    email: "michael.chen@solved-contact.com",
-    role: "Supervisor",
-    status: "Active",
-    team: "Technical Support",
-    location: "San Francisco",
-    phoneNumber: "+1 (555) 987-6543",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: "3",
-    name: "Jessica Williams",
-    email: "jessica.williams@solved-contact.com",
-    role: "Agent",
-    status: "Away",
-    team: "Sales",
-    location: "Chicago",
-    phoneNumber: "+1 (555) 456-7890",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: "4",
-    name: "David Rodriguez",
-    email: "david.rodriguez@solved-contact.com",
-    role: "Administrator",
-    status: "Active",
-    team: "Management",
-    location: "Miami",
-    phoneNumber: "+1 (555) 234-5678",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: "5",
-    name: "Emily Taylor",
-    email: "emily.taylor@solved-contact.com",
-    role: "Agent",
-    status: "Offline",
-    team: "Customer Support",
-    location: "Boston",
-    phoneNumber: "+1 (555) 876-5432",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-] as const;
 
 export function UserManagement() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -158,14 +120,51 @@ export function UserManagement() {
     role = "All Roles",
   } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+  const { zero } = useRouter().options.context;
+  const { data: sessionData } = authClient.useSession();
 
-  function setSearchQuery(value: string) {
-    void navigate({
-      search: (prev) => ({ ...prev, search: value || undefined }),
-    });
-  }
+  const activeOrganizationId =
+    sessionData?.session.activeOrganizationId ?? undefined;
 
-  const filteredUsers = users.filter((user) => {
+  // const { data, error } = useTanstackQuery({
+  //   queryKey: ["members", activeOrganizationId],
+  //   queryFn: async () =>
+  //     await authClient.organization.getFullOrganization({
+  //       query: {
+  //         organizationId: activeOrganizationId,
+  //       },
+  //     }),
+  // });
+
+  const [members, { type }] = useQuery(query(zero, activeOrganizationId), {
+    ttl: "5m",
+  });
+
+  // Query for users to get user details
+  const [users] = useQuery(zero.query.users, {
+    ttl: "5m",
+  });
+
+  // Create a map of user IDs to user data for quick lookup
+  const userMap = new Map(users.map((user) => [user.id, user]));
+
+  // Transform members data to match the expected format
+  const transformedUsers = members.map((member) => {
+    const user = userMap.get(member.userId);
+    return {
+      id: member.userId,
+      name: user?.name || "Unknown User",
+      email: user?.email || "unknown@example.com",
+      role: member.role || "member",
+      status: "Active", // TODO: This field doesn't exist on members, commenting out for now
+      team: "Customer Support", // TODO: This field doesn't exist on members, commenting out for now
+      location: "New York", // TODO: This field doesn't exist on members, commenting out for now
+      phoneNumber: "+1 (555) 123-4567", // TODO: This field doesn't exist on members, commenting out for now
+      avatar: user?.image || "/placeholder.svg?height=40&width=40",
+    };
+  });
+
+  const filteredUsers = transformedUsers.filter((user) => {
     // Filter by search query
     const matchesSearch =
       user.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -194,6 +193,12 @@ export function UserManagement() {
     );
   });
 
+  function setSearchQuery(value: string) {
+    void navigate({
+      search: (prev) => ({ ...prev, search: value || undefined }),
+    });
+  }
+
   function toggleUserSelection(userId: string) {
     setSelectedUsers((prev) =>
       prev.includes(userId)
@@ -221,6 +226,36 @@ export function UserManagement() {
       default:
         return "bg-gray-400";
     }
+  }
+
+  // Show loading state while query is incomplete
+  if (type === "unknown" && transformedUsers.length === 0) {
+    return (
+      <div className="flex flex-col">
+        <div className="border-b"></div>
+        <div className="container flex-1 space-y-4 overflow-auto p-4">
+          <Card>
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>
+                    <h1>User Management</h1>
+                  </CardTitle>
+                  <CardDescription>
+                    Manage your contact center users, teams, and permissions
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="py-8 text-center">
+                <div className="text-muted-foreground">Loading users...</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -365,7 +400,7 @@ export function UserManagement() {
                     {locations.map((loc) => (
                       <DropdownMenuItem
                         className="flex items-center justify-between"
-                        key={location}
+                        key={loc}
                         onClick={() => {
                           void navigate({
                             search: (prev) => ({
@@ -396,7 +431,7 @@ export function UserManagement() {
                     {roles.map((r) => (
                       <DropdownMenuItem
                         className="flex items-center justify-between"
-                        key={role}
+                        key={r}
                         onClick={() =>
                           void navigate({
                             search: (prev) => ({
@@ -476,7 +511,6 @@ export function UserManagement() {
                             <Avatar>
                               <AvatarImage
                                 alt={user.name}
-                                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- when dealing with real data the avatar might be undefined
                                 src={user.avatar || "/placeholder.svg"}
                               />
                               <AvatarFallback>

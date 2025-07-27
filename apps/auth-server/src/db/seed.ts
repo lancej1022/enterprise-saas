@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { faker } from "@faker-js/faker";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 
 import { accounts, members, organizations, users } from "./schema/auth";
@@ -132,6 +133,20 @@ export async function seed() {
   console.log(`Created ${organizationData.length} organizations`);
   // eslint-disable-next-line no-console -- intentional log for seeding
   console.log(`Created ${memberData.length} members`);
+
+  // Update the password for the account associated with userId: 1
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log("Updating password for test user account...");
+  await db
+    .update(accounts)
+    .set({
+      password:
+        "d00a5564e215b86b8293d7d54137bf1b:3bf4e0c76dbf56cd29991fb51bf666adc9cab05bc303cebc38548a3d4b5f2a620d7ad91f64ef99ea6a7f8828e137afe7bf7ea5d84a8dde19373d092cf49aa281",
+      updatedAt: new Date(),
+    })
+    .where(eq(accounts.userId, "1"));
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log("Test user password updated successfully!");
 }
 
 // Run the seed function if this file is executed directly
@@ -140,13 +155,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.error("Seeding failed:", error);
     process.exit(1);
   });
-
-  //   TODO: this logic definitely isnt generating a password with the correct hash lol
-  //   const ctx = await auth.$context;
-  //   const hash = await ctx.password.hash("aaaaaaaa");
-  //   try {
-  //     await ctx.internalAdapter.updatePassword("1", hash);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
 }

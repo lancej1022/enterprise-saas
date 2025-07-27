@@ -46,5 +46,20 @@ export const permissions = definePermissions<{}, Schema>(schema, () => {
         select: [allowIfCartOwner],
       },
     },
+    members: {
+      row: {
+        select: ANYONE_CAN,
+      },
+    },
+    organizations: {
+      row: {
+        select: ANYONE_CAN,
+      },
+    },
+    users: {
+      row: {
+        select: ANYONE_CAN,
+      },
+    },
   } satisfies PermissionsConfig<AuthData, Schema>;
 });
