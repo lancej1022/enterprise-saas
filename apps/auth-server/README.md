@@ -38,3 +38,8 @@ The full flow in a FRESH db is basically:
 4. `pnpm --filter=web dev` -- seeds the artist data and all that
 
 THEN need to manually enter the db via drizzle studio and update the password where `accountId = 1` -> "d00a5564e215b86b8293d7d54137bf1b:3bf4e0c76dbf56cd29991fb51bf666adc9cab05bc303cebc38548a3d4b5f2a620d7ad91f64ef99ea6a7f8828e137afe7bf7ea5d84a8dde19373d092cf49aa281"
+
+### Debugging
+
+If you see an error such as "failed to decrypt private key" or something from better auth, try console.log(secret) within `src/lib/auth.ts` to make sure its g2g.
+If its properly defined, try deleting everything in the JWKs table via Drizzle Studio. I have no idea if this is actually needed, but it worked for me in the past.

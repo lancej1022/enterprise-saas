@@ -16,6 +16,7 @@ import * as schema from "../db/schema/auth";
 import { ac, admin, member, owner } from "./permissions";
 
 const corsOrigins = process.env.CORS_ORIGIN?.split(",") || [];
+const secret = process.env.BETTER_AUTH_SECRET;
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -70,12 +71,23 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  secret: process.env.BETTER_AUTH_SECRET,
+  secret: secret,
   baseURL: process.env.BETTER_AUTH_URL,
   plugins: [
     expo(),
     jwt({
       jwt: {
+        definePayload: (ctx) => {
+          return {
+            ...ctx.user,
+            // add the orgId so that Zero Cache Server can access it through the JWT
+            /* 
+              eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: how do we make better-auth aware that `activeOrganizationId` 
+              is guaranteed to be set thanks to the `databaseHooks` above?
+            */
+            activeOrganizationId: ctx.session.activeOrganizationId,
+          };
+        },
         // This is now long your websockets will be able to stay up. When the
         // websocket is closed, all the queries are dematerialized on the
         // server. So making the socket lifetime too short is bad for

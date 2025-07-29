@@ -1,8 +1,8 @@
 import { type CustomMutatorDefs } from "@rocicorp/zero";
 
-import { type AuthData, type schema } from "./schema";
+import { type DecodedJWT, type schema } from "./schema";
 
-export function createMutators(authData: AuthData | undefined) {
+export function createMutators(authData: DecodedJWT | undefined) {
   return {
     cart: {
       add: async (

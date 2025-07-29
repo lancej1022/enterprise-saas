@@ -29,6 +29,8 @@ export const ServerRoute = createServerFileRoute("/api/zero/push").methods({
 
     try {
       const result = await processor.process(
+        // @ts-expect-error -- The eventual goal is to not have Tanstack as the push endpoint, but rather the Go server or Node auth-server
+        // TODO: this does meant that this is a guaranteed bug below, since it's not passing the `activeOrganizationId`
         createMutators(userID ? { sub: userID } : undefined),
         request,
       );
