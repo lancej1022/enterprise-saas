@@ -8,7 +8,6 @@ import {
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
-import { authClient } from "auth/client";
 import {
   Activity,
   ArrowUpDown,
@@ -96,19 +95,10 @@ const limit = 20;
 
 function query(
   z: Zero<Schema, Mutators>,
-  organizationId: string | undefined,
   // TODO: this appears to be a `member` object rather than `unknown`, but Im not 100% sure how to accurately get the type of that from the BE?
   startAfter?: unknown, // cursor for pagination
 ) {
-  if (!organizationId) {
-    console.error("no organization id");
-    return z.query.members.where("id", "IS", null); // TODO: return empty query if no organization
-  }
-
-  let q = z.query.members
-    .where("organizationId", "=", organizationId)
-    .orderBy("createdAt", "desc")
-    .limit(limit);
+  let q = z.query.members.orderBy("createdAt", "desc").limit(limit);
 
   if (startAfter) {
     q = q.start(startAfter);
@@ -127,6 +117,12 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
     role: rolesSchema,
     page: z.number().min(1).optional().default(1),
   }),
+  loaderDeps: ({ search }) => search,
+  // TODO: use the actual search deps to perform the Zero query!
+  loader: ({ context, deps: _deps }) => {
+    const { zero } = context;
+    query(zero).preload({ ttl: "5m" }).cleanup();
+  },
 });
 
 export function UserManagement() {
@@ -143,20 +139,13 @@ export function UserManagement() {
   } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
   const { zero } = useRouter().options.context;
-  const { data: sessionData } = authClient.useSession();
-
-  const activeOrganizationId =
-    sessionData?.session.activeOrganizationId ?? undefined;
 
   // For cursor-based pagination, we need to determine the cursor for the current page
   const currentCursor = page > 1 ? cursors[page] : undefined;
 
-  const [members, { type }] = useQuery(
-    query(zero, activeOrganizationId, currentCursor),
-    {
-      ttl: "5m",
-    },
-  );
+  const [members, { type }] = useQuery(query(zero, currentCursor), {
+    ttl: "5m",
+  });
 
   // TODO: this was vibe coded with Claude -- need to check the Zero discord to see if they have better recommendations
   // Store cursor for next page when we have a full page of results
