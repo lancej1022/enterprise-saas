@@ -9,6 +9,10 @@
       "mode": "auto"
     }
   ],
+  "eslint.rules.customizations": [
+    // for lint errors that will autofix on save, show them as info in the IDE rather than errors
+    { "rule": "*", "fixable": true, "severity": "info" }
+  ],
   // TODO: can the below note be automated?
   // NOTE: You must tell VS Code / Cursor to use the WORKSPACE version of TypeScript, not the IDE version. `Cmd + Shift + P` and select `TypeScript: Select TypeScript Version` and select `Use Workspace Version`
   "typescript.tsdk": "node_modules/typescript/lib",

@@ -1,7 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { type Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
-// import { useQuery as useTanstackQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   Link,
@@ -53,6 +52,15 @@ import {
 import { Input } from "@solved-contact/ui/components/input";
 import { Label } from "@solved-contact/ui/components/label";
 import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@solved-contact/ui/components/pagination";
+import {
   Table,
   TableBody,
   TableCell,
@@ -86,16 +94,27 @@ const locationsSchema = z.enum(locations).optional();
 
 const limit = 20;
 
-function query(z: Zero<Schema, Mutators>, organizationId: string | undefined) {
+function query(
+  z: Zero<Schema, Mutators>,
+  organizationId: string | undefined,
+  // TODO: this appears to be a `member` object rather than `unknown`, but Im not 100% sure how to accurately get the type of that from the BE?
+  startAfter?: unknown, // cursor for pagination
+) {
   if (!organizationId) {
     console.error("no organization id");
     return z.query.members.where("id", "IS", null); // TODO: return empty query if no organization
   }
 
-  return z.query.members
+  let q = z.query.members
     .where("organizationId", "=", organizationId)
     .orderBy("createdAt", "desc")
     .limit(limit);
+
+  if (startAfter) {
+    q = q.start(startAfter);
+  }
+
+  return q;
 }
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
@@ -106,18 +125,21 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
     team: teamsSchema,
     location: locationsSchema,
     role: rolesSchema,
+    page: z.number().min(1).optional().default(1),
   }),
 });
 
 export function UserManagement() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [cursors, setCursors] = useState<Record<number, unknown>>({});
   const {
     search = "",
     status = "All Statuses",
     team = "All Teams",
     location = "All Locations",
     role = "All Roles",
+    page = 1,
   } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
   const { zero } = useRouter().options.context;
@@ -126,19 +148,26 @@ export function UserManagement() {
   const activeOrganizationId =
     sessionData?.session.activeOrganizationId ?? undefined;
 
-  // const { data, error } = useTanstackQuery({
-  //   queryKey: ["members", activeOrganizationId],
-  //   queryFn: async () =>
-  //     await authClient.organization.getFullOrganization({
-  //       query: {
-  //         organizationId: activeOrganizationId,
-  //       },
-  //     }),
-  // });
+  // For cursor-based pagination, we need to determine the cursor for the current page
+  const currentCursor = page > 1 ? cursors[page] : undefined;
 
-  const [members, { type }] = useQuery(query(zero, activeOrganizationId), {
-    ttl: "5m",
-  });
+  const [members, { type }] = useQuery(
+    query(zero, activeOrganizationId, currentCursor),
+    {
+      ttl: "5m",
+    },
+  );
+
+  // TODO: this was vibe coded with Claude -- need to check the Zero discord to see if they have better recommendations
+  // Store cursor for next page when we have a full page of results
+  useEffect(() => {
+    if (members.length === limit && page > 0) {
+      const lastMember = members[members.length - 1];
+      if (lastMember) {
+        setCursors((prev) => ({ ...prev, [page + 1]: lastMember }));
+      }
+    }
+  }, [members, page]);
 
   // Query for users to get user details
   const [users] = useQuery(zero.query.users, {
@@ -195,7 +224,7 @@ export function UserManagement() {
 
   function setSearchQuery(value: string) {
     void navigate({
-      search: (prev) => ({ ...prev, search: value || undefined }),
+      search: (prev) => ({ ...prev, search: value || undefined, page: 1 }),
     });
   }
 
@@ -344,6 +373,7 @@ export function UserManagement() {
                             search: (prev) => ({
                               ...prev,
                               status: t === "All Statuses" ? undefined : t,
+                              page: 1,
                             }),
                           })
                         }
@@ -376,6 +406,7 @@ export function UserManagement() {
                             search: (prev) => ({
                               ...prev,
                               team: t === "All Teams" ? undefined : t,
+                              page: 1,
                             }),
                           })
                         }
@@ -401,15 +432,16 @@ export function UserManagement() {
                       <DropdownMenuItem
                         className="flex items-center justify-between"
                         key={loc}
-                        onClick={() => {
+                        onClick={() =>
                           void navigate({
                             search: (prev) => ({
                               ...prev,
                               location:
                                 loc === "All Locations" ? undefined : loc,
+                              page: 1,
                             }),
-                          });
-                        }}
+                          })
+                        }
                       >
                         {loc}
                         {loc === location && <Check className="h-4 w-4" />}
@@ -437,6 +469,7 @@ export function UserManagement() {
                             search: (prev) => ({
                               ...prev,
                               role: r === "All Roles" ? undefined : r,
+                              page: 1,
                             }),
                           })
                         }
@@ -596,6 +629,70 @@ export function UserManagement() {
                   )}
                 </TableBody>
               </Table>
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      aria-disabled={page <= 1}
+                      className={
+                        page <= 1 ? "pointer-events-none" : "cursor-pointer"
+                      }
+                      // @ts-expect-error -- link intentionally broken for now
+                      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- link intentionally broken for now
+                      search={(prev) => ({
+                        ...prev,
+                        page: page > 1 ? page - 1 : undefined,
+                      })}
+                      to={`/admin/users`}
+                    />
+                  </PaginationItem>
+
+                  {Array.from(
+                    { length: Math.min(5, Math.max(page + 2, 5)) },
+                    (_, i) => i + 1,
+                  ).map((pageNum) => (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        className="cursor-pointer"
+                        isActive={pageNum === page}
+                        // @ts-expect-error -- link intentionally broken for now
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- link intentionally broken for now
+                        search={(prev) => ({
+                          ...prev,
+                          page: pageNum,
+                        })}
+                        to={`/admin/users`}
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+
+                  {page < 5 && (
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  )}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      aria-disabled={members.length < limit}
+                      className={
+                        members.length < limit
+                          ? "pointer-events-none"
+                          : "cursor-pointer"
+                      }
+                      // @ts-expect-error -- link intentionally broken for now
+                      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- link intentionally broken for now
+                      search={(prev) => ({
+                        ...prev,
+                        page: page + 1,
+                      })}
+                      to={`/admin/users`}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             </div>
           </CardContent>
         </Card>
