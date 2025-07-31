@@ -95,13 +95,23 @@ const limit = 20;
 
 function query(
   z: Zero<Schema, Mutators>,
-  // TODO: this appears to be a `member` object rather than `unknown`, but Im not 100% sure how to accurately get the type of that from the BE?
-  startAfter?: unknown, // cursor for pagination
+  options: {
+    organizationId: string;
+    search?: string;
+    // TODO: this appears to be a `member` object rather than `unknown`, but Im not 100% sure how to accurately get the type of that from the BE?
+    startAfter?: unknown; // cursor for pagination
+  },
 ) {
-  let q = z.query.members.orderBy("createdAt", "desc").limit(limit);
+  // TODO: this seems to somehow be querying ALL the users, not just the ones in the current organization?
+  let q = z.query.users
+    .related("members", (subQ) =>
+      subQ.where("organizationId", options.organizationId),
+    )
+    .orderBy("createdAt", "desc")
+    .limit(limit);
 
-  if (startAfter) {
-    q = q.start(startAfter);
+  if (options.startAfter) {
+    q = q.start(options.startAfter);
   }
 
   return q;
@@ -120,8 +130,9 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
   loaderDeps: ({ search }) => search,
   // TODO: use the actual search deps to perform the Zero query!
   loader: ({ context, deps: _deps }) => {
-    const { zero } = context;
-    query(zero).preload({ ttl: "5m" }).cleanup();
+    const { zero, session } = context;
+    const organizationId = session.data?.activeOrganizationId ?? "";
+    query(zero, { organizationId }).preload({ ttl: "5m" }).cleanup();
   },
 });
 
@@ -138,78 +149,29 @@ export function UserManagement() {
     page = 1,
   } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
-  const { zero } = useRouter().options.context;
+  const { zero, session } = useRouter().options.context;
+  const organizationId = session.data?.activeOrganizationId ?? "";
 
   // For cursor-based pagination, we need to determine the cursor for the current page
   const currentCursor = page > 1 ? cursors[page] : undefined;
 
-  const [members, { type }] = useQuery(query(zero, currentCursor), {
-    ttl: "5m",
-  });
+  const [users, { type }] = useQuery(
+    query(zero, { organizationId, search, startAfter: currentCursor }),
+    {
+      ttl: "5m",
+    },
+  );
 
   // TODO: this was vibe coded with Claude -- need to check the Zero discord to see if they have better recommendations
   // Store cursor for next page when we have a full page of results
   useEffect(() => {
-    if (members.length === limit && page > 0) {
-      const lastMember = members[members.length - 1];
+    if (users.length === limit && page > 0) {
+      const lastMember = users[users.length - 1];
       if (lastMember) {
         setCursors((prev) => ({ ...prev, [page + 1]: lastMember }));
       }
     }
-  }, [members, page]);
-
-  // Query for users to get user details
-  const [users] = useQuery(zero.query.users, {
-    ttl: "5m",
-  });
-
-  // Create a map of user IDs to user data for quick lookup
-  const userMap = new Map(users.map((user) => [user.id, user]));
-
-  // Transform members data to match the expected format
-  const transformedUsers = members.map((member) => {
-    const user = userMap.get(member.userId);
-    return {
-      id: member.userId,
-      name: user?.name || "Unknown User",
-      email: user?.email || "unknown@example.com",
-      role: member.role || "member",
-      status: "Active", // TODO: This field doesn't exist on members, commenting out for now
-      team: "Customer Support", // TODO: This field doesn't exist on members, commenting out for now
-      location: "New York", // TODO: This field doesn't exist on members, commenting out for now
-      phoneNumber: "+1 (555) 123-4567", // TODO: This field doesn't exist on members, commenting out for now
-      avatar: user?.image || "/placeholder.svg?height=40&width=40",
-    };
-  });
-
-  const filteredUsers = transformedUsers.filter((user) => {
-    // Filter by search query
-    const matchesSearch =
-      user.name.toLowerCase().includes(search.toLowerCase()) ||
-      user.email.toLowerCase().includes(search.toLowerCase()) ||
-      user.phoneNumber.includes(search);
-
-    // Filter by status
-    const matchesStatus =
-      status === "All Statuses" ||
-      (status === "Active" && user.status === "Active") ||
-      (status === "Away" && user.status === "Away") ||
-      (status === "Offline" && user.status === "Offline");
-
-    // Filter by dropdown filters
-    const matchesTeam = team === "All Teams" || user.team === team;
-    const matchesLocation =
-      location === "All Locations" || user.location === location;
-    const matchesRole = role === "All Roles" || user.role === role;
-
-    return (
-      matchesSearch &&
-      matchesStatus &&
-      matchesTeam &&
-      matchesLocation &&
-      matchesRole
-    );
-  });
+  }, [users, page]);
 
   function setSearchQuery(value: string) {
     void navigate({
@@ -226,10 +188,10 @@ export function UserManagement() {
   }
 
   function toggleSelectAll() {
-    if (selectedUsers.length === filteredUsers.length) {
+    if (selectedUsers.length === users.length) {
       setSelectedUsers([]);
     } else {
-      setSelectedUsers(filteredUsers.map((user) => user.id));
+      setSelectedUsers(users.map((user) => user.id));
     }
   }
 
@@ -247,7 +209,7 @@ export function UserManagement() {
   }
 
   // Show loading state while query is incomplete
-  if (type === "unknown" && transformedUsers.length === 0) {
+  if (type === "unknown" && users.length === 0) {
     return (
       <div className="flex flex-col">
         <div className="border-b"></div>
@@ -492,8 +454,8 @@ export function UserManagement() {
                       <Checkbox
                         aria-label="Select all users"
                         checked={
-                          selectedUsers.length === filteredUsers.length &&
-                          filteredUsers.length > 0
+                          selectedUsers.length === users.length &&
+                          users.length > 0
                         }
                         onCheckedChange={toggleSelectAll}
                       />
@@ -512,14 +474,14 @@ export function UserManagement() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredUsers.length === 0 ? (
+                  {users.length === 0 ? (
                     <TableRow>
                       <TableCell className="h-24 text-center" colSpan={8}>
                         No users found.
                       </TableCell>
                     </TableRow>
                   ) : (
-                    filteredUsers.map((user) => (
+                    users.map((user) => (
                       <TableRow className="group" key={user.id}>
                         <TableCell>
                           <Checkbox
@@ -665,9 +627,9 @@ export function UserManagement() {
 
                   <PaginationItem>
                     <PaginationNext
-                      aria-disabled={members.length < limit}
+                      aria-disabled={users.length < limit}
                       className={
-                        members.length < limit
+                        users.length < limit
                           ? "pointer-events-none"
                           : "cursor-pointer"
                       }

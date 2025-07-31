@@ -894,6 +894,16 @@ export const schema = {
     },
   },
   relationships: {
+    accounts: {
+      user: [
+        {
+          sourceField: ["userId"],
+          destField: ["id"],
+          destSchema: "users",
+          cardinality: "one",
+        },
+      ],
+    },
     album: {
       artist: [
         {
@@ -940,12 +950,160 @@ export const schema = {
         },
       ],
     },
+    invitations: {
+      organization: [
+        {
+          sourceField: ["organizationId"],
+          destField: ["id"],
+          destSchema: "organizations",
+          cardinality: "one",
+        },
+      ],
+      inviter: [
+        {
+          sourceField: ["inviterId"],
+          destField: ["id"],
+          destSchema: "users",
+          cardinality: "one",
+        },
+      ],
+    },
+    members: {
+      user: [
+        {
+          sourceField: ["userId"],
+          destField: ["id"],
+          destSchema: "users",
+          cardinality: "one",
+        },
+      ],
+      organization: [
+        {
+          sourceField: ["organizationId"],
+          destField: ["id"],
+          destSchema: "organizations",
+          cardinality: "one",
+        },
+      ],
+    },
+    organizations: {
+      members: [
+        {
+          sourceField: ["id"],
+          destField: ["organizationId"],
+          destSchema: "members",
+          cardinality: "many",
+        },
+      ],
+      invitations: [
+        {
+          sourceField: ["id"],
+          destField: ["organizationId"],
+          destSchema: "invitations",
+          cardinality: "many",
+        },
+      ],
+      teams: [
+        {
+          sourceField: ["id"],
+          destField: ["organizationId"],
+          destSchema: "teams",
+          cardinality: "many",
+        },
+      ],
+    },
+    sessions: {
+      user: [
+        {
+          sourceField: ["userId"],
+          destField: ["id"],
+          destSchema: "users",
+          cardinality: "one",
+        },
+      ],
+    },
+    teamMembers: {
+      team: [
+        {
+          sourceField: ["teamId"],
+          destField: ["id"],
+          destSchema: "teams",
+          cardinality: "one",
+        },
+      ],
+      user: [
+        {
+          sourceField: ["userId"],
+          destField: ["id"],
+          destSchema: "users",
+          cardinality: "one",
+        },
+      ],
+    },
+    teams: {
+      organization: [
+        {
+          sourceField: ["organizationId"],
+          destField: ["id"],
+          destSchema: "organizations",
+          cardinality: "one",
+        },
+      ],
+      teamMembers: [
+        {
+          sourceField: ["id"],
+          destField: ["teamId"],
+          destSchema: "teamMembers",
+          cardinality: "many",
+        },
+      ],
+    },
     users: {
       cartItems: [
         {
           sourceField: ["id"],
           destField: ["userId"],
           destSchema: "cartItem",
+          cardinality: "many",
+        },
+      ],
+      sessions: [
+        {
+          sourceField: ["id"],
+          destField: ["userId"],
+          destSchema: "sessions",
+          cardinality: "many",
+        },
+      ],
+      accounts: [
+        {
+          sourceField: ["id"],
+          destField: ["userId"],
+          destSchema: "accounts",
+          cardinality: "many",
+        },
+      ],
+      members: [
+        {
+          sourceField: ["id"],
+          destField: ["userId"],
+          destSchema: "members",
+          cardinality: "many",
+        },
+      ],
+      invitations: [
+        {
+          sourceField: ["id"],
+          destField: ["inviterId"],
+          destSchema: "invitations",
+          cardinality: "many",
+        },
+      ],
+      teamMembers: [
+        {
+          sourceField: ["id"],
+          destField: ["userId"],
+          destSchema: "teamMembers",
           cardinality: "many",
         },
       ],

@@ -32,8 +32,8 @@ export const auth = betterAuth({
           // TODO: check if org name is already taken OR just create a randomized name
           await auth.api.createOrganization({
             body: {
-              name: `${user.name}${Math.random()} organization`,
-              slug: `${user.name}${Math.random()}-organization`,
+              name: `${user.name} organization`,
+              slug: `${user.name}-organization`,
               userId: user.id,
             },
           });
