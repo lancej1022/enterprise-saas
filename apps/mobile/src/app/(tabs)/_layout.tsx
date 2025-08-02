@@ -4,11 +4,11 @@ import { Tabs } from "expo-router";
 import { type BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 import { Text } from "#/components/ui/text";
-import { Bell } from "#/lib/icons/Bell";
-import { Book } from "#/lib/icons/Book";
-import { Home } from "#/lib/icons/Home";
-import { Keypad } from "#/lib/icons/Keypad";
-import { Users } from "#/lib/icons/Users";
+import { Bell } from "#/lib/icons/bell";
+import { Book } from "#/lib/icons/book";
+import { Home } from "#/lib/icons/home";
+import { Keypad } from "#/lib/icons/keypad";
+import { Users } from "#/lib/icons/users";
 import { cn } from "#/lib/utils";
 
 const TABS = [

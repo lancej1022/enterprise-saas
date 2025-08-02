@@ -30,6 +30,7 @@
     "db:migrate": "turbo -F server db:migrate"
   },
   "devDependencies": {
+    "@ls-lint/ls-lint": "2.3.1",
     "@solved-contact/prettier-config": "workspace:*",
     "@turbo/gen": "^2.5.4",
     "husky": "^9.1.7",

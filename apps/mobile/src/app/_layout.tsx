@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { useColorScheme } from "#/lib/useColorScheme";
+import { useColorScheme } from "#/lib/use-color-scheme";
 
 import "../styles.css";
 

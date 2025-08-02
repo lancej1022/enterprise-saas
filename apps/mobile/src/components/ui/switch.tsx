@@ -8,7 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import * as SwitchPrimitives from "@rn-primitives/switch";
 
-import { useColorScheme } from "#/lib/useColorScheme";
+import { useColorScheme } from "#/lib/use-color-scheme";
 import { cn } from "#/lib/utils";
 
 function SwitchWeb({

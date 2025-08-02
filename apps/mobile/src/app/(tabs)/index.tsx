@@ -2,7 +2,7 @@ import { Alert, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "#/components/ui/button";
-import { Header } from "#/components/ui/Header";
+import { Header } from "#/components/ui/header";
 import { Text } from "#/components/ui/text";
 import { authClient } from "#/lib/auth-client";
 import { orpc } from "#/utils/orpc";

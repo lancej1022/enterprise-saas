@@ -1,0 +1,23 @@
+# TODO: consider switching from kebab-case to snake_case since its a bit more readable and hyphen symbols can cause problems within JS/Go scripts if youre not careful
+ls:
+  .sql: snake_case
+  "**/meta":
+    .json: snake_case
+  .*: lowercase # allow files to be lowercase and ignore symbols. While I prefer kebab-case, this helps accomodate the various symbols used by expo + tanstack routers
+  .dir: kebab-case | regex:.+ # forces all directories to be kebab-case or begin with a ".", eg ".github"
+  .md: SCREAMING_SNAKE_CASE | kebab-case
+
+ignore:
+  - node_modules
+  - "**/node_modules"
+  - "**/.expo"
+  - "**/.tanstack"
+  - "**/.vercel"
+  - "**/.turbo"
+  - "**/.cache"
+  - "**/.data"
+  - "**/ios"
+  - "**/android"
+  - "**/postgres-data/"
+  - "**/.data/pgdata"
+  - "**/database/postgres-test-data"
