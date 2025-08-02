@@ -38,6 +38,7 @@ test.describe("Visual snapshots of unauthenticated routes", () => {
       await page.goto(path);
 
       await page.waitForLoadState("networkidle");
+      await expect(page.getByText(/loading/i)).not.toBeVisible();
 
       // Need to remove slashes from the route path otherwise the generated filename is invalid
       const screenshotName = path.slice(1).replace(/\//g, "-");

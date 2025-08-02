@@ -7,6 +7,7 @@ import {
   Outlet,
   useNavigate,
   useRouter,
+  // useSearch,
 } from "@tanstack/react-router";
 import {
   Activity,
@@ -22,6 +23,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+// import { useDebouncedCallback } from "use-debounce";
 import { type Mutators } from "zero/mutators";
 import { type Schema } from "zero/schema";
 import { z } from "zod/v4";
@@ -102,15 +104,15 @@ function query(
     startAfter?: unknown; // cursor for pagination
   },
 ) {
-  // TODO: This works, but need to modify this to only grab the relevant fields from users + members
-  const q = z.query.members
-    .related("user")
-    .where("organizationId", options.organizationId)
-    .start(options.startAfter || 0) // TODO: seems like we can just pass a number, rather than the actual member?
-    // .orderBy("createdAt", "desc") // doesnt seem to work anymore for some reason?
+  // TODO: Zero is flagging this as a slow query. Need to ask in Discord if they have perf improvement ideas or try adding an index
+  return z.query.users
+    .whereExists("members", (q) =>
+      q.where("organizationId", options.organizationId),
+    )
+    .where("name", "ILIKE", options.search ? `%${options.search}%` : "%")
+    .related("members")
+    .orderBy("updatedAt", "desc")
     .limit(limit);
-
-  return q;
 }
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
@@ -124,13 +126,57 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
     page: z.number().min(1).optional().default(1),
   }),
   loaderDeps: ({ search }) => search,
-  // TODO: use the actual search deps to perform the Zero query!
-  loader: ({ context, deps: _deps }) => {
+  loader: ({ context, deps }) => {
     const { zero, session } = context;
     const organizationId = session.data?.activeOrganizationId ?? "";
-    query(zero, { organizationId }).preload({ ttl: "5m" }).cleanup();
+    query(zero, { organizationId, search: deps.search })
+      .preload({ ttl: "5m" })
+      .cleanup();
   },
 });
+
+// TODO: need to somehow reset the value if the user clicks the back button, otherwise the input value doesnt match the URL value
+// function useDebouncedSearchParam(initialValue: string, paramName: string) {
+//   const [value, setValue] = useState(initialValue);
+//   const navigate = useNavigate();
+//   const searchParams = useSearch({ strict: false });
+//   console.log("searchParams:", searchParams);
+
+//   // TODO: how to re-run this when `setValue` gets called without using useEffect?
+//   const debouncedNavigate = useDebouncedCallback(
+//     async (callback: () => void) => {
+//       await navigate({
+//         // @ts-expect-error -- TODO: need to figure out how to properly type this
+//         search: (prev) => ({
+//           ...prev,
+//           [paramName]: value.length > 0 ? value : undefined,
+//         }),
+//       });
+//       callback();
+//       console.log("debouncedNavigate complete");
+//     },
+//     300,
+//   );
+
+//   const relevantSearchParam =
+//     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- `string` is too broad to be valid, so we must cast
+//     searchParams[paramName as keyof typeof searchParams];
+
+//   function updateValue(event: React.ChangeEvent<HTMLInputElement>) {
+//     const val = event.target.value;
+//     event.target.focus();
+//     setValue(val);
+//     void debouncedNavigate(() => event.target.focus());
+//   }
+
+//   useEffect(() => {
+//     if (relevantSearchParam !== value) {
+//       setValue(String(relevantSearchParam ?? ""));
+//     }
+//   }, [relevantSearchParam]);
+
+//   return [value, updateValue] as const;
+// }
 
 export function UserManagement() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -147,12 +193,19 @@ export function UserManagement() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { zero, session } = useRouter().options.context;
   const organizationId = session.data?.activeOrganizationId ?? "";
+  // const [searchVal, setSearchVal] = useDebouncedSearchParam(search, "search");
 
   // For cursor-based pagination, we need to determine the cursor for the current page
   const currentCursor = page > 1 ? cursors[page] : undefined;
 
-  const [users, { type }] = useQuery(
-    query(zero, { organizationId, search, startAfter: currentCursor }),
+  const [users] = useQuery(
+    // query(zero, { organizationId, search, startAfter: currentCursor }),
+    query(zero, {
+      organizationId,
+      // search: searchVal,
+      search,
+      startAfter: currentCursor,
+    }),
     {
       ttl: "5m",
     },
@@ -205,36 +258,6 @@ export function UserManagement() {
     }
   }
 
-  // Show loading state while query is incomplete
-  if (type === "unknown" && users.length === 0) {
-    return (
-      <div className="flex flex-col">
-        <div className="border-b"></div>
-        <div className="container flex-1 space-y-4 overflow-auto p-4">
-          <Card>
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>
-                    <h1>User Management</h1>
-                  </CardTitle>
-                  <CardDescription>
-                    Manage your contact center users, teams, and permissions
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="py-8 text-center">
-                <div className="text-muted-foreground">Loading users...</div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col">
       <div className="border-b"></div>
@@ -276,8 +299,10 @@ export function UserManagement() {
                   <Input
                     className="pl-8"
                     defaultValue={search}
+                    // defaultValue={searchVal}
                     id="search"
                     onChange={(e) => setSearchQuery(e.target.value)}
+                    // onChange={setSearchVal}
                     placeholder="Search users..."
                     // TODO: using a controlled input here would definitely be simpler than using a ref to clear the value, but since the `value` is determined by search params
                     // it can cause the cursor to jump to the end of the input if the user types in the middle of an existing value.
@@ -482,7 +507,7 @@ export function UserManagement() {
                       <TableRow className="group" key={user.id}>
                         <TableCell>
                           <Checkbox
-                            aria-label={`Select ${user.user?.name}`}
+                            aria-label={`Select ${user.name}`}
                             checked={selectedUsers.includes(user.id)}
                             onCheckedChange={() => toggleUserSelection(user.id)}
                           />
@@ -491,11 +516,11 @@ export function UserManagement() {
                           <div className="flex items-center space-x-3">
                             <Avatar>
                               <AvatarImage
-                                alt={user.user?.name}
-                                src={user.user?.image || "/placeholder.svg"}
+                                alt={user.name}
+                                src={user.image || "/placeholder.svg"}
                               />
                               <AvatarFallback>
-                                {user.user?.name
+                                {user.name
                                   .split(" ")
                                   .map((n) => n[0])
                                   .join("")}
@@ -507,10 +532,10 @@ export function UserManagement() {
                                 // @ts-expect-error -- link intentionally broken for now
                                 to={`/admin/users/${user.id}`}
                               >
-                                {user.user?.name}
+                                {user.name}
                               </Link>
                               <div className="text-muted-foreground text-xs">
-                                {user.user?.email}
+                                {user.email}
                               </div>
                             </div>
                           </div>
@@ -518,12 +543,12 @@ export function UserManagement() {
                         <TableCell>
                           <Badge
                             variant={
-                              user.role === "Administrator"
+                              user.members[0]?.role === "Administrator"
                                 ? "default"
                                 : "outline"
                             }
                           >
-                            {user.role}
+                            {user.members[0]?.role}
                           </Badge>
                         </TableCell>
                         {/* @ts-expect-error -- havent yet assigned these to users/members */}
