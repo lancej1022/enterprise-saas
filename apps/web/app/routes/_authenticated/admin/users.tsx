@@ -164,6 +164,7 @@ export function UserManagement() {
     if (users.length === limit && page > 0) {
       const lastMember = users[users.length - 1];
       if (lastMember) {
+        // eslint-disable-next-line react-you-might-not-need-an-effect/no-derived-state -- TODO: keeping this temporarily until I get cursors working properly with Zero
         setCursors((prev) => ({ ...prev, [page + 1]: lastMember }));
       }
     }

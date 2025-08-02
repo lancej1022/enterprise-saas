@@ -89,6 +89,7 @@ function Carousel({
 
   React.useEffect(() => {
     if (!api || !setApi) return;
+    // eslint-disable-next-line react-you-might-not-need-an-effect/no-pass-data-to-parent -- this is directly from shadcn
     setApi(api);
   }, [api, setApi]);
 
