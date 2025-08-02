@@ -102,17 +102,13 @@ function query(
     startAfter?: unknown; // cursor for pagination
   },
 ) {
-  // TODO: this seems to somehow be querying ALL the users, not just the ones in the current organization?
-  let q = z.query.users
-    .related("members", (subQ) =>
-      subQ.where("organizationId", options.organizationId),
-    )
-    .orderBy("createdAt", "desc")
+  // TODO: This works, but need to modify this to only grab the relevant fields from users + members
+  const q = z.query.members
+    .related("user")
+    .where("organizationId", options.organizationId)
+    .start(options.startAfter || 0) // TODO: seems like we can just pass a number, rather than the actual member?
+    // .orderBy("createdAt", "desc") // doesnt seem to work anymore for some reason?
     .limit(limit);
-
-  if (options.startAfter) {
-    q = q.start(options.startAfter);
-  }
 
   return q;
 }
@@ -485,7 +481,7 @@ export function UserManagement() {
                       <TableRow className="group" key={user.id}>
                         <TableCell>
                           <Checkbox
-                            aria-label={`Select ${user.name}`}
+                            aria-label={`Select ${user.user?.name}`}
                             checked={selectedUsers.includes(user.id)}
                             onCheckedChange={() => toggleUserSelection(user.id)}
                           />
@@ -494,11 +490,11 @@ export function UserManagement() {
                           <div className="flex items-center space-x-3">
                             <Avatar>
                               <AvatarImage
-                                alt={user.name}
-                                src={user.avatar || "/placeholder.svg"}
+                                alt={user.user?.name}
+                                src={user.user?.image || "/placeholder.svg"}
                               />
                               <AvatarFallback>
-                                {user.name
+                                {user.user?.name
                                   .split(" ")
                                   .map((n) => n[0])
                                   .join("")}
@@ -510,10 +506,10 @@ export function UserManagement() {
                                 // @ts-expect-error -- link intentionally broken for now
                                 to={`/admin/users/${user.id}`}
                               >
-                                {user.name}
+                                {user.user?.name}
                               </Link>
                               <div className="text-muted-foreground text-xs">
-                                {user.email}
+                                {user.user?.email}
                               </div>
                             </div>
                           </div>
@@ -529,14 +525,20 @@ export function UserManagement() {
                             {user.role}
                           </Badge>
                         </TableCell>
+                        {/* @ts-expect-error -- havent yet assigned these to users/members */}
                         <TableCell>{user.team}</TableCell>
+                        {/* @ts-expect-error -- havent yet assigned these to users/members */}
                         <TableCell>{user.location}</TableCell>
+                        {/* @ts-expect-error -- havent yet assigned these to users/members */}
                         <TableCell>{user.phoneNumber}</TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-2">
                             <div
+                              //  @ts-expect-error -- havent yet assigned these to users/members
+                              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- havent created statuses yet
                               className={`h-2 w-2 rounded-full ${getStatusColor(user.status)}`}
                             />
+                            {/* @ts-expect-error -- havent yet assigned these to users/members */}
                             <span>{user.status}</span>
                           </div>
                         </TableCell>
