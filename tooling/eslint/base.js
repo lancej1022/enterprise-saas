@@ -119,6 +119,8 @@ export default tseslint.config(
       "no-console": ["error", { allow: ["error"] }],
       // improves perf and reduces bugs by ensuring devs dont write code where the operators behave differently from the way the developer thought they would
       "no-constant-binary-expression": "error",
+      "unicorn/no-useless-spread": "error",
+      "unicorn/consistent-function-scoping": "error",
       // stylistic
       "func-style": ["error", "declaration"],
       "perfectionist/sort-interfaces": "error",
@@ -129,8 +131,6 @@ export default tseslint.config(
       "perfectionist/sort-union-types": "error",
       "perfectionist/sort-switch-case": "error",
       "unicorn/numeric-separators-style": "error",
-      "unicorn/consistent-function-scoping": "error",
-      "unicorn/no-useless-spread": "error",
     },
   },
   {

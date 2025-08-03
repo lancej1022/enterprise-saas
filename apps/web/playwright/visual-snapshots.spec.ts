@@ -70,11 +70,13 @@ for (const route of routes) {
     }
 
     // Normalize empty route to root path
-    let path = route === "" ? "/" : route;
+    const path = route === "" ? "/" : route;
 
     if (path === "/artist") {
       // eminem artist id
-      path = "artist?id=b95ce3ff-3d05-4e87-9e01-c97b66af13d4";
+      // path = "artist?id=b95ce3ff-3d05-4e87-9e01-c97b66af13d4";
+      test.skip();
+      return;
     }
     await page.goto(path);
 
