@@ -8,6 +8,7 @@ import eslint from "@eslint/js";
 import importPlugin from "eslint-plugin-import";
 import perfectionist from "eslint-plugin-perfectionist";
 import turboPlugin from "eslint-plugin-turbo";
+import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import unusedImports from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 
@@ -60,6 +61,7 @@ export default tseslint.config(
       turbo: turboPlugin,
       "@eslint-community/eslint-comments": ESLintPluginESLintComments,
       perfectionist,
+      unicorn: eslintPluginUnicorn,
     },
     extends: [
       eslint.configs.recommended,
@@ -126,6 +128,9 @@ export default tseslint.config(
       "perfectionist/sort-sets": "error",
       "perfectionist/sort-union-types": "error",
       "perfectionist/sort-switch-case": "error",
+      "unicorn/numeric-separators-style": "error",
+      "unicorn/consistent-function-scoping": "error",
+      "unicorn/no-useless-spread": "error",
     },
   },
   {

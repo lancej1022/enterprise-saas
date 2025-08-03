@@ -30,7 +30,7 @@ export async function seed() {
     metadata: JSON.stringify({
       industry: faker.company.buzzNoun(),
       founded: faker.date.past().getFullYear(),
-      employees: faker.number.int({ min: 50, max: 10000 }),
+      employees: faker.number.int({ min: 50, max: 10_000 }),
     }),
   }));
 
@@ -48,7 +48,7 @@ export async function seed() {
   // eslint-disable-next-line no-console -- intentional log for seeding
   console.log("Creating users and accounts...");
 
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 10_000; i++) {
     const userId = i === 0 ? "1" : randomUUID();
     const accountId = randomUUID();
 

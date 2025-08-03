@@ -13,25 +13,25 @@ import {
   TooltipTrigger,
 } from "@solved-contact/ui/components/tooltip";
 
-export function ModeToggle() {
-  function toggleTheme(theme: "dark" | "light" | "system") {
-    localStorage.theme = theme;
-    const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
+function toggleTheme(theme: "dark" | "light" | "system") {
+  localStorage.theme = theme;
+  const root = window.document.documentElement;
+  root.classList.remove("light", "dark");
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
+  if (theme === "system") {
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light";
 
-      root.classList.add(systemTheme);
-      return;
-    }
-
-    root.classList.add(theme);
+    root.classList.add(systemTheme);
+    return;
   }
 
+  root.classList.add(theme);
+}
+
+export function ModeToggle() {
   return (
     <DropdownMenu>
       <TooltipProvider>

@@ -1,4 +1,19 @@
 import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import {
+  Building,
+  Calendar,
+  Edit2,
+  Mail,
+  MapPin,
+  MoreHorizontal,
+  Phone,
+  Save,
+  Trash2,
+  User,
+  UserCog,
+} from "lucide-react";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -47,21 +62,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@solved-contact/ui/components/tabs";
-import { createFileRoute } from "@tanstack/react-router";
-import {
-  Building,
-  Calendar,
-  Edit2,
-  Mail,
-  MapPin,
-  MoreHorizontal,
-  Phone,
-  Save,
-  Trash2,
-  User,
-  UserCog,
-} from "lucide-react";
-import { toast } from "sonner";
 
 // Mock user data
 const userData = {
@@ -132,6 +132,14 @@ export const Route = createFileRoute("/_authenticated/admin/users_/$userId")({
   component: UserDetails,
 });
 
+function handleDeleteUser() {
+  // Here you would typically make an API call to delete the user
+
+  toast.error("User has been deleted successfully.");
+
+  // Redirect to users list would happen here
+}
+
 function UserDetails() {
   // TODO: will be used to retrieve the actual user data based on their ID
   // const userId = Route.useParams({
@@ -148,14 +156,6 @@ function UserDetails() {
     setIsEditing(false);
 
     toast.success("User information has been updated successfully.");
-  }
-
-  function handleDeleteUser() {
-    // Here you would typically make an API call to delete the user
-
-    toast.error("User has been deleted successfully.");
-
-    // Redirect to users list would happen here
   }
 
   return (

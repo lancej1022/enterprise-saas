@@ -178,6 +178,19 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
 //   return [value, updateValue] as const;
 // }
 
+function getStatusColor(status: string) {
+  switch (status) {
+    case "Active":
+      return "bg-green-500";
+    case "Away":
+      return "bg-yellow-500";
+    case "Offline":
+      return "bg-gray-400";
+    default:
+      return "bg-gray-400";
+  }
+}
+
 export function UserManagement() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
@@ -242,19 +255,6 @@ export function UserManagement() {
       setSelectedUsers([]);
     } else {
       setSelectedUsers(users.map((user) => user.id));
-    }
-  }
-
-  function getStatusColor(status: string) {
-    switch (status) {
-      case "Active":
-        return "bg-green-500";
-      case "Away":
-        return "bg-yellow-500";
-      case "Offline":
-        return "bg-gray-400";
-      default:
-        return "bg-gray-400";
     }
   }
 
