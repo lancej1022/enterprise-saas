@@ -158,6 +158,13 @@ const userData = {
 
 export const Route = createFileRoute("/_authenticated/admin/users_/$userId")({
   component: UserDetails,
+  loader: ({ context, params }) => {
+    const { zero, session } = context;
+    const organizationId = session.data?.activeOrganizationId ?? "";
+    individualUserQuery(zero, { organizationId, userId: params.userId })
+      .preload({ ttl: "5m" })
+      .cleanup();
+  },
 });
 
 function handleDeleteUser() {
