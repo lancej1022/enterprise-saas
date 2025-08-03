@@ -9,15 +9,16 @@ ls:
 
 ignore:
   - node_modules
-  - "**/node_modules"
-  - "**/.expo"
-  - "**/.tanstack"
-  - "**/.vercel"
-  - "**/.turbo"
-  - "**/.cache"
-  - "**/.data"
-  - "**/ios"
-  - "**/android"
-  - "**/postgres-data/"
-  - "**/.data/pgdata"
-  - "**/database/postgres-test-data"
+  # the {} pattern winds up being drastically faster than using "**" -- see https://github.com/loeffel-io/ls-lint/issues/246#issuecomment-2273191041
+  - "{apps,packages,tooling}/*/node_modules"
+  - "{apps,packages,tooling}/*/.expo"
+  - "{apps,packages,tooling}/*/.tanstack"
+  - "{apps,packages,tooling}/*/.vercel"
+  - "{apps,packages,tooling,backend}/*/.turbo"
+  - "{apps,packages,tooling,backend}/*/.cache"
+  - "{apps,packages,tooling,backend}/*/.data"
+  - "{apps,packages,tooling}/*/ios"
+  - "{apps,packages,tooling}/*/android"
+  - "{apps,packages,tooling,backend}/*/postgres-data/"
+  - "{apps,packages,tooling,backend}/*/.data/pgdata"
+  - "{apps,packages,tooling,backend}/*/database/postgres-test-data"
