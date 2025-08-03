@@ -86,8 +86,6 @@ export function individualUserQuery(
       .where("id", options.userId)
       .related("members")
       .one()
-    // .orderBy("updatedAt", "desc")
-    // .limit(limit)
   );
 }
 

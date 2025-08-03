@@ -20,7 +20,7 @@ import { Route as AuthenticatedArtistRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminTeamsRouteImport } from './routes/_authenticated/admin/teams'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users_.$userId'
-import { Route as AuthenticatedAdminUsersAddUserRouteImport } from './routes/_authenticated/admin/users/add-user'
+import { Route as AuthenticatedAdminUsersAddUserRouteImport } from './routes/_authenticated/admin/users.add-user'
 import { ServerRoute as ApiZeroPushServerRouteImport } from './routes/api/zero/push'
 import { ServerRoute as ApiAuthRefreshServerRouteImport } from './routes/api/auth/refresh'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
