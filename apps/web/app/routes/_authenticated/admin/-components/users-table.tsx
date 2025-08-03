@@ -40,6 +40,7 @@ import {
 
 const limit = 20;
 
+// TODO: is there a better place on the file system to share this query from?
 export function query(
   z: Zero<Schema, Mutators>,
   options: {
@@ -246,7 +247,15 @@ export function UsersTable() {
                           View Details
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>Edit User</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link
+                          className="w-full"
+                          params={{ userId: user.id }}
+                          to={`/admin/users/$userId`}
+                        >
+                          Edit User
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem>Assign to Team</DropdownMenuItem>
                       <DropdownMenuItem>Change Phone Number</DropdownMenuItem>
                       <DropdownMenuSeparator />

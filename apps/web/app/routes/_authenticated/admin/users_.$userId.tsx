@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { type Zero } from "@rocicorp/zero";
+import { useQuery } from "@rocicorp/zero/react";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import {
   Building,
   Calendar,
@@ -14,6 +16,8 @@ import {
   UserCog,
 } from "lucide-react";
 import { toast } from "sonner";
+import { type Mutators } from "zero/mutators";
+import { type Schema } from "zero/schema";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -62,6 +66,30 @@ import {
   TabsList,
   TabsTrigger,
 } from "@solved-contact/ui/components/tabs";
+
+export function individualUserQuery(
+  z: Zero<Schema, Mutators>,
+  options: {
+    organizationId: string;
+    // TODO: this appears to be a `member` object rather than `unknown`, but Im not 100% sure how to accurately get the type of that from the BE?
+    startAfter?: unknown; // cursor for pagination
+    userId: string;
+  },
+) {
+  // TODO: Zero is flagging this as a slow query. Need to ask in Discord if they have perf improvement ideas or try adding an index
+  return (
+    // TODO: find the member info for THIS ORGANIZATION
+    z.query.users
+      // .whereExists("members", (q) =>
+      //   q.where("organizationId", options.organizationId),
+      // )
+      .where("id", options.userId)
+      .related("members")
+      .one()
+    // .orderBy("updatedAt", "desc")
+    // .limit(limit)
+  );
+}
 
 // Mock user data
 const userData = {
@@ -141,21 +169,33 @@ function handleDeleteUser() {
 }
 
 function UserDetails() {
-  // TODO: will be used to retrieve the actual user data based on their ID
-  // const userId = Route.useParams({
-  //   select: (params) => params.userId,
-  // });
+  const { zero, session } = useRouter().options.context;
+  const userId = Route.useParams({
+    select: (params) => params.userId,
+  });
 
-  const [user, setUser] = useState(userData);
+  const [dbUser] = useQuery(
+    individualUserQuery(zero, {
+      organizationId: session.data?.activeOrganizationId ?? "",
+      userId,
+    }),
+  );
+
+  // const [user, setUser] = useState(userData);
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(userData);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   function handleSaveChanges() {
-    setUser(editedUser);
+    // setUser(editedUser);
     setIsEditing(false);
 
     toast.success("User information has been updated successfully.");
+  }
+
+  // TODO: handle the whole "User | null" from the Zero query case more effectively
+  if (!dbUser) {
+    return <div>User not found</div>;
   }
 
   return (
@@ -168,37 +208,42 @@ function UserDetails() {
               <div className="mb-4 flex justify-center">
                 <Avatar className="h-24 w-24">
                   <AvatarImage
-                    alt={`${user.firstName} ${user.lastName}`}
-                    src={user.avatar || "/placeholder.svg"}
+                    alt={`${dbUser.name}`}
+                    src={dbUser.image || "/placeholder.svg"}
                   />
                   <AvatarFallback>
-                    {user.firstName[0]}
-                    {user.lastName[0]}
+                    {dbUser.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </AvatarFallback>
                 </Avatar>
               </div>
-              <CardTitle>
-                {user.firstName} {user.lastName}
-              </CardTitle>
+              <CardTitle>{dbUser.name}</CardTitle>
               <CardDescription className="flex items-center justify-center gap-2">
                 <Badge
                   variant={
-                    user.role === "Administrator" ? "default" : "outline"
+                    dbUser.members[0]?.role === "Administrator"
+                      ? "default"
+                      : "outline"
                   }
                 >
-                  {user.role}
+                  {dbUser.members[0]?.role}
                 </Badge>
                 <div className="flex items-center">
                   <div
                     className={`h-2 w-2 rounded-full ${
-                      user.status === "Active"
-                        ? "bg-green-500"
-                        : user.status === "Away"
-                          ? "bg-yellow-500"
-                          : "bg-gray-400"
+                      // user.status === "Active"
+                      // ?
+                      "bg-green-500"
+                      // : user.status === "Away"
+                      //   ? "bg-yellow-500"
+                      //   : "bg-gray-400"
                     }`}
                   />
-                  <span className="ml-1 text-xs">{user.status}</span>
+                  <span className="ml-1 text-xs">
+                    put the User's status here :)
+                  </span>
                 </div>
               </CardDescription>
             </CardHeader>
@@ -206,31 +251,33 @@ function UserDetails() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <Mail className="text-muted-foreground mr-2 h-4 w-4" />
-                  <span className="text-sm">{user.email}</span>
+                  <span className="text-sm">{dbUser.email}</span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="text-muted-foreground mr-2 h-4 w-4" />
-                  <span className="text-sm">{user.phoneNumber}</span>
+                  <span className="text-sm">
+                    Put the users phone number here
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Building className="text-muted-foreground mr-2 h-4 w-4" />
-                  <span className="text-sm">{user.team}</span>
+                  <span className="text-sm">Put the users team here</span>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="text-muted-foreground mr-2 h-4 w-4" />
-                  <span className="text-sm">{user.location}</span>
+                  <span className="text-sm">Put the users location here</span>
                 </div>
                 <div className="flex items-center">
                   <Calendar className="text-muted-foreground mr-2 h-4 w-4" />
                   <span className="text-sm">
-                    Joined {new Date(user.dateJoined).toLocaleDateString()}
+                    Joined {new Date(dbUser.createdAt).toLocaleDateString()}
                   </span>
                 </div>
                 <Separator />
                 <div>
                   <p className="mb-2 text-sm font-medium">Skills</p>
                   <div className="flex flex-wrap gap-1">
-                    {user.skills.map((skill) => (
+                    {/* {user.skills.map((skill) => (
                       <Badge
                         className="text-xs"
                         key={skill}
@@ -238,7 +285,18 @@ function UserDetails() {
                       >
                         {skill}
                       </Badge>
-                    ))}
+                    ))} */}
+                    {["fake skill1", "fake skill2", "fake skill3"].map(
+                      (skill) => (
+                        <Badge
+                          className="text-xs"
+                          key={skill}
+                          variant="secondary"
+                        >
+                          {skill}
+                        </Badge>
+                      ),
+                    )}
                   </div>
                 </div>
               </div>
@@ -456,7 +514,7 @@ function UserDetails() {
                       <Button
                         onClick={() => {
                           setIsEditing(false);
-                          setEditedUser(user);
+                          // setEditedUser(user);
                         }}
                         variant="outline"
                       >
@@ -480,7 +538,8 @@ function UserDetails() {
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                         <div className="bg-muted/50 rounded-lg p-4 text-center">
                           <div className="text-2xl font-bold">
-                            {user.callsHandled}
+                            {/* {user.callsHandled} */}
+                            put the users calls handled here
                           </div>
                           <div className="text-muted-foreground text-sm">
                             Calls Handled
@@ -488,7 +547,8 @@ function UserDetails() {
                         </div>
                         <div className="bg-muted/50 rounded-lg p-4 text-center">
                           <div className="text-2xl font-bold">
-                            {user.avgCallTime}
+                            {/* {user.avgCallTime} */}
+                            put the users avg call time here
                           </div>
                           <div className="text-muted-foreground text-sm">
                             Avg. Call Time
@@ -496,7 +556,8 @@ function UserDetails() {
                         </div>
                         <div className="bg-muted/50 rounded-lg p-4 text-center">
                           <div className="text-2xl font-bold">
-                            {user.satisfactionScore}/5.0
+                            {/* {user.satisfactionScore}/5.0 */}
+                            put the users satisfaction score here
                           </div>
                           <div className="text-muted-foreground text-sm">
                             Satisfaction Score
@@ -554,7 +615,7 @@ function UserDetails() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {user.permissions.map((permission, index) => (
+                      {/* {user.permissions.map((permission, index) => (
                         <div
                           className="bg-muted/30 flex items-center justify-between rounded-lg p-3"
                           key={index}
@@ -566,7 +627,8 @@ function UserDetails() {
                             {permission.granted ? "Granted" : "Not Granted"}
                           </Badge>
                         </div>
-                      ))}
+                      ))} */}
+                      Map over permissions here maybe?
                     </div>
                   </CardContent>
                   <CardFooter>
@@ -588,7 +650,7 @@ function UserDetails() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {user.callHistory.map((call) => (
+                      {/* {user.callHistory.map((call) => (
                         <div
                           className="bg-muted/30 flex items-center justify-between rounded-lg p-3"
                           key={call.id}
@@ -609,7 +671,8 @@ function UserDetails() {
                             {call.status}
                           </Badge>
                         </div>
-                      ))}
+                      ))} */}
+                      Map over call history here maybe?
                     </div>
                   </CardContent>
                   <CardFooter>
