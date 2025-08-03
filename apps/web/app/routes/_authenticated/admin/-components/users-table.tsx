@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Zero } from "@rocicorp/zero";
+import { type Row, type Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { Link, useRouter, useSearch } from "@tanstack/react-router";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
@@ -46,8 +46,8 @@ export function query(
   options: {
     organizationId: string;
     search?: string;
-    // TODO: this appears to be a `member` object rather than `unknown`, but Im not 100% sure how to accurately get the type of that from the BE?
-    startAfter?: unknown; // cursor for pagination
+    // TODO: this doesnt really work the same as a SQL offset since its a cursor. Follow along to https://discord.com/channels/830183651022471199/1401636176997388501 to see better options
+    startAfter?: Row<Schema["tables"]["users"]>;
   },
 ) {
   // TODO: Zero is flagging this as a slow query. Need to ask in Discord if they have perf improvement ideas or try adding an index
@@ -81,16 +81,11 @@ export function UsersTable() {
     from: "/_authenticated/admin/users",
   });
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  //   const [cursors, setCursors] = useState<Record<number, unknown>>({});
-
-  // const currentCursor = page > 1 ? cursors[page] : undefined;
 
   const [users] = useQuery(
     query(zero, {
       organizationId,
-      // search: searchVal,
       search,
-      //   startAfter: currentCursor,
     }),
     {
       ttl: "5m",
@@ -112,18 +107,6 @@ export function UsersTable() {
       setSelectedUsers(users.map((user) => user.id));
     }
   }
-
-  // TODO: this was vibe coded with Claude -- need to check the Zero discord to see if they have better recommendations
-  // Store cursor for next page when we have a full page of results
-  // useEffect(() => {
-  //   if (users.length === limit && page > 0) {
-  //     const lastMember = users[users.length - 1];
-  //     if (lastMember) {
-  //       // eslint-disable-next-line react-you-might-not-need-an-effect/no-derived-state -- TODO: keeping this temporarily until I get cursors working properly with Zero
-  //       setCursors((prev) => ({ ...prev, [page + 1]: lastMember }));
-  //     }
-  //   }
-  // }, [users, page]);
 
   return (
     <div className="rounded-md border">
