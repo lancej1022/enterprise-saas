@@ -9,7 +9,7 @@ ls:
 
 ignore:
   - node_modules
-  # the {} pattern winds up being drastically faster than using "**" -- see https://github.com/loeffel-io/ls-lint/issues/246#issuecomment-2273191041
+  # the `{apps, ...}/` pattern winds up being drastically faster than using "**/" -- see https://github.com/loeffel-io/ls-lint/issues/246#issuecomment-2273191041
   - "{apps,packages,tooling}/*/node_modules"
   - "{apps,packages,tooling}/*/.expo"
   - "{apps,packages,tooling}/*/.tanstack"
