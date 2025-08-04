@@ -33,9 +33,7 @@ export function useDebouncedSearchParam(
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- `string` is too broad to be valid, so we must cast
     searchParams[paramName as keyof typeof searchParams];
 
-  function updateValue(event: React.ChangeEvent<HTMLInputElement>) {
-    const val = event.target.value;
-    event.target.focus();
+  function updateValue(val: string) {
     setValue(val);
     void debouncedNavigate();
   }

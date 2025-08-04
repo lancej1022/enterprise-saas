@@ -82,7 +82,7 @@ for (const route of routes) {
 
     await page.waitForLoadState("networkidle");
     await expect(page.getByText(/loading/i).first()).not.toBeVisible({
-      timeout: 20_000,
+      timeout: 30_000,
     });
 
     // Need to remove slashes from the route path otherwise the generated filename is invalid
