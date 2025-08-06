@@ -35,7 +35,8 @@
     "@turbo/gen": "^2.5.4",
     "husky": "^9.1.7",
     "prettier": "catalog:",
-    "turbo": "^2.5.4"
+    "turbo": "^2.5.4",
+    "typescript": "catalog:"
   },
   "packageManager": "pnpm@10.6.4",
   "pnpm": {

@@ -23,13 +23,13 @@ function query(z: Zero<Schema, Mutators>, q: string | undefined) {
 
 export const Route = createFileRoute("/_authenticated/")({
   component: Home,
-  ssr: false,
   validateSearch: (search: Record<string, unknown>) => {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- taken from ztunes
     return {
       q: typeof search.q === "string" ? search.q : undefined,
     } as { q?: string | undefined };
   },
+  ssr: false,
   loaderDeps: ({ search }) => ({ q: search.q }),
   loader: ({ context, deps: { q } }) => {
     const { zero } = context;

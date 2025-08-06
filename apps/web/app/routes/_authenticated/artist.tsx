@@ -14,13 +14,13 @@ function query(zero: Zero<Schema, Mutators>, artistID: string | undefined) {
 
 export const Route = createFileRoute("/_authenticated/artist")({
   component: RouteComponent,
-  ssr: false,
   validateSearch: (search: Record<string, unknown>) => {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- taken from ztunes
     return {
       id: typeof search.id === "string" ? search.id : undefined,
     } as { id: string | undefined };
   },
+  ssr: false,
   loaderDeps: ({ search }) => ({ artistId: search.id }),
   loader: ({ context, deps: { artistId } }) => {
     const { zero } = context;
