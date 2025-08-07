@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pressable } from "react-native";
+import { Animated, Pressable, type GestureResponderEvent } from "react-native";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { TextClassContext } from "#/components/ui/text";
@@ -64,6 +64,32 @@ type ButtonProps = React.ComponentProps<typeof Pressable> &
   VariantProps<typeof buttonVariants>;
 
 function Button({ ref, className, variant, size, ...props }: ButtonProps) {
+  const animatedValue = new Animated.Value(1);
+
+  function pressIn(event: GestureResponderEvent) {
+    Animated.spring(animatedValue, {
+      toValue: 0.96,
+      friction: 10,
+      tension: 45,
+      useNativeDriver: true,
+    }).start();
+    props.onPressIn?.(event);
+  }
+
+  function pressOut(event: GestureResponderEvent) {
+    Animated.spring(animatedValue, {
+      toValue: 1,
+      tension: 45,
+      friction: 10,
+      useNativeDriver: true,
+    }).start();
+    props.onPressOut?.(event);
+  }
+
+  const animatedStyle = {
+    transform: [{ scale: animatedValue }],
+  };
+
   return (
     <TextClassContext.Provider
       value={buttonTextVariants({
@@ -72,15 +98,19 @@ function Button({ ref, className, variant, size, ...props }: ButtonProps) {
         className: "web:pointer-events-none",
       })}
     >
-      <Pressable
-        className={cn(
-          props.disabled && "web:pointer-events-none opacity-50",
-          buttonVariants({ variant, size, className }),
-        )}
-        ref={ref}
-        role="button"
-        {...props}
-      />
+      <Animated.View style={animatedStyle}>
+        <Pressable
+          className={cn(
+            props.disabled && "web:pointer-events-none opacity-50",
+            buttonVariants({ variant, size, className }),
+          )}
+          onPressIn={pressIn}
+          onPressOut={pressOut}
+          ref={ref}
+          role="button"
+          {...props}
+        />
+      </Animated.View>
     </TextClassContext.Provider>
   );
 }
