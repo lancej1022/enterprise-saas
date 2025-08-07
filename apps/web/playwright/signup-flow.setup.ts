@@ -105,6 +105,9 @@ test.describe("Unauthenticated state on login and signup pages", () => {
     await page.waitForLoadState("networkidle");
     // Should be redirected to home/dashboard
     await expect(page).toHaveURL("/");
-    await page.context().storageState({ path: authFile });
+    await page.context().storageState({
+      path: authFile,
+      // indexedDB: true // TODO: idk if this is needed for Zero at all?
+    });
   });
 });

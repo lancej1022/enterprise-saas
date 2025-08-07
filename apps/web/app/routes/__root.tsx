@@ -38,6 +38,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         title: "Solved Contact",
       },
     ],
+    // scripts: [
+    //   {
+    //     src: "//unpkg.com/react-scan/dist/auto.global.js",
+    //     crossOrigin: "anonymous",
+    //   },
+    // ],
   }),
   notFoundComponent: () => <div>Not Found</div>,
   component: RootComponent,

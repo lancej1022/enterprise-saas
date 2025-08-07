@@ -12,6 +12,8 @@ import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import unusedImports from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 
+import funcStyleRule from "./custom-rules/func-style.js";
+
 // The plugin is not currently exported from the root, so we have to get the plugin from the config.
 // https://github.com/eslint-community/eslint-plugin-eslint-comments/issues/215#issuecomment-2140949371
 const ESLintPluginESLintComments =
@@ -62,6 +64,11 @@ export default tseslint.config(
       "@eslint-community/eslint-comments": ESLintPluginESLintComments,
       perfectionist,
       unicorn: eslintPluginUnicorn,
+      custom: {
+        rules: {
+          "func-style": funcStyleRule,
+        },
+      },
     },
     extends: [
       eslint.configs.recommended,
@@ -121,8 +128,8 @@ export default tseslint.config(
       "no-constant-binary-expression": "error",
       "unicorn/no-useless-spread": "error",
       "unicorn/consistent-function-scoping": "error",
-      // stylistic
-      "func-style": ["error", "declaration"],
+      // stylistic - using custom autofixable version
+      "custom/func-style": ["error", "declaration"],
       "perfectionist/sort-interfaces": "error",
       "perfectionist/sort-jsx-props": "error",
       "perfectionist/sort-maps": "error",
