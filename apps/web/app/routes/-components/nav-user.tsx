@@ -30,7 +30,7 @@ import {
   useSidebar,
 } from "@solved-contact/ui/components/sidebar";
 
-import { authClient } from "../../auth/client";
+import { authClient } from "../../../auth/client";
 
 export function NavUser() {
   const { isMobile } = useSidebar();

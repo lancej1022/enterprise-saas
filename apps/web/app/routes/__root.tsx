@@ -13,9 +13,9 @@ import { CookiesProvider } from "react-cookie";
 import { must } from "shared/must";
 
 import { DefaultCatchBoundary } from "#/components/catch-boundary";
-import { SessionInit } from "#/components/session-init";
-import { ZeroInit } from "#/components/zero-init";
 import { type RouterContext } from "#/router";
+import { SessionInit } from "#/routes/-components/session-init";
+import { ZeroInit } from "#/routes/-components/zero-init";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   errorComponent: (props) => {

@@ -20,9 +20,9 @@ import {
   SidebarTrigger,
 } from "@solved-contact/ui/components/sidebar";
 
-import { AppSidebar } from "#/components/app-sidebar";
 import { Cart } from "#/components/cart";
 import { ModeToggle } from "#/components/theme/mode-toggle";
+import { AppSidebar } from "#/routes/-components/app-sidebar";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function -- taken from ztunes
 export const getAuthFromHeaders = createServerFn().handler(async () => {});

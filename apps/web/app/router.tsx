@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { type Mutators } from "zero/mutators";
 import { type Schema } from "zero/schema";
 
-import { type SessionContextType } from "./components/session-init";
+import { type SessionContextType } from "./routes/-components/session-init";
 import { routeTree } from "./routeTree.gen";
 import { orpc } from "./utils/orpc";
 

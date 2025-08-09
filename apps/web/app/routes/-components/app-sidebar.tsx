@@ -1,10 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { NavMain } from "#/components/nav-main";
-import { NavProjects } from "#/components/nav-projects";
-import { NavUser } from "#/components/nav-user";
-import { TeamSwitcher } from "#/components/team-switcher";
 import {
   AudioWaveform,
   BookOpen,
@@ -24,6 +20,11 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@solved-contact/ui/components/sidebar";
+
+import { NavMain } from "#/routes/-components/nav-main";
+import { NavProjects } from "#/routes/-components/nav-projects";
+import { NavUser } from "#/routes/-components/nav-user";
+import { TeamSwitcher } from "#/routes/-components/team-switcher";
 
 // This is sample data.
 const data = {
