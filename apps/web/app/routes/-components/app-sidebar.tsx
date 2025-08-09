@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
-  Bot,
   Command,
   Frame,
   GalleryVerticalEnd,
+  Inbox,
   Map,
   PieChart,
   Settings2,
@@ -21,18 +21,13 @@ import {
   SidebarRail,
 } from "@solved-contact/ui/components/sidebar";
 
-import { NavMain } from "#/routes/-components/nav-main";
-import { NavProjects } from "#/routes/-components/nav-projects";
-import { NavUser } from "#/routes/-components/nav-user";
-import { TeamSwitcher } from "#/routes/-components/team-switcher";
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
+import { TeamSwitcher } from "./team-switcher";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "Solved Contact",
@@ -53,7 +48,7 @@ const data = {
   navMain: [
     {
       title: "Admin",
-      url: "/users",
+      url: "/admin", // TODO: dont think this URL is actually used anywhere?
       icon: SquareTerminal,
       isActive: true,
       items: [
@@ -72,21 +67,37 @@ const data = {
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Inbox",
+      url: "/inbox",
+      icon: Inbox,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "All",
+          url: "/inbox",
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "@Mentions",
+          url: "/inbox?mentions",
         },
         {
-          title: "Quantum",
-          url: "#",
+          title: "Created by you",
+          url: "/inbox?created-by-you",
+        },
+        {
+          title: "Unassigned",
+          url: "/inbox?unassigned",
+        },
+        {
+          title: "Dashboard",
+          url: "/inbox/unassigned",
+        },
+        {
+          title: "Team Inboxes",
+          url: "/inbox/team",
+        },
+        {
+          title: "AI Agent",
+          url: "/inbox/ai-agent",
         },
       ],
     },
