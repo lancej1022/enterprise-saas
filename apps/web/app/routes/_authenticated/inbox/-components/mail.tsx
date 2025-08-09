@@ -1,5 +1,6 @@
 "use client";
 
+import { Outlet } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { Input } from "@solved-contact/ui/components/input";
 import {
@@ -17,9 +18,7 @@ import {
 import { TooltipProvider } from "@solved-contact/ui/components/tooltip";
 
 import { type Mail } from "./data";
-import { MailDisplay } from "./mail-display";
 import { MailList } from "./mail-list";
-import { useMail } from "./use-mail";
 
 interface MailProps {
   defaultCollapsed?: boolean;
@@ -31,17 +30,11 @@ interface MailProps {
 export function Mail({
   mails,
   defaultLayout = [12, 88], //[20, 32, 48],
-  //   defaultCollapsed = false,
-  //   navCollapsedSize,
 }: MailProps) {
-  //   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
-  //   TODO: get from router
-  const [mail] = useMail();
-
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
-        className="h-full max-h-[800px] items-stretch"
+        className="h-full items-stretch"
         direction="horizontal"
         onLayout={(sizes: number[]) => {
           document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
@@ -49,116 +42,6 @@ export function Mail({
           )}`;
         }}
       >
-        {/* <ResizablePanel
-          className={cn(
-            isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
-          )}
-          collapsedSize={navCollapsedSize}
-          collapsible={true}
-          defaultSize={defaultLayout[0]}
-          maxSize={20}
-          minSize={15}
-          onCollapse={() => {
-            setIsCollapsed(true);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
-            )}`;
-          }}
-          onResize={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
-            )}`;
-          }}
-        >
-          <div
-            className={cn(
-              "flex h-[52px] items-center justify-center",
-              isCollapsed ? "h-[52px]" : "px-2",
-            )}
-          >
-            <AccountSwitcher accounts={accounts} isCollapsed={isCollapsed} />
-          </div>
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Inbox",
-                label: "128",
-                icon: Inbox,
-                variant: "default",
-              },
-              {
-                title: "Drafts",
-                label: "9",
-                icon: File,
-                variant: "ghost",
-              },
-              {
-                title: "Sent",
-                label: "",
-                icon: Send,
-                variant: "ghost",
-              },
-              {
-                title: "Junk",
-                label: "23",
-                icon: ArchiveX,
-                variant: "ghost",
-              },
-              {
-                title: "Trash",
-                label: "",
-                icon: Trash2,
-                variant: "ghost",
-              },
-              {
-                title: "Archive",
-                label: "",
-                icon: Archive,
-                variant: "ghost",
-              },
-            ]}
-          />
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Social",
-                label: "972",
-                icon: Users2,
-                variant: "ghost",
-              },
-              {
-                title: "Updates",
-                label: "342",
-                icon: AlertCircle,
-                variant: "ghost",
-              },
-              {
-                title: "Forums",
-                label: "128",
-                icon: MessagesSquare,
-                variant: "ghost",
-              },
-              {
-                title: "Shopping",
-                label: "8",
-                icon: ShoppingCart,
-                variant: "ghost",
-              },
-              {
-                title: "Promotions",
-                label: "21",
-                icon: Archive,
-                variant: "ghost",
-              },
-            ]}
-          />
-        </ResizablePanel> */}
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[0]} minSize={30}>
           <Tabs defaultValue="all">
@@ -198,9 +81,7 @@ export function Mail({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <MailDisplay
-            mail={mails.find((item) => item.id === mail.selected) || null}
-          />
+          <Outlet />
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

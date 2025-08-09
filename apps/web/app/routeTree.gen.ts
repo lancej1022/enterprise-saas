@@ -17,6 +17,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedCartRouteImport } from './routes/_authenticated/cart'
 import { Route as AuthenticatedArtistRouteImport } from './routes/_authenticated/artist'
+import { Route as AuthenticatedInboxRouteRouteImport } from './routes/_authenticated/inbox/route'
 import { Route as AuthenticatedInboxIndexRouteImport } from './routes/_authenticated/inbox/index'
 import { Route as AuthenticatedInboxMailRouteImport } from './routes/_authenticated/inbox/$mail'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
@@ -58,15 +59,20 @@ const AuthenticatedArtistRoute = AuthenticatedArtistRouteImport.update({
   path: '/artist',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedInboxIndexRoute = AuthenticatedInboxIndexRouteImport.update({
-  id: '/inbox/',
-  path: '/inbox/',
+const AuthenticatedInboxRouteRoute = AuthenticatedInboxRouteRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedInboxIndexRoute = AuthenticatedInboxIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedInboxRouteRoute,
+} as any)
 const AuthenticatedInboxMailRoute = AuthenticatedInboxMailRouteImport.update({
-  id: '/inbox/$mail',
-  path: '/inbox/$mail',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  id: '/$mail',
+  path: '/$mail',
+  getParentRoute: () => AuthenticatedInboxRouteRoute,
 } as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin/users',
@@ -109,13 +115,14 @@ const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/inbox': typeof AuthenticatedInboxRouteRouteWithChildren
   '/artist': typeof AuthenticatedArtistRoute
   '/cart': typeof AuthenticatedCartRoute
   '/': typeof AuthenticatedIndexRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/inbox/$mail': typeof AuthenticatedInboxMailRoute
-  '/inbox': typeof AuthenticatedInboxIndexRoute
+  '/inbox/': typeof AuthenticatedInboxIndexRoute
   '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
 }
@@ -137,6 +144,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_authenticated/inbox': typeof AuthenticatedInboxRouteRouteWithChildren
   '/_authenticated/artist': typeof AuthenticatedArtistRoute
   '/_authenticated/cart': typeof AuthenticatedCartRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
@@ -152,13 +160,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/login'
     | '/signup'
+    | '/inbox'
     | '/artist'
     | '/cart'
     | '/'
     | '/admin/teams'
     | '/admin/users'
     | '/inbox/$mail'
-    | '/inbox'
+    | '/inbox/'
     | '/admin/users/add-user'
     | '/admin/users/$userId'
   fileRoutesByTo: FileRoutesByTo
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/login'
     | '/signup'
+    | '/_authenticated/inbox'
     | '/_authenticated/artist'
     | '/_authenticated/cart'
     | '/_authenticated/'
@@ -269,19 +279,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedArtistRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/inbox/': {
-      id: '/_authenticated/inbox/'
+    '/_authenticated/inbox': {
+      id: '/_authenticated/inbox'
       path: '/inbox'
       fullPath: '/inbox'
-      preLoaderRoute: typeof AuthenticatedInboxIndexRouteImport
+      preLoaderRoute: typeof AuthenticatedInboxRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inbox/': {
+      id: '/_authenticated/inbox/'
+      path: '/'
+      fullPath: '/inbox/'
+      preLoaderRoute: typeof AuthenticatedInboxIndexRouteImport
+      parentRoute: typeof AuthenticatedInboxRouteRoute
     }
     '/_authenticated/inbox/$mail': {
       id: '/_authenticated/inbox/$mail'
-      path: '/inbox/$mail'
+      path: '/$mail'
       fullPath: '/inbox/$mail'
       preLoaderRoute: typeof AuthenticatedInboxMailRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedInboxRouteRoute
     }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
@@ -339,6 +356,22 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface AuthenticatedInboxRouteRouteChildren {
+  AuthenticatedInboxMailRoute: typeof AuthenticatedInboxMailRoute
+  AuthenticatedInboxIndexRoute: typeof AuthenticatedInboxIndexRoute
+}
+
+const AuthenticatedInboxRouteRouteChildren: AuthenticatedInboxRouteRouteChildren =
+  {
+    AuthenticatedInboxMailRoute: AuthenticatedInboxMailRoute,
+    AuthenticatedInboxIndexRoute: AuthenticatedInboxIndexRoute,
+  }
+
+const AuthenticatedInboxRouteRouteWithChildren =
+  AuthenticatedInboxRouteRoute._addFileChildren(
+    AuthenticatedInboxRouteRouteChildren,
+  )
+
 interface AuthenticatedAdminUsersRouteChildren {
   AuthenticatedAdminUsersAddUserRoute: typeof AuthenticatedAdminUsersAddUserRoute
 }
@@ -354,24 +387,22 @@ const AuthenticatedAdminUsersRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedInboxRouteRoute: typeof AuthenticatedInboxRouteRouteWithChildren
   AuthenticatedArtistRoute: typeof AuthenticatedArtistRoute
   AuthenticatedCartRoute: typeof AuthenticatedCartRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedAdminTeamsRoute: typeof AuthenticatedAdminTeamsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRouteWithChildren
-  AuthenticatedInboxMailRoute: typeof AuthenticatedInboxMailRoute
-  AuthenticatedInboxIndexRoute: typeof AuthenticatedInboxIndexRoute
   AuthenticatedAdminUsersUserIdRoute: typeof AuthenticatedAdminUsersUserIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedInboxRouteRoute: AuthenticatedInboxRouteRouteWithChildren,
   AuthenticatedArtistRoute: AuthenticatedArtistRoute,
   AuthenticatedCartRoute: AuthenticatedCartRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedAdminTeamsRoute: AuthenticatedAdminTeamsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRouteWithChildren,
-  AuthenticatedInboxMailRoute: AuthenticatedInboxMailRoute,
-  AuthenticatedInboxIndexRoute: AuthenticatedInboxIndexRoute,
   AuthenticatedAdminUsersUserIdRoute: AuthenticatedAdminUsersUserIdRoute,
 }
 
