@@ -1,34 +1,41 @@
-import { createRouter as createTanstackRouter } from '@tanstack/react-router'
-import { routerWithQueryClient } from '@tanstack/react-router-with-query'
-import * as TanstackQuery from './integrations/tanstack-query/root-provider'
+import {
+  createMemoryHistory,
+  createRouter as createTanstackRouter,
+} from "@tanstack/react-router";
+import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 
-// Import the generated route tree
-import { routeTree } from './routeTree.gen'
+import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
+import { routeTree } from "./routeTree.gen";
 
-// Create a new router instance
+// Used to ensure that changing the route within the chat-widget doesnt actually impact the browser URL
+const memoryHistory = createMemoryHistory({
+  initialEntries: ["/"],
+});
+
 export function createRouter() {
-  const rqContext = TanstackQuery.getContext()
+  const rqContext = TanstackQuery.getContext();
 
   return routerWithQueryClient(
     createTanstackRouter({
       routeTree,
+      defaultSsr: false,
+      history: memoryHistory,
       context: { ...rqContext },
-      defaultPreload: 'intent',
+      defaultPreload: "intent",
       Wrap: (props: { children: React.ReactNode }) => {
         return (
           <TanstackQuery.Provider {...rqContext}>
             {props.children}
           </TanstackQuery.Provider>
-        )
+        );
       },
     }),
     rqContext.queryClient,
-  )
+  );
 }
 
-// Register the router instance for type safety
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface Register {
-    router: ReturnType<typeof createRouter>
+    router: ReturnType<typeof createRouter>;
   }
 }

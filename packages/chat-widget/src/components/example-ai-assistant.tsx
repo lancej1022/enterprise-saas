@@ -11,7 +11,8 @@ import remarkGfm from "remark-gfm";
 
 import { showAIAssistant } from "../store/example-assistant";
 import { genAIResponse } from "../utils/demo.ai";
-import GuitarRecommendation from "./example-guitar-recommendation";
+
+// import GuitarRecommendation from "./example-guitar-recommendation";
 
 function Messages({ messages }: { messages: UIMessage[] }) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -78,8 +79,8 @@ function Messages({ messages }: { messages: UIMessage[] }) {
                 className="mx-auto max-w-[80%]"
                 key={toolCall.toolInvocation.toolName}
               >
-                {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- TODO: fix this */}
-                <GuitarRecommendation id={toolCall.toolInvocation.args.id} />
+                {}
+                {/* <GuitarRecommendation id={toolCall.toolInvocation.args.id} /> */}
               </div>
             ))}
         </div>
