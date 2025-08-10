@@ -1,0 +1,24 @@
+{
+  "extends": ["@solved-contact/tsconfig/base.json"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "rootDirs": ["."],
+    "paths": {
+      "#/*": ["./src/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "playwright-report",
+    ".vercel",
+    ".tanstack"
+  ]
+}

@@ -21,4 +21,5 @@ ignore:
   - "{apps,packages,tooling}/*/android"
   - "{apps,packages,tooling,backend}/*/postgres-data/"
   - "{apps,packages,tooling,backend}/*/.data/pgdata"
-  - "{apps,packages,tooling,backend}/*/database/postgres-test-data"
+  - "packages/chat-widget/src/routes/example.guitars/$guitarId.tsx"
+  -
