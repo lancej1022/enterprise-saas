@@ -19,12 +19,6 @@ function Image(props: React.ComponentProps<"img">) {
 }
 
 export default function MailPage() {
-  // const layout =  cookies().get("react-resizable-panels:layout:mail");
-  // const collapsed =  cookies().get("react-resizable-panels:collapsed");
-
-  const defaultLayout = undefined; // layout ? JSON.parse(layout.value) : undefined;
-  const defaultCollapsed = undefined; // collapsed ? JSON.parse(collapsed.value) : undefined;
-
   return (
     <>
       <div className="md:hidden">
@@ -44,12 +38,7 @@ export default function MailPage() {
         />
       </div>
       <div className="hidden flex-col md:flex">
-        <Mail
-          defaultCollapsed={defaultCollapsed}
-          defaultLayout={defaultLayout}
-          mails={mails}
-          navCollapsedSize={4}
-        />
+        <Mail mails={mails} />
       </div>
     </>
   );

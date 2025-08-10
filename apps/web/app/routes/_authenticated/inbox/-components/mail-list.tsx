@@ -20,7 +20,7 @@ export function MailList({ items }: MailListProps) {
   });
 
   return (
-    <ScrollArea className="h-screen">
+    <ScrollArea>
       <div className="flex flex-col gap-2 p-4 pt-0">
         {items.map((item) => (
           <Link key={item.id} params={{ mail: item.id }} to="/inbox/$mail">
