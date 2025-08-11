@@ -10,5 +10,12 @@ export const Route = createFileRoute("/")({
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
-  return <ChatWidget isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />;
+  return (
+    <ChatWidget
+      isOpen={isOpen}
+      onToggle={() => {
+        setIsOpen(!isOpen);
+      }}
+    />
+  );
 }

@@ -1,7 +1,15 @@
 {
-  "name": "chat-widget",
+  "name": "@solved-contact/chat-widget",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    },
+    "./index.css": "./dist/index.css"
+  },
   "scripts": {
     "dev": "vite dev --port 3001",
     "start": "node .output/server/index.mjs",
@@ -64,6 +72,7 @@
     "prettier": "3.6.2",
     "typescript": "catalog:",
     "vite": "catalog:",
+    "vite-plugin-dts": "4.5.4",
     "vitest": "^3.0.5",
     "web-vitals": "^4.2.4"
   }

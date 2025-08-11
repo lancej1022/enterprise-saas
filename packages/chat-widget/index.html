@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Widget Demo</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: white;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .content {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        margin-bottom: 2rem;
+      }
+      h1 {
+        margin-top: 0;
+      }
+      .demo-button {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s;
+      }
+      .demo-button:hover {
+        background: #059669;
+      }
+      .demo-button:disabled {
+        background: #6b7280;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <h1>🚀 Chat Widget Demo</h1>
+        <p>
+          This page demonstrates how the chat widget can be embedded on any
+          website without requiring specific markup.
+        </p>
+
+        <h2>Features Demonstrated:</h2>
+        <ul>
+          <li>✅ Automatic body attachment (no need for specific div IDs)</li>
+          <li>✅ Fixed positioning that works over any content</li>
+          <li>✅ Isolated styles that don't conflict with host page</li>
+          <li>✅ Responsive design</li>
+          <li>✅ Smooth animations and interactions</li>
+        </ul>
+
+        <p>Click the button below to load the chat widget:</p>
+        <button id="loadWidget" class="demo-button">Load Chat Widget</button>
+        <button id="removeWidget" class="demo-button" disabled>
+          Remove Widget
+        </button>
+      </div>
+
+      <div class="content">
+        <h2>How It Works</h2>
+        <p>The chat widget:</p>
+        <ol>
+          <li>Creates its own container div programmatically</li>
+          <li>Appends it to document.body with fixed positioning</li>
+          <li>Uses pointer-events CSS to ensure interactions work properly</li>
+          <li>Prevents multiple instances from loading</li>
+          <li>Works on any website regardless of existing markup</li>
+        </ol>
+      </div>
+
+      <div class="content">
+        <h2>Integration Code</h2>
+        <pre
+          style="
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+          "
+        >
+&lt;script src="./dist/chat-widget.umd.cjs"&gt;&lt;/script&gt;
+&lt;script&gt;
+  ChatWidget.boot({
+    app_id: "demo-app",
+    email: "demo@example.com",
+    name: "Demo User", 
+    user_id: "demo-123"
+  });
+&lt;/script&gt;</pre
+        >
+      </div>
+    </div>
+
+    <!-- Load the chat widget -->
+    <script src="./dist/chat-widget.umd.cjs"></script>
+    <script>
+      const loadButton = document.getElementById("loadWidget");
+      const removeButton = document.getElementById("removeWidget");
+
+      loadButton.addEventListener("click", () => {
+        // Load the chat widget
+        ChatWidget.boot({
+          app_id: "demo-app",
+          email: "demo@example.com",
+          name: "Demo User",
+          user_id: "demo-123",
+          created_at: Date.now(),
+        });
+
+        loadButton.disabled = true;
+        removeButton.disabled = false;
+      });
+
+      removeButton.addEventListener("click", () => {
+        // Remove the widget
+        const widget = document.getElementById("chat-widget-root");
+        if (widget) {
+          widget.remove();
+          loadButton.disabled = false;
+          removeButton.disabled = true;
+        }
+      });
+    </script>
+  </body>
+</html>

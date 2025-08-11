@@ -70,11 +70,14 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
       <Button
         className={cn(
           "fixed right-6 bottom-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300",
+          "pointer-events-auto", // Enable pointer events for the button
           isOpen
             ? "bg-slate-600 hover:bg-slate-700"
             : "bg-emerald-600 hover:bg-emerald-700",
         )}
-        onClick={onToggle}
+        onClick={() => {
+          onToggle();
+        }}
       >
         {isOpen ? (
           <X className="h-6 w-6 text-white" />
@@ -87,6 +90,7 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
       <div
         className={cn(
           "fixed right-6 bottom-24 z-40 w-96 max-w-[calc(100vw-3rem)] transition-all duration-300",
+          "pointer-events-auto", // Enable pointer events for the widget
           isOpen
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-4 opacity-0",

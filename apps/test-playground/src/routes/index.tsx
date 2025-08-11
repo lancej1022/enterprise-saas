@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { boot } from "@solved-contact/chat-widget";
 
 import logo from "../logo.svg";
-import { ChatWidget } from "./-components/chat-widget";
 
 export const Route = createFileRoute("/")({
   component: App,
 });
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- TODO: fix the types of bundled package
+    boot({
+      app_id: "123",
+      email: "test@test.com",
+      created_at: 123,
+      name: "Test User",
+      user_id: "123",
+    });
+  }, []);
   return (
     <div className="text-center">
       <header className="flex min-h-screen flex-col items-center justify-center bg-[#282c34] text-[calc(10px+2vmin)] text-white">
@@ -21,7 +30,6 @@ function App() {
         <p>
           Edit <code>src/routes/index.tsx</code> and save to reload.
         </p>
-        <ChatWidget isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
       </header>
     </div>
   );

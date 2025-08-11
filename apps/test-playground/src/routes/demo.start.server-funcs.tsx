@@ -46,16 +46,17 @@ export const Route = createFileRoute("/demo/start/server-funcs")({
 
 function Home() {
   const router = useRouter();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- from create-ts-router cli
-  let todos = Route.useLoaderData();
 
   const [todo, setTodo] = useState("");
 
   const submitTodo = useCallback(async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, react-hooks/react-compiler, react-hooks/exhaustive-deps -- from create-ts-router cli
+    // @ts-expect-error -- TODO: fix later
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- from create-ts-router cli
     todos = await addTodo({ data: todo });
     setTodo("");
     void router.invalidate();
+    // eslint-disable-next-line react-hooks/react-compiler -- TODO: fix later
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- TODO: fix later
   }, [addTodo, todo]);
 
   return (
@@ -68,19 +69,7 @@ function Home() {
     >
       <div className="w-full max-w-2xl rounded-xl border-8 border-black/10 bg-black/50 p-8 shadow-xl backdrop-blur-md">
         <h1 className="mb-4 text-2xl">Start Server Functions - Todo Example</h1>
-        <ul className="mb-4 space-y-2">
-          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any -- from create-ts-router cli*/}
-          {todos?.map((t: any) => (
-            <li
-              className="rounded-lg border border-white/20 bg-white/10 p-3 shadow-md backdrop-blur-sm"
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- from create-ts-router cli
-              key={t.id}
-            >
-              {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- from create-ts-router cli*/}
-              <span className="text-lg text-white">{t.name}</span>
-            </li>
-          ))}
-        </ul>
+        <ul className="mb-4 space-y-2"></ul>
         <div className="flex flex-col gap-2">
           <input
             className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 backdrop-blur-sm focus:border-transparent focus:ring-2 focus:ring-blue-400 focus:outline-none"
