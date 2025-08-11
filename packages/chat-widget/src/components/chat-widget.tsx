@@ -5,12 +5,12 @@ import { MessageCircle, Minimize2, Send, X } from "lucide-react";
 import { Button } from "@solved-contact/ui/components/button";
 import { Card } from "@solved-contact/ui/components/card";
 import { Input } from "@solved-contact/ui/components/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@solved-contact/ui/components/popover";
 import { cn } from "@solved-contact/ui/lib/utils";
-
-interface ChatWidgetProps {
-  isOpen: boolean;
-  onToggle: () => void;
-}
 
 const suggestedQuestions = [
   "What services do you offer?",
@@ -20,10 +20,11 @@ const suggestedQuestions = [
   "How do I contact sales?",
 ];
 
-export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
+export function ChatWidget() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat();
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,15 +32,16 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  useEffect(() => {
-    if (isOpen && !isMinimized) {
-      inputRef.current?.focus();
+  // Focus input when popover opens and is not minimized
+  function handleOpenChange(open: boolean) {
+    setIsOpen(open);
+    // TODO: how can this be done without setTimeout? The original setTimeout comes from Claude, but removing it does break the autofocus
+    if (open && !isMinimized) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
     }
-  }, [isOpen, isMinimized]);
+  }
 
   function handleSuggestedQuestion(question: string) {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- from v0
@@ -52,52 +54,50 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
 
     handleInputChange(syntheticEvent);
 
-    setTimeout(() => {
+    // TODO: This looks like AI BS
+    void Promise.resolve().then(() => {
       const submitEvent = new Event("submit", {
         bubbles: true,
         cancelable: true,
       });
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any -- from v0
       handleSubmit(submitEvent as any);
-    }, 100);
+    });
   }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const hasMessages = messages.length > 0;
 
   return (
-    <>
-      {/* Chat Toggle Button */}
-      <Button
-        className={cn(
-          "fixed right-6 bottom-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300",
-          "pointer-events-auto", // Enable pointer events for the button
-          isOpen
-            ? "bg-slate-600 hover:bg-slate-700"
-            : "bg-emerald-600 hover:bg-emerald-700",
-        )}
-        onClick={() => {
-          onToggle();
-        }}
-      >
-        {isOpen ? (
-          <X className="h-6 w-6 text-white" />
-        ) : (
-          <MessageCircle className="h-6 w-6 text-white" />
-        )}
-      </Button>
+    <Popover onOpenChange={handleOpenChange} open={isOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          className={cn(
+            "fixed right-6 bottom-6 z-50 h-14 w-14 rounded-full shadow-lg transition-all duration-300",
+            "pointer-events-auto",
+            isOpen
+              ? "bg-slate-600 hover:bg-slate-700"
+              : "bg-emerald-600 hover:bg-emerald-700",
+          )}
+        >
+          {isOpen ? (
+            <X className="h-6 w-6 text-white" />
+          ) : (
+            <MessageCircle className="h-6 w-6 text-white" />
+          )}
+        </Button>
+      </PopoverTrigger>
 
-      {/* Chat Widget */}
-      <div
-        className={cn(
-          "fixed right-6 bottom-24 z-40 w-96 max-w-[calc(100vw-3rem)] transition-all duration-300",
-          "pointer-events-auto", // Enable pointer events for the widget
-          isOpen
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-4 opacity-0",
-        )}
+      <PopoverContent
+        align="end"
+        className="w-96 max-w-[calc(100vw-3rem)] border-0 bg-transparent p-0 shadow-none"
+        side="top"
+        sideOffset={8}
       >
         <Card className="overflow-hidden border-0 shadow-2xl">
-          {/* Header */}
           <div className="flex items-center justify-between bg-emerald-600 p-4 text-white">
             <div className="flex items-center space-x-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
@@ -119,7 +119,7 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
               </Button>
               <Button
                 className="h-8 w-8 p-0 text-white hover:bg-white/20"
-                onClick={onToggle}
+                onClick={() => setIsOpen(false)}
                 size="sm"
                 variant="ghost"
               >
@@ -128,14 +128,12 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
             </div>
           </div>
 
-          {/* Chat Content */}
           <div
             className={cn(
               "overflow-hidden transition-all duration-300",
               isMinimized ? "h-0" : "h-96",
             )}
           >
-            {/* Messages */}
             <div className="h-80 space-y-4 overflow-y-auto bg-slate-50 p-4">
               {!hasMessages && (
                 <div className="py-8 text-center">
@@ -206,7 +204,6 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
             <div className="border-t bg-white p-4">
               <form className="flex space-x-2" onSubmit={handleSubmit}>
                 <Input
@@ -231,7 +228,7 @@ export function ChatWidget({ isOpen, onToggle }: ChatWidgetProps) {
             </div>
           </div>
         </Card>
-      </div>
-    </>
+      </PopoverContent>
+    </Popover>
   );
 }
