@@ -29,6 +29,20 @@
       "when": 1753497139581,
       "tag": "0003_simple_bug",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1755133842257,
+      "tag": "0004_soft_james_howlett",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755144436951,
+      "tag": "0005_youthful_terror",
+      "breakpoints": true
     }
   ]
 }
