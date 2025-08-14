@@ -44,6 +44,7 @@
     "./routers": "./dist/src/routers/index.d.ts",
     "./auth": "./dist/src/lib/auth.js",
     "./db/authSchema": "./dist/src/db/schema/auth.js",
-    "./db/ztunesSchema": "./dist/src/db/schema/ztunes.js"
+    "./db/ztunesSchema": "./dist/src/db/schema/ztunes.js",
+    "./db/chatSchema": "./dist/src/db/schema/chat.js"
   }
 }

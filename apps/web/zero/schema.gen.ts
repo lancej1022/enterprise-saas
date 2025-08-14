@@ -274,6 +274,90 @@ export const schema = {
       },
       primaryKey: ["id"],
     },
+    attachments: {
+      name: "attachments",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "id"
+          >,
+        },
+        messageId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "messageId"
+          >,
+          serverName: "message_id",
+        },
+        fileName: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "fileName"
+          >,
+          serverName: "file_name",
+        },
+        fileSize: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "fileSize"
+          >,
+          serverName: "file_size",
+        },
+        mimeType: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "mimeType"
+          >,
+          serverName: "mime_type",
+        },
+        url: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "url"
+          >,
+        },
+        thumbnailUrl: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "thumbnailUrl"
+          >,
+          serverName: "thumbnail_url",
+        },
+        createdAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "attachments",
+            "createdAt"
+          >,
+          serverName: "created_at",
+        },
+      },
+      primaryKey: ["id"],
+    },
     cartItem: {
       name: "cartItem",
       columns: {
@@ -310,6 +394,333 @@ export const schema = {
       },
       primaryKey: ["userId", "albumId"],
       serverName: "cart_item",
+    },
+    chatUsers: {
+      name: "chatUsers",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "id"
+          >,
+        },
+        organizationId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "organizationId"
+          >,
+          serverName: "organization_id",
+        },
+        userId: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "userId"
+          >,
+          serverName: "user_id",
+        },
+        email: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "email"
+          >,
+        },
+        name: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "name"
+          >,
+        },
+        sessionId: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "sessionId"
+          >,
+          serverName: "session_id",
+        },
+        userAgent: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "userAgent"
+          >,
+          serverName: "user_agent",
+        },
+        ipAddress: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "ipAddress"
+          >,
+          serverName: "ip_address",
+        },
+        metadata: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "metadata"
+          >,
+        },
+        createdAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "createdAt"
+          >,
+          serverName: "created_at",
+        },
+        lastSeenAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatUsers",
+            "lastSeenAt"
+          >,
+          serverName: "last_seen_at",
+        },
+      },
+      primaryKey: ["id"],
+      serverName: "chat_users",
+    },
+    conversationAssignments: {
+      name: "conversationAssignments",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversationAssignments",
+            "id"
+          >,
+        },
+        conversationId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversationAssignments",
+            "conversationId"
+          >,
+          serverName: "conversation_id",
+        },
+        agentId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversationAssignments",
+            "agentId"
+          >,
+          serverName: "agent_id",
+        },
+        assignedBy: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversationAssignments",
+            "assignedBy"
+          >,
+          serverName: "assigned_by",
+        },
+        assignedAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversationAssignments",
+            "assignedAt"
+          >,
+          serverName: "assigned_at",
+        },
+        unassignedAt: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversationAssignments",
+            "unassignedAt"
+          >,
+          serverName: "unassigned_at",
+        },
+        reason: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversationAssignments",
+            "reason"
+          >,
+        },
+      },
+      primaryKey: ["id"],
+      serverName: "conversation_assignments",
+    },
+    conversations: {
+      name: "conversations",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "id"
+          >,
+        },
+        organizationId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "organizationId"
+          >,
+          serverName: "organization_id",
+        },
+        chatUserId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "chatUserId"
+          >,
+          serverName: "chat_user_id",
+        },
+        assignedAgentId: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "assignedAgentId"
+          >,
+          serverName: "assigned_agent_id",
+        },
+        status: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "status"
+          >,
+        },
+        priority: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "priority"
+          >,
+        },
+        subject: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "subject"
+          >,
+        },
+        tags: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "tags"
+          >,
+        },
+        pageUrl: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "pageUrl"
+          >,
+          serverName: "page_url",
+        },
+        referrer: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "referrer"
+          >,
+        },
+        metadata: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "metadata"
+          >,
+        },
+        createdAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "createdAt"
+          >,
+          serverName: "created_at",
+        },
+        updatedAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "updatedAt"
+          >,
+          serverName: "updated_at",
+        },
+        closedAt: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "conversations",
+            "closedAt"
+          >,
+          serverName: "closed_at",
+        },
+      },
+      primaryKey: ["id"],
     },
     invitations: {
       name: "invitations",
@@ -488,6 +899,109 @@ export const schema = {
             "createdAt"
           >,
           serverName: "created_at",
+        },
+      },
+      primaryKey: ["id"],
+    },
+    messages: {
+      name: "messages",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "id"
+          >,
+        },
+        conversationId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "conversationId"
+          >,
+          serverName: "conversation_id",
+        },
+        senderId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "senderId"
+          >,
+          serverName: "sender_id",
+        },
+        senderType: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "senderType"
+          >,
+          serverName: "sender_type",
+        },
+        content: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "content"
+          >,
+        },
+        messageType: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "messageType"
+          >,
+          serverName: "message_type",
+        },
+        metadata: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "metadata"
+          >,
+        },
+        isRead: {
+          type: "boolean",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "isRead"
+          >,
+          serverName: "is_read",
+        },
+        createdAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "createdAt"
+          >,
+          serverName: "created_at",
+        },
+        editedAt: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "messages",
+            "editedAt"
+          >,
+          serverName: "edited_at",
         },
       },
       primaryKey: ["id"],
@@ -932,6 +1446,16 @@ export const schema = {
         },
       ],
     },
+    attachments: {
+      message: [
+        {
+          sourceField: ["messageId"],
+          destField: ["id"],
+          destSchema: "messages",
+          cardinality: "one",
+        },
+      ],
+    },
     cartItem: {
       album: [
         {
@@ -947,6 +1471,100 @@ export const schema = {
           destField: ["id"],
           destSchema: "users",
           cardinality: "one",
+        },
+      ],
+    },
+    chatUsers: {
+      organization: [
+        {
+          sourceField: ["organizationId"],
+          destField: ["id"],
+          destSchema: "organizations",
+          cardinality: "one",
+        },
+      ],
+      user: [
+        {
+          sourceField: ["userId"],
+          destField: ["id"],
+          destSchema: "users",
+          cardinality: "one",
+        },
+      ],
+      conversations: [
+        {
+          sourceField: ["id"],
+          destField: ["chatUserId"],
+          destSchema: "conversations",
+          cardinality: "many",
+        },
+      ],
+    },
+    conversationAssignments: {
+      conversation: [
+        {
+          sourceField: ["conversationId"],
+          destField: ["id"],
+          destSchema: "conversations",
+          cardinality: "one",
+        },
+      ],
+      agent: [
+        {
+          sourceField: ["agentId"],
+          destField: ["id"],
+          destSchema: "members",
+          cardinality: "one",
+        },
+      ],
+      assignedByAgent: [
+        {
+          sourceField: ["assignedBy"],
+          destField: ["id"],
+          destSchema: "members",
+          cardinality: "one",
+        },
+      ],
+    },
+    conversations: {
+      organization: [
+        {
+          sourceField: ["organizationId"],
+          destField: ["id"],
+          destSchema: "organizations",
+          cardinality: "one",
+        },
+      ],
+      chatUser: [
+        {
+          sourceField: ["chatUserId"],
+          destField: ["id"],
+          destSchema: "chatUsers",
+          cardinality: "one",
+        },
+      ],
+      assignedAgent: [
+        {
+          sourceField: ["assignedAgentId"],
+          destField: ["id"],
+          destSchema: "members",
+          cardinality: "one",
+        },
+      ],
+      messages: [
+        {
+          sourceField: ["id"],
+          destField: ["conversationId"],
+          destSchema: "messages",
+          cardinality: "many",
+        },
+      ],
+      assignments: [
+        {
+          sourceField: ["id"],
+          destField: ["conversationId"],
+          destSchema: "conversationAssignments",
+          cardinality: "many",
         },
       ],
     },
@@ -983,6 +1601,24 @@ export const schema = {
           destField: ["id"],
           destSchema: "organizations",
           cardinality: "one",
+        },
+      ],
+    },
+    messages: {
+      conversation: [
+        {
+          sourceField: ["conversationId"],
+          destField: ["id"],
+          destSchema: "conversations",
+          cardinality: "one",
+        },
+      ],
+      attachments: [
+        {
+          sourceField: ["id"],
+          destField: ["messageId"],
+          destSchema: "attachments",
+          cardinality: "many",
         },
       ],
     },

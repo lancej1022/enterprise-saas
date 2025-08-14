@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 
 import { accounts, members, organizations, users } from "./schema/auth";
+import { chatUsers, conversations, messages } from "./schema/chat";
 
 const dbUrl = process.env.DATABASE_URL;
 
@@ -123,6 +124,145 @@ export async function seed() {
     );
   }
 
+  // Create chat data: 50 conversations per organization with messages
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log("Creating chat data...");
+
+  const chatUsersData: (typeof chatUsers.$inferInsert)[] = [];
+  const conversationsData: (typeof conversations.$inferInsert)[] = [];
+  const messagesData: (typeof messages.$inferInsert)[] = [];
+
+  for (const org of organizationData) {
+    // Create 50 chat users for this organization
+    const orgChatUsers: string[] = [];
+
+    for (let i = 0; i < 50; i++) {
+      const chatUserId = randomUUID();
+      orgChatUsers.push(chatUserId);
+
+      // Get a random user from this organization
+      const orgUserIndex = organizationData.indexOf(org) * 1000 + i;
+      const userId =
+        orgUserIndex < userData.length ? userData[orgUserIndex]?.id : null;
+
+      chatUsersData.push({
+        id: chatUserId,
+        organizationId: org.id,
+        userId: userId,
+        email: userId
+          ? userData.find((u) => u.id === userId)?.email
+          : faker.internet.email(),
+        name: faker.person.fullName(),
+        sessionId: faker.string.alphanumeric(20),
+        userAgent: faker.internet.userAgent(),
+        ipAddress: faker.internet.ip(),
+        metadata: JSON.stringify({
+          source: faker.helpers.arrayElement(["website", "mobile", "api"]),
+          referrer: faker.internet.url(),
+        }),
+        createdAt: new Date(),
+        lastSeenAt: new Date(),
+      });
+    }
+
+    // Create 50 conversations for this organization
+    for (let i = 0; i < 50; i++) {
+      const conversationId = randomUUID();
+      const chatUserId = faker.helpers.arrayElement(orgChatUsers);
+      const createdAt = faker.date.recent({ days: 30 });
+
+      conversationsData.push({
+        id: conversationId,
+        organizationId: org.id,
+        chatUserId: chatUserId,
+        assignedAgentId:
+          i % 3 === 0
+            ? faker.helpers.arrayElement(
+                memberData.filter((m) => m.organizationId === org.id),
+              ).id
+            : null,
+        status: faker.helpers.arrayElement(["open", "closed", "waiting"]),
+        priority: faker.helpers.arrayElement(["low", "normal", "high"]),
+        subject: faker.lorem.sentence(),
+        tags: JSON.stringify(
+          faker.helpers.arrayElements(
+            ["support", "billing", "technical", "sales"],
+            2,
+          ),
+        ),
+        pageUrl: faker.internet.url(),
+        referrer: faker.internet.url(),
+        metadata: JSON.stringify({
+          browser: faker.internet.userAgent(),
+          device: faker.helpers.arrayElement(["desktop", "mobile", "tablet"]),
+        }),
+        createdAt: createdAt,
+        updatedAt: faker.date.between({ from: createdAt, to: new Date() }),
+        closedAt: faker.datatype.boolean(0.3)
+          ? faker.date.recent({ days: 7 })
+          : null,
+      });
+
+      // Create 3-10 messages per conversation
+      const messageCount = faker.number.int({ min: 3, max: 10 });
+      for (let j = 0; j < messageCount; j++) {
+        const messageCreatedAt = new Date(createdAt.getTime() + j * 60_000); // Messages 1 minute apart
+        const isFromUser = j % 2 === 0; // Alternate between user and agent
+
+        messagesData.push({
+          id: randomUUID(),
+          conversationId: conversationId,
+          senderId: isFromUser
+            ? chatUserId
+            : faker.helpers.arrayElement(
+                memberData.filter((m) => m.organizationId === org.id),
+              ).id || chatUserId,
+          senderType: isFromUser ? "user" : "agent",
+          content: faker.lorem.paragraph(),
+          messageType: "text",
+          metadata: null,
+          isRead: faker.datatype.boolean(0.8),
+          createdAt: messageCreatedAt,
+          editedAt: null,
+        });
+      }
+    }
+  }
+
+  // Insert chat data in batches
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log("Inserting chat users...");
+  for (let i = 0; i < chatUsersData.length; i += batchSize) {
+    const batch = chatUsersData.slice(i, i + batchSize);
+    await db.insert(chatUsers).values(batch);
+    // eslint-disable-next-line no-console -- intentional log for seeding
+    console.log(
+      `Inserted chat users ${i + 1} to ${Math.min(i + batchSize, chatUsersData.length)}`,
+    );
+  }
+
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log("Inserting conversations...");
+  for (let i = 0; i < conversationsData.length; i += batchSize) {
+    const batch = conversationsData.slice(i, i + batchSize);
+    await db.insert(conversations).values(batch);
+    // eslint-disable-next-line no-console -- intentional log for seeding
+    console.log(
+      `Inserted conversations ${i + 1} to ${Math.min(i + batchSize, conversationsData.length)}`,
+    );
+  }
+
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log("Inserting messages...");
+  for (let i = 0; i < messagesData.length; i += batchSize) {
+    const batch = messagesData.slice(i, i + batchSize);
+    await db.insert(messages).values(batch);
+    // eslint-disable-next-line no-console -- intentional log for seeding
+    console.log(
+      `Inserted messages ${i + 1} to ${Math.min(i + batchSize, messagesData.length)}`,
+    );
+  }
+
   // eslint-disable-next-line no-console -- intentional log for seeding
   console.log("Database seeding completed successfully!");
   // eslint-disable-next-line no-console -- intentional log for seeding
@@ -133,6 +273,12 @@ export async function seed() {
   console.log(`Created ${organizationData.length} organizations`);
   // eslint-disable-next-line no-console -- intentional log for seeding
   console.log(`Created ${memberData.length} members`);
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log(`Created ${chatUsersData.length} chat users`);
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log(`Created ${conversationsData.length} conversations`);
+  // eslint-disable-next-line no-console -- intentional log for seeding
+  console.log(`Created ${messagesData.length} messages`);
 
   // Update the password for the account associated with userId: 1
   // eslint-disable-next-line no-console -- intentional log for seeding
