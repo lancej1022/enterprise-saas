@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { boot } from "@solved-contact/chat-widget";
 
+import "@solved-contact/chat-widget/style.css";
+
 import logo from "../logo.svg";
 
 export const Route = createFileRoute("/")({

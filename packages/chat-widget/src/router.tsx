@@ -8,8 +8,8 @@ import ReactDOM from "react-dom/client";
 
 import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
 import { routeTree } from "./routeTree.gen";
-
-import "./demo.index.css";
+// import "./demo.index.css";
+import "./styles.css";
 
 // Used to ensure that changing the route within the chat-widget doesnt actually impact the browser URL
 const memoryHistory = createMemoryHistory({
@@ -76,16 +76,15 @@ export function boot({
   const widgetContainer = document.createElement("div");
   widgetContainer.id = "chat-widget-root";
 
-  // TODO: Claude made this originally, need to review which of these styles are truly needed and which might be missing
+  // TODO: Need to work on the positioning of the widget
   widgetContainer.style.cssText = `
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 100px;
+    right: 100px;
     z-index: 2147483647;
     font-family: system-ui, -apple-system, sans-serif;
   `;
 
-  // Append to body
   document.body.appendChild(widgetContainer);
 
   // Create React root and render the widget

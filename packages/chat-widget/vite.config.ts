@@ -6,6 +6,8 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+// import { externalizeDeps } from "vite-plugin-externalize-deps";
+import noBundlePlugin from "vite-plugin-no-bundle";
 import viteTsConfigPaths from "vite-tsconfig-paths";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -22,41 +24,49 @@ const config = defineConfig({
       // autoCodeSplitting: true,
     }),
     viteReact(),
+    noBundlePlugin(),
     dts({
-      insertTypesEntry: true,
+      // insertTypesEntry: true,
       include: ["src/**/*"],
-      exclude: ["src/**/*.test.*", "src/**/*.spec.*", "src/routeTree.gen.ts"],
+      exclude: ["src/**/*.test.*", "src/**/*.spec.*"],
       outDir: "dist",
-      rollupTypes: true,
+      // rollupTypes: true,
       compilerOptions: {
         declaration: true,
         declarationMap: true,
         skipLibCheck: true,
       },
     }),
+    // externalizeDeps(),
   ],
+
   build: {
     lib: {
       entry: resolve(__dirname, "src/router.tsx"),
       name: "ChatWidget",
-      // TODO: update this build so that it can use import maps or something in order to allow CDN projects to load a codesplit version of the widget
-      fileName: "index",
-      formats: ["es", "umd"],
-    },
-    rollupOptions: {
-      external: [
-        "react",
-        "react-dom",
-        "@tanstack/react-router",
-        "@tanstack/react-query",
+      // fileName: (format, entryName) => `${format}/${entryName}.js`,
+      fileName: (_format, entryName) => `${entryName}.js`,
+      cssFileName: "style",
+      formats: [
+        "es",
+        // "umd"
       ],
-      output: {
-        globals: {
-          // No external globals needed since we're bundling everything
-        },
-        exports: "named",
-      },
     },
+    // rollupOptions: {
+    //   // external: [
+    //   //   "react",
+    //   //   "react-dom",
+    //   //   "@tanstack/react-router",
+    //   //   "@tanstack/react-query",
+    //   // ],
+    //   output: {
+    //     // globals: {
+    //     //   // No external globals needed since we're bundling everything
+    //     // },
+    //     // exports: "named",
+    //     inlineDynamicImports: true,
+    //   },
+    // },
   },
 });
 
