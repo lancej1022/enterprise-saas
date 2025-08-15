@@ -2,6 +2,7 @@ import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
+  apiKey,
   createAuthMiddleware,
   jwt,
   openAPI,
@@ -99,6 +100,9 @@ export const auth = betterAuth({
       },
     }),
     openAPI(),
+    apiKey({
+      enableMetadata: true,
+    }),
     organization({
       ac,
       // beforeCreate: async ({ organization, user }, request) => {
@@ -139,6 +143,110 @@ export const auth = betterAuth({
         admin,
         member,
         // myCustomRole,
+      },
+      schema: {
+        organization: {
+          additionalFields: {
+            // Chat widget fields
+            chatDomain: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatApiKey: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatWebhookUrl: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            // chatIsActive: {
+            //   type: "boolean",
+            //   input: true,
+            //   required: false,
+            // },
+
+            // Widget customization settings
+            chatTheme: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatPrimaryColor: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatPosition: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatWelcomeMessage: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            // chatOfflineMessage: {
+            //   type: "string",
+            //   input: true,
+            //   required: false,
+            // },
+            // chatShowAgentAvatar: {
+            //   type: "boolean",
+            //   input: true,
+            //   required: false,
+            // },
+            chatCollectEmail: {
+              type: "boolean",
+              input: true,
+              required: false,
+            },
+            chatCollectName: {
+              type: "boolean",
+              input: true,
+              required: false,
+            },
+            // chatCustomCss: {
+            //   type: "string",
+            //   input: true,
+            //   required: false,
+            // },
+            // chatCustomFields: {
+            //   type: "string",
+            //   input: true,
+            //   required: false,
+            // },
+          },
+        },
+        member: {
+          additionalFields: {
+            // Chat agent fields
+            chatDisplayName: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatRole: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            // chatIsOnline: {
+            //   type: "boolean",
+            //   input: true,
+            //   required: false,
+            // },
+            // chatMaxConcurrentChats: {
+            //   type: "number",
+            //   input: true,
+            //   required: false,
+            // },
+          },
+        },
       },
     }),
   ],

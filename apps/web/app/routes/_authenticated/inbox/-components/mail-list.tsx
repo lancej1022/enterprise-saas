@@ -7,15 +7,15 @@ import { cn } from "@solved-contact/ui/lib/utils";
 
 import { type Mail } from "./data";
 
-interface MailListProps {
+interface ConversationListProps {
   items: Mail[];
 }
 
-export function MailList({ items }: MailListProps) {
-  const mailId = useParams({
+export function ConversationList({ items }: ConversationListProps) {
+  const conversationId = useParams({
     // TODO: unless we wire up auto-redirecting on route load then we cannot use `from` here because we're not guaranteed to have a path param
-    // from: "/_authenticated/inbox/$mail",
-    select: (params) => params.mail,
+    // from: "/_authenticated/inbox/$conversationId",
+    select: (params) => params["conversation-id"],
     strict: false,
   });
 
@@ -23,11 +23,15 @@ export function MailList({ items }: MailListProps) {
     <ScrollArea>
       <div className="flex flex-col gap-2 p-4 pt-0">
         {items.map((item) => (
-          <Link key={item.id} params={{ mail: item.id }} to="/inbox/$mail">
+          <Link
+            key={item.id}
+            params={{ "conversation-id": item.id }}
+            to="/inbox/$conversation-id"
+          >
             <button
               className={cn(
                 "hover:bg-accent flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all",
-                mailId === item.id && "bg-muted",
+                conversationId === item.id && "bg-muted",
               )}
             >
               <div className="flex w-full flex-col gap-1">
@@ -41,7 +45,7 @@ export function MailList({ items }: MailListProps) {
                   <div
                     className={cn(
                       "ml-auto text-xs",
-                      mailId === item.id
+                      conversationId === item.id
                         ? "text-foreground"
                         : "text-muted-foreground",
                     )}

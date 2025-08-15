@@ -27,8 +27,8 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
       return undefined;
     }
     return {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- taken from ztunes
-      userID: cookies.userid,
+      // TODO: think I need to update the BE so that the cookie is properly encoded as a string. Currently, `useCookies` returns a number for "cookies.userid" and so we need to convert it here
+      userID: String(cookies.userid),
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- taken from ztunes
       email: cookies.email,
       // TODO: is this safe since it comes from useSession, rather than the cookies? Or are we fine as long as `userId` + `email` are cookie based, while the rest isnt...?
@@ -58,8 +58,7 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
        *
        * TODO: this creates potential re-render flaws, especially if `data` changes unexpectedly. Consider refactoring this away from the original Ztunes implementation and closer to the "typical" tanstack router implementation.
        */
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- taken from ztunes
-      key={data?.activeOrganizationId || data?.user || data?.userID}
+      key={data?.activeOrganizationId || data?.user?.id || data?.userID}
       router={router}
     >
       {children}

@@ -19,7 +19,7 @@ import { Route as AuthenticatedCartRouteImport } from './routes/_authenticated/c
 import { Route as AuthenticatedArtistRouteImport } from './routes/_authenticated/artist'
 import { Route as AuthenticatedInboxRouteRouteImport } from './routes/_authenticated/inbox/route'
 import { Route as AuthenticatedInboxIndexRouteImport } from './routes/_authenticated/inbox/index'
-import { Route as AuthenticatedInboxMailRouteImport } from './routes/_authenticated/inbox/$mail'
+import { Route as AuthenticatedInboxConversationIdRouteImport } from './routes/_authenticated/inbox/$conversation-id'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminTeamsRouteImport } from './routes/_authenticated/admin/teams'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users_.$userId'
@@ -69,11 +69,12 @@ const AuthenticatedInboxIndexRoute = AuthenticatedInboxIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedInboxRouteRoute,
 } as any)
-const AuthenticatedInboxMailRoute = AuthenticatedInboxMailRouteImport.update({
-  id: '/$mail',
-  path: '/$mail',
-  getParentRoute: () => AuthenticatedInboxRouteRoute,
-} as any)
+const AuthenticatedInboxConversationIdRoute =
+  AuthenticatedInboxConversationIdRouteImport.update({
+    id: '/$conversation-id',
+    path: '/$conversation-id',
+    getParentRoute: () => AuthenticatedInboxRouteRoute,
+  } as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
@@ -121,7 +122,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
-  '/inbox/$mail': typeof AuthenticatedInboxMailRoute
+  '/inbox/$conversation-id': typeof AuthenticatedInboxConversationIdRoute
   '/inbox/': typeof AuthenticatedInboxIndexRoute
   '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
@@ -134,7 +135,7 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
-  '/inbox/$mail': typeof AuthenticatedInboxMailRoute
+  '/inbox/$conversation-id': typeof AuthenticatedInboxConversationIdRoute
   '/inbox': typeof AuthenticatedInboxIndexRoute
   '/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
@@ -150,7 +151,7 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
-  '/_authenticated/inbox/$mail': typeof AuthenticatedInboxMailRoute
+  '/_authenticated/inbox/$conversation-id': typeof AuthenticatedInboxConversationIdRoute
   '/_authenticated/inbox/': typeof AuthenticatedInboxIndexRoute
   '/_authenticated/admin/users/add-user': typeof AuthenticatedAdminUsersAddUserRoute
   '/_authenticated/admin/users_/$userId': typeof AuthenticatedAdminUsersUserIdRoute
@@ -166,7 +167,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin/teams'
     | '/admin/users'
-    | '/inbox/$mail'
+    | '/inbox/$conversation-id'
     | '/inbox/'
     | '/admin/users/add-user'
     | '/admin/users/$userId'
@@ -179,7 +180,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin/teams'
     | '/admin/users'
-    | '/inbox/$mail'
+    | '/inbox/$conversation-id'
     | '/inbox'
     | '/admin/users/add-user'
     | '/admin/users/$userId'
@@ -194,7 +195,7 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/_authenticated/admin/teams'
     | '/_authenticated/admin/users'
-    | '/_authenticated/inbox/$mail'
+    | '/_authenticated/inbox/$conversation-id'
     | '/_authenticated/inbox/'
     | '/_authenticated/admin/users/add-user'
     | '/_authenticated/admin/users_/$userId'
@@ -293,11 +294,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInboxIndexRouteImport
       parentRoute: typeof AuthenticatedInboxRouteRoute
     }
-    '/_authenticated/inbox/$mail': {
-      id: '/_authenticated/inbox/$mail'
-      path: '/$mail'
-      fullPath: '/inbox/$mail'
-      preLoaderRoute: typeof AuthenticatedInboxMailRouteImport
+    '/_authenticated/inbox/$conversation-id': {
+      id: '/_authenticated/inbox/$conversation-id'
+      path: '/$conversation-id'
+      fullPath: '/inbox/$conversation-id'
+      preLoaderRoute: typeof AuthenticatedInboxConversationIdRouteImport
       parentRoute: typeof AuthenticatedInboxRouteRoute
     }
     '/_authenticated/admin/users': {
@@ -357,13 +358,14 @@ declare module '@tanstack/react-start/server' {
 }
 
 interface AuthenticatedInboxRouteRouteChildren {
-  AuthenticatedInboxMailRoute: typeof AuthenticatedInboxMailRoute
+  AuthenticatedInboxConversationIdRoute: typeof AuthenticatedInboxConversationIdRoute
   AuthenticatedInboxIndexRoute: typeof AuthenticatedInboxIndexRoute
 }
 
 const AuthenticatedInboxRouteRouteChildren: AuthenticatedInboxRouteRouteChildren =
   {
-    AuthenticatedInboxMailRoute: AuthenticatedInboxMailRoute,
+    AuthenticatedInboxConversationIdRoute:
+      AuthenticatedInboxConversationIdRoute,
     AuthenticatedInboxIndexRoute: AuthenticatedInboxIndexRoute,
   }
 

@@ -18,15 +18,15 @@ import {
 import { TooltipProvider } from "@solved-contact/ui/components/tooltip";
 
 import { type Mail } from "./data";
-import { MailList } from "./mail-list";
+import { ConversationList } from "./mail-list";
 
-interface MailProps {
-  mails: Mail[];
+interface ConversationsProps {
+  conversations: Mail[];
 }
 
-const panelSizeKey = "mail-layout";
+const panelSizeKey = "conversations-layout";
 
-export function Mail({ mails }: MailProps) {
+export function Conversations({ conversations }: ConversationsProps) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- choosing not to validate this with zod since its part of the render path
   const panelSizes: number[] = JSON.parse(
     localStorage.getItem(panelSizeKey) ?? "[30, 70]",
@@ -44,13 +44,13 @@ export function Mail({ mails }: MailProps) {
         <ResizablePanel defaultSize={panelSizes[0]} minSize={30}>
           <Tabs defaultValue="all">
             <div className="flex items-center px-4 py-2">
-              <h1 className="text-xl font-bold">Inbox</h1>
+              <h1 className="text-xl font-bold">Conversations</h1>
               <TabsList className="ml-auto">
                 <TabsTrigger
                   className="text-zinc-600 dark:text-zinc-200"
                   value="all"
                 >
-                  All mail
+                  All chats
                 </TabsTrigger>
                 <TabsTrigger
                   className="text-zinc-600 dark:text-zinc-200"
@@ -70,10 +70,12 @@ export function Mail({ mails }: MailProps) {
               </form>
             </div>
             <TabsContent className="m-0" value="all">
-              <MailList items={mails} />
+              <ConversationList items={conversations} />
             </TabsContent>
             <TabsContent className="m-0" value="unread">
-              <MailList items={mails.filter((item) => !item.read)} />
+              <ConversationList
+                items={conversations.filter((item) => !item.read)}
+              />
             </TabsContent>
           </Tabs>
         </ResizablePanel>
