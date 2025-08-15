@@ -26,7 +26,7 @@ export type ConversationAssignment = Row<
 export interface DecodedJWT {
   // The organization ID. This is pulled from the "activeOrganizationId" field of the JWT token.
   activeOrganizationId: string;
-  // The logged-in user. This is pulled from the "sub" field of the JWT token. TODO: is this actually correct?
+  // The logged-in user. This is pulled from the "sub" field of the JWT token via `zero-init.tsx`
   sub: string;
 }
 
@@ -99,11 +99,13 @@ export const permissions = definePermissions<DecodedJWT, Schema>(schema, () => {
     chatUsers: {
       row: {
         select: [allowIfSameOrganization],
+        // insert: ANYONE_CAN,
       },
     },
     conversations: {
       row: {
         select: [allowIfConversationParticipant],
+        // insert: ANYONE_CAN,
       },
     },
     messages: {
@@ -111,6 +113,7 @@ export const permissions = definePermissions<DecodedJWT, Schema>(schema, () => {
         // TODO: Implement proper relationship-based permissions
         // For now using ANYONE_CAN to get the system working
         select: ANYONE_CAN,
+        // insert: ANYONE_CAN,
       },
     },
     attachments: {

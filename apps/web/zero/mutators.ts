@@ -47,39 +47,40 @@ export function createMutators(authData: DecodedJWT | undefined) {
 
         // Determine sender type - check if user is an agent (member) for this org
         const member = await tx.query.members
-          .where("userId", authData.sub)
           .where("organizationId", authData.activeOrganizationId)
+          .where("userId", authData.sub)
           .one();
 
+        // TODO: probably need better logic here. It seems that `member` is potentially undefined if it hasnt been queried on the client previously
         const senderType = member ? "agent" : "user";
-        let senderId: string;
+        let senderId = "";
 
+        // TODO: potentially simplify this to `if member`...?
         if (senderType === "agent" && member) {
           senderId = member.id;
         } else {
+          // TODO: this whole `else` block `chatUser` stuff looks like it has a lot of flawed logic
           // Find or create chat user
-          const chatUser = await tx.query.chatUsers
-            .where("userId", authData.sub)
-            .where("organizationId", authData.activeOrganizationId)
-            .one();
-
-          if (!chatUser) {
-            const chatUserId = generateId();
-            await tx.mutate.chatUsers.insert({
-              id: chatUserId,
-              organizationId: authData.activeOrganizationId,
-              userId: authData.sub,
-              createdAt: Date.now(),
-              lastSeenAt: Date.now(),
-            });
-            senderId = chatUserId;
-          } else {
-            senderId = chatUser.id;
-          }
+          // const chatUser = await tx.query.chatUsers
+          //   .where("userId", authData.sub)
+          //   .where("organizationId", authData.activeOrganizationId)
+          //   .one();
+          // if (!chatUser) {
+          //   const chatUserId = generateId();
+          //   await tx.mutate.chatUsers.insert({
+          //     id: chatUserId,
+          //     organizationId: authData.activeOrganizationId,
+          //     userId: authData.sub,
+          //     createdAt: Date.now(),
+          //     lastSeenAt: Date.now(),
+          //   });
+          //   senderId = chatUserId;
+          // } else {
+          //   senderId = chatUser.id;
+          // }
         }
 
-        // Insert message
-        await tx.mutate.messages.insert({
+        const messageToInsert = {
           id: generateId(),
           conversationId,
           senderId,
@@ -88,8 +89,11 @@ export function createMutators(authData: DecodedJWT | undefined) {
           messageType,
           isRead: false,
           createdAt: Date.now(),
-        });
+        };
 
+        await tx.mutate.messages.insert(messageToInsert);
+
+        // TODO: this should be something that can be automated via Postgres or Drizzle instead of requiring a manual update
         // Update conversation timestamp
         await tx.mutate.conversations.update({
           id: conversationId,
