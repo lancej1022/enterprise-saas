@@ -80,9 +80,6 @@ export function ConversationList({ items }: ConversationListProps) {
   );
 }
 
-// Backward compatibility export
-export const MailList = ConversationList;
-
 function getBadgeVariantFromLabel(
   label: string,
 ): ComponentProps<typeof Badge>["variant"] {
