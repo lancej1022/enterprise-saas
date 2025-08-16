@@ -18,6 +18,9 @@ catalogs:
     '@orpc/tanstack-query':
       specifier: ^1.5.0
       version: 1.6.6
+    '@rocicorp/zero':
+      specifier: 0.22.2025070600
+      version: 0.22.2025070600
     '@tailwindcss/vite':
       specifier: 4.1.8
       version: 4.1.8
@@ -72,6 +75,9 @@ catalogs:
     lucide-react:
       specifier: ^0.525.0
       version: 0.525.0
+    nanoid:
+      specifier: 5.1.5
+      version: 5.1.5
     next-themes:
       specifier: 0.4.6
       version: 0.4.6
@@ -143,6 +149,9 @@ importers:
       '@orpc/server':
         specifier: 'catalog:'
         version: 1.6.6(crossws@0.3.5)(ws@8.18.3)
+      '@rocicorp/zero':
+        specifier: 'catalog:'
+        version: 0.22.2025070600(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(typescript@5.9.2)
       better-auth:
         specifier: 'catalog:'
         version: 1.3.5-beta.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(zod@4.0.5)
@@ -155,9 +164,18 @@ importers:
       hono:
         specifier: ^4.8.2
         version: 4.8.4
+      jose:
+        specifier: ^6.0.11
+        version: 6.0.11
+      nanoid:
+        specifier: 'catalog:'
+        version: 5.1.5
       pg:
         specifier: ^8.16.0
         version: 8.16.3
+      postgres:
+        specifier: ^3.4.5
+        version: 3.4.7
       zod:
         specifier: 'catalog:'
         version: 4.0.5
@@ -180,9 +198,15 @@ importers:
       '@types/pg':
         specifier: ^8.15.4
         version: 8.15.4
+      concurrently:
+        specifier: ^9.1.2
+        version: 9.2.0
       drizzle-kit:
         specifier: ^0.31.2
         version: 0.31.4
+      drizzle-zero:
+        specifier: 0.11.0
+        version: 0.11.0(@rocicorp/zero@0.22.2025070600(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(typescript@5.9.2))(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.3)(postgres@3.4.7))(prettier@3.6.2)
       tsc-alias:
         specifier: ^1.8.11
         version: 1.8.16
@@ -513,7 +537,7 @@ importers:
         specifier: 'catalog:'
         version: 1.6.6(@orpc/client@1.6.6)(@tanstack/query-core@5.83.1)
       '@rocicorp/zero':
-        specifier: 0.22.2025070600
+        specifier: 'catalog:'
         version: 0.22.2025070600(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(typescript@5.9.2)
       '@solved-contact/auth-server':
         specifier: workspace:*
@@ -557,14 +581,11 @@ importers:
       drizzle-orm:
         specifier: ^0.44.2
         version: 0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.3)(postgres@3.4.7)
-      jose:
-        specifier: ^6.0.11
-        version: 6.0.11
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
       nanoid:
-        specifier: ^5.1.5
+        specifier: 'catalog:'
         version: 5.1.5
       pg:
         specifier: ^8.16.0
@@ -627,9 +648,6 @@ importers:
       drizzle-kit:
         specifier: ^0.31.2
         version: 0.31.4
-      drizzle-zero:
-        specifier: 0.11.0
-        version: 0.11.0(@rocicorp/zero@0.22.2025070600(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(typescript@5.9.2))(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(kysely@0.28.2)(pg@8.16.3)(postgres@3.4.7))(prettier@3.6.2)
       tailwindcss:
         specifier: 4.0.15
         version: 4.0.15
@@ -14049,10 +14067,10 @@ snapshots:
       dotenv: 16.6.1
       eciesjs: 0.4.15
       execa: 5.1.1
-      fdir: 6.4.6(picomatch@4.0.2)
+      fdir: 6.4.6(picomatch@4.0.3)
       ignore: 5.3.2
       object-treeify: 1.1.33
-      picomatch: 4.0.2
+      picomatch: 4.0.3
       which: 4.0.0
 
   '@drdgvhbh/postgres-error-codes@0.0.6': {}

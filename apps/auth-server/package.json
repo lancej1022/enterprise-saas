@@ -17,7 +17,7 @@
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "//db:seed-comment": "the db:seed script is used to run the solved-contact seed, while the plain seed script is used to run the ztunes seed script and insert artist data. It can eventually be removed",
+    "//db:seed:comment": "the db:seed script is used to run the solved-contact seed, while the plain seed script is used to run the ztunes seed script and insert artist data. It can eventually be removed",
     "db:seed": "tsx src/db/seed.ts",
     "seed": "tsx scripts/seed.ts",
     "generate-zero-schema": "drizzle-zero generate --schema=src/db/schema/index.ts --format -o src/zero/schema.gen.ts",
@@ -28,13 +28,13 @@
     "@hono/node-server": "^1.14.4",
     "@orpc/client": "catalog:",
     "@orpc/server": "catalog:",
-    "@rocicorp/zero": "0.22.2025070600",
+    "@rocicorp/zero": "catalog:",
     "better-auth": "catalog:",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
     "hono": "^4.8.2",
     "jose": "^6.0.11",
-    "nanoid": "^5.1.5",
+    "nanoid": "catalog:",
     "pg": "^8.16.0",
     "postgres": "^3.4.5",
     "zod": "catalog:"
@@ -54,12 +54,25 @@
     "typescript": "catalog:"
   },
   "exports": {
-    "./routers": "./dist/src/routers/index.d.ts",
-    "./auth": "./dist/src/lib/auth.js",
-    "./db/authSchema": "./dist/src/db/schema/auth.js",
-    "./db/ztunesSchema": "./dist/src/db/schema/ztunes.js",
-    "./db/chatSchema": "./dist/src/db/schema/chat.js",
-    "./zero/schema": "./dist/src/zero/schema.js",
-    "./zero/mutators": "./dist/src/zero/mutators.js"
+    "./routers": {
+      "types": "./dist/src/routers/index.d.ts",
+      "import": "./dist/src/routers/index.js",
+      "default": "./dist/src/routers/index.js"
+    },
+    "./auth": {
+      "types": "./dist/src/lib/auth.d.ts",
+      "import": "./dist/src/lib/auth.js",
+      "default": "./dist/src/lib/auth.js"
+    },
+    "./zero/schema": {
+      "types": "./dist/src/zero/schema.d.ts",
+      "import": "./dist/src/zero/schema.js",
+      "default": "./dist/src/zero/schema.js"
+    },
+    "./zero/mutators": {
+      "types": "./dist/src/zero/mutators.d.ts",
+      "import": "./dist/src/zero/mutators.js",
+      "default": "./dist/src/zero/mutators.js"
+    }
   }
 }

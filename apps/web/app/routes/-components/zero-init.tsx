@@ -3,7 +3,10 @@ import { type Zero } from "@rocicorp/zero";
 import { ZeroProvider } from "@rocicorp/zero/react";
 import { useRouter } from "@tanstack/react-router";
 import { must } from "shared/must";
-import { createMutators, type Mutators } from "@solved-contact/auth-server/zero/mutators";
+import {
+  createMutators,
+  type Mutators,
+} from "@solved-contact/auth-server/zero/mutators";
 import { schema, type Schema } from "@solved-contact/auth-server/zero/schema";
 
 if (typeof import.meta.env === "undefined") {
@@ -55,7 +58,7 @@ export function ZeroInit({ children }: { children: React.ReactNode }) {
   return <ZeroProvider {...opts}>{children}</ZeroProvider>;
 }
 
-function preload(z: Zero<Schema>) {
+function preload(z: Zero<Schema, Mutators>) {
   // Delay preload() slightly to avoid blocking UI on first run. We don't need
   // this data to display the UI, it's used by search.
   setTimeout(() => {

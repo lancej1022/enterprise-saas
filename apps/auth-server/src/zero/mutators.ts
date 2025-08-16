@@ -8,7 +8,9 @@ function generateId() {
   return nanoid();
 }
 
-export function createMutators(authData: DecodedJWT | undefined): CustomMutatorDefs<typeof schema> {
+export function createMutators(
+  authData: DecodedJWT | undefined,
+): CustomMutatorDefs<typeof schema> {
   return {
     chat: {
       sendMessage: async (
@@ -27,7 +29,6 @@ export function createMutators(authData: DecodedJWT | undefined): CustomMutatorD
           throw new Error("Not authenticated");
         }
 
-        // Client-side validation
         if (!content.trim()) {
           throw new Error("Message cannot be empty");
         }

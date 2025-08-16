@@ -43,6 +43,13 @@
       "when": 1755144436951,
       "tag": "0005_youthful_terror",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1755363582757,
+      "tag": "0006_true_nova",
+      "breakpoints": true
     }
   ]
 }

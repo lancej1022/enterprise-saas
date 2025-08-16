@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -70,6 +76,32 @@ export const jwkss = pgTable("jwkss", {
   createdAt: timestamp("created_at").notNull(),
 });
 
+export const apikeys = pgTable("apikeys", {
+  id: text("id").primaryKey(),
+  name: text("name"),
+  start: text("start"),
+  prefix: text("prefix"),
+  key: text("key").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  refillInterval: integer("refill_interval"),
+  refillAmount: integer("refill_amount"),
+  lastRefillAt: timestamp("last_refill_at"),
+  enabled: boolean("enabled").default(true),
+  rateLimitEnabled: boolean("rate_limit_enabled").default(true),
+  rateLimitTimeWindow: integer("rate_limit_time_window").default(86_400_000),
+  rateLimitMax: integer("rate_limit_max").default(10),
+  requestCount: integer("request_count"),
+  remaining: integer("remaining"),
+  lastRequest: timestamp("last_request"),
+  expiresAt: timestamp("expires_at"),
+  createdAt: timestamp("created_at").notNull(),
+  updatedAt: timestamp("updated_at").notNull(),
+  permissions: text("permissions"),
+  metadata: text("metadata"),
+});
+
 export const organizations = pgTable("organizations", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -77,6 +109,15 @@ export const organizations = pgTable("organizations", {
   logo: text("logo"),
   createdAt: timestamp("created_at").notNull(),
   metadata: text("metadata"),
+  chatDomain: text("chat_domain"),
+  chatApiKey: text("chat_api_key"),
+  chatWebhookUrl: text("chat_webhook_url"),
+  chatTheme: text("chat_theme"),
+  chatPrimaryColor: text("chat_primary_color"),
+  chatPosition: text("chat_position"),
+  chatWelcomeMessage: text("chat_welcome_message"),
+  chatCollectEmail: boolean("chat_collect_email"),
+  chatCollectName: boolean("chat_collect_name"),
 });
 
 export const members = pgTable("members", {
@@ -89,6 +130,8 @@ export const members = pgTable("members", {
     .references(() => users.id, { onDelete: "cascade" }),
   role: text("role").default("member").notNull(),
   createdAt: timestamp("created_at").notNull(),
+  chatDisplayName: text("chat_display_name"),
+  chatRole: text("chat_role"),
 });
 
 export const invitations = pgTable("invitations", {

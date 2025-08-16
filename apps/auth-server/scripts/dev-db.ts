@@ -1,12 +1,6 @@
 import { exec } from "#/shared/exec";
-import { must } from "#/shared/must";
 
 import "#/shared/env";
-
-const devPgPassword = must(
-  process.env.DEV_PG_PASSWORD,
-  "DEV_PG_PASSWORD is required",
-);
 
 function main() {
   try {

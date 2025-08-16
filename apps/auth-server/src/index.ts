@@ -2,14 +2,14 @@ import "dotenv/config";
 
 import { serve } from "@hono/node-server";
 import { RPCHandler } from "@orpc/server/fetch";
-import { Hono } from "hono";
-import { cors } from "hono/cors";
-import { logger } from "hono/logger";
 import {
   PostgresJSConnection,
   PushProcessor,
   ZQLDatabase,
 } from "@rocicorp/zero/pg";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
 import * as jose from "jose";
 import postgres from "postgres";
 
@@ -50,9 +50,14 @@ app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
 // Zero push endpoint
 app.post("/api/zero/push", async (c) => {
+  // eslint-disable-next-line no-console -- TODO: debugging
   console.log("Zero push request received");
   const userAuth = await getUserAuth(c.req.raw);
-  if (typeof userAuth === "object" && userAuth !== null && "error" in userAuth) {
+  if (
+    typeof userAuth === "object" &&
+    userAuth !== null &&
+    "error" in userAuth
+  ) {
     return c.json(userAuth, { status: 401 });
   }
 
@@ -118,8 +123,11 @@ async function getUserAuth(request: Request) {
   try {
     const { payload } = await jose.jwtVerify(token, jwks);
     const sub = payload.sub;
-    const activeOrganizationId = payload.activeOrganizationId;
-    
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO: fix this
+    const activeOrganizationId = payload.activeOrganizationId as
+      | string
+      | undefined;
+
     if (!sub || !activeOrganizationId) {
       return {
         error: "Invalid token payload",
@@ -127,11 +135,16 @@ async function getUserAuth(request: Request) {
     }
 
     return {
-      sub: sub as string,
-      activeOrganizationId: activeOrganizationId as string,
+      sub: sub,
+      activeOrganizationId: activeOrganizationId,
     };
   } catch (err) {
-    console.info("Could not verify token: " + ((err as Error).message ?? String(err)));
+    // eslint-disable-next-line no-console -- TODO: debugging
+    console.info(
+      "Could not verify token: " +
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO: fix this
+        ((err as Error | undefined)?.message ?? String(err)),
+    );
     return {
       error: "Invalid token",
     };
