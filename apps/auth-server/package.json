@@ -5,7 +5,11 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "check-types": "tsc --noEmit",
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx ./scripts/dev.ts",
+    "dev:db": "tsx scripts/dev-db.ts",
+    "dev:clean": "tsx scripts/clean.ts",
+    "dev:server": "tsx watch src/index.ts",
+    "dev:zero": "npx zero-cache-dev",
     "format": "prettier --write . --ignore-path ../../.gitignore --ignore-path .prettierignore",
     "lint": "eslint . --cache --cache-location ./.cache/.eslintcache",
     "start": "node dist/src/index.js",
@@ -13,7 +17,10 @@
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "//db:seed-comment": "the db:seed script is used to run the solved-contact seed, while the plain seed script is used to run the ztunes seed script and insert artist data. It can eventually be removed",
     "db:seed": "tsx src/db/seed.ts",
+    "seed": "tsx scripts/seed.ts",
+    "generate-zero-schema": "drizzle-zero generate --schema=src/db/schema/index.ts --format -o src/zero/schema.gen.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -21,11 +28,15 @@
     "@hono/node-server": "^1.14.4",
     "@orpc/client": "catalog:",
     "@orpc/server": "catalog:",
+    "@rocicorp/zero": "0.22.2025070600",
     "better-auth": "catalog:",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
     "hono": "^4.8.2",
+    "jose": "^6.0.11",
+    "nanoid": "^5.1.5",
     "pg": "^8.16.0",
+    "postgres": "^3.4.5",
     "zod": "catalog:"
   },
   "devDependencies": {
@@ -35,7 +46,9 @@
     "@solved-contact/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "@types/pg": "^8.15.4",
+    "concurrently": "^9.1.2",
     "drizzle-kit": "^0.31.2",
+    "drizzle-zero": "0.11.0",
     "tsc-alias": "^1.8.11",
     "tsx": "^4.19.4",
     "typescript": "catalog:"
@@ -45,6 +58,8 @@
     "./auth": "./dist/src/lib/auth.js",
     "./db/authSchema": "./dist/src/db/schema/auth.js",
     "./db/ztunesSchema": "./dist/src/db/schema/ztunes.js",
-    "./db/chatSchema": "./dist/src/db/schema/chat.js"
+    "./db/chatSchema": "./dist/src/db/schema/chat.js",
+    "./zero/schema": "./dist/src/zero/schema.js",
+    "./zero/mutators": "./dist/src/zero/mutators.js"
   }
 }

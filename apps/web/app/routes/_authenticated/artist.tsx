@@ -1,8 +1,8 @@
 import { type Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { type Mutators } from "zero/mutators";
-import { type Schema } from "zero/schema";
+import { type Mutators } from "@solved-contact/auth-server/zero/mutators";
+import { type Schema } from "@solved-contact/auth-server/zero/schema";
 import { Button } from "@solved-contact/ui/components/button";
 
 function query(zero: Zero<Schema, Mutators>, artistID: string | undefined) {

@@ -4,8 +4,8 @@ import { useQuery } from "@rocicorp/zero/react";
 import { useRouter } from "@tanstack/react-router";
 import { format } from "date-fns/format";
 import { MoreVertical, Send } from "lucide-react";
-import { type Mutators } from "zero/mutators";
-import { type Schema } from "zero/schema";
+import { type Mutators } from "@solved-contact/auth-server/zero/mutators";
+import { type Schema } from "@solved-contact/auth-server/zero/schema";
 import {
   Avatar,
   AvatarFallback,

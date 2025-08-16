@@ -6,6 +6,8 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { accounts, members, organizations, users } from "./schema/auth";
 import { chatUsers, conversations, messages } from "./schema/chat";
 
+import "#/shared/env";
+
 const dbUrl = process.env.DATABASE_URL;
 
 if (!dbUrl) {

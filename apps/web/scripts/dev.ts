@@ -38,12 +38,15 @@ async function checkPorts(): Promise<boolean> {
   const pgPort = parsePgAddress(devPgAddress);
   const vitePort = 5173;
 
-  const [pgInUse, viteInUse] = await Promise.all([
+  const [_pgInUse, viteInUse] = await Promise.all([
     isPortInUse(pgPort),
     isPortInUse(vitePort),
   ]);
 
-  if (pgInUse && viteInUse) {
+  if (
+    // pgInUse &&
+    viteInUse
+  ) {
     process.stdout.write(`✅ Both ports are already in use:\n`);
     process.stdout.write(`   - PostgreSQL (${pgPort})\n`);
     process.stdout.write(`   - Vite (${vitePort})\n`);
@@ -62,28 +65,7 @@ async function main() {
   }
 
   concurrently([
-    {
-      command: "npm run dev:clean && npm run dev:db",
-      name: "postgres",
-      prefixColor: "#32648c",
-    },
     { command: "npm run dev:ui", name: "vite", prefixColor: "#7ce645" },
-    {
-      command: `wait-on tcp:${devPgAddress} && sleep 1 && npx drizzle-kit push --force && npm run seed`,
-      name: "seed-script",
-      prefixColor: "#005fec",
-    },
-    {
-      command: `wait-on tcp:${devPgAddress} && sleep 1 && npm run dev:zero`,
-      name: "zero",
-      prefixColor: "#ff11cc",
-    },
-    {
-      command:
-        "chokidar 'db/schema.ts' 'auth/schema.ts' -c 'npm run generate-zero-schema'",
-      name: "generate-zero-schema",
-      prefixColor: "#11ffcc",
-    },
   ]);
 }
 

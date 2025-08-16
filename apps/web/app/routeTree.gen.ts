@@ -24,7 +24,6 @@ import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminTeamsRouteImport } from './routes/_authenticated/admin/teams'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users_.$userId'
 import { Route as AuthenticatedAdminUsersAddUserRouteImport } from './routes/_authenticated/admin/users.add-user'
-import { ServerRoute as ApiZeroPushServerRouteImport } from './routes/api/zero/push'
 import { ServerRoute as ApiAuthRefreshServerRouteImport } from './routes/api/auth/refresh'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -97,11 +96,6 @@ const AuthenticatedAdminUsersAddUserRoute =
     path: '/add-user',
     getParentRoute: () => AuthenticatedAdminUsersRoute,
   } as any)
-const ApiZeroPushServerRoute = ApiZeroPushServerRouteImport.update({
-  id: '/api/zero/push',
-  path: '/api/zero/push',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
 const ApiAuthRefreshServerRoute = ApiAuthRefreshServerRouteImport.update({
   id: '/api/auth/refresh',
   path: '/api/auth/refresh',
@@ -209,31 +203,27 @@ export interface RootRouteChildren {
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
   '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
-  '/api/zero/push': typeof ApiZeroPushServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
   '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
-  '/api/zero/push': typeof ApiZeroPushServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/auth/$': typeof ApiAuthSplatServerRoute
   '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
-  '/api/zero/push': typeof ApiZeroPushServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/$' | '/api/auth/refresh' | '/api/zero/push'
+  fullPaths: '/api/auth/$' | '/api/auth/refresh'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/$' | '/api/auth/refresh' | '/api/zero/push'
-  id: '__root__' | '/api/auth/$' | '/api/auth/refresh' | '/api/zero/push'
+  to: '/api/auth/$' | '/api/auth/refresh'
+  id: '__root__' | '/api/auth/$' | '/api/auth/refresh'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
   ApiAuthRefreshServerRoute: typeof ApiAuthRefreshServerRoute
-  ApiZeroPushServerRoute: typeof ApiZeroPushServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -333,13 +323,6 @@ declare module '@tanstack/react-router' {
 }
 declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
-    '/api/zero/push': {
-      id: '/api/zero/push'
-      path: '/api/zero/push'
-      fullPath: '/api/zero/push'
-      preLoaderRoute: typeof ApiZeroPushServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
     '/api/auth/refresh': {
       id: '/api/auth/refresh'
       path: '/api/auth/refresh'
@@ -422,7 +405,6 @@ export const routeTree = rootRouteImport
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
   ApiAuthRefreshServerRoute: ApiAuthRefreshServerRoute,
-  ApiZeroPushServerRoute: ApiZeroPushServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

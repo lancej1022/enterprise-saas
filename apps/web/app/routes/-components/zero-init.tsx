@@ -3,8 +3,8 @@ import { type Zero } from "@rocicorp/zero";
 import { ZeroProvider } from "@rocicorp/zero/react";
 import { useRouter } from "@tanstack/react-router";
 import { must } from "shared/must";
-import { createMutators, type Mutators } from "zero/mutators";
-import { schema, type Schema } from "zero/schema";
+import { createMutators, type Mutators } from "@solved-contact/auth-server/zero/mutators";
+import { schema, type Schema } from "@solved-contact/auth-server/zero/schema";
 
 if (typeof import.meta.env === "undefined") {
   // @ts-expect-error -- this is a hack to make sure `import.meta.env` doesnt crash playwright

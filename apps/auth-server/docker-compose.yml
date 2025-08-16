@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: postgres
+    container_name: hono-server
     image: postgres:17-alpine
     shm_size: 1g
     user: postgres

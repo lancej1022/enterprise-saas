@@ -66,11 +66,11 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
   );
 }
 
-// TODO: Zero will call this function to get a new JWT if verification fails, so this needs to be fixed otherwise refresh tokens wont work
+// TODO: Need to verify whether this actually works after consolidating this logic from `web` into `auth-server`
 async function zeroAuth(error?: "invalid-token") {
   if (error) {
-    // TODO: this will attempt to hit the Tanstack Start auth/refresh endpoint, when we ACTUALLY need to hit the hono auth server
-    await fetch("/api/auth/refresh", {
+    // TODO: Pull the URL from the env
+    await fetch("http://localhost:3000/api/auth/refresh", {
       credentials: "include",
     });
   }
