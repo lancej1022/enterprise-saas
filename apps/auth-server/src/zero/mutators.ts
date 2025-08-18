@@ -1,20 +1,18 @@
-import { type CustomMutatorDefs } from "@rocicorp/zero";
+import type { Transaction } from "@rocicorp/zero";
 import { nanoid } from "nanoid";
 
-import { type DecodedJWT, type schema } from "./schema";
+import type { DecodedJWT, Schema } from "./schema";
 
 // TODO: generate this with Drizzle or something instead
 function generateId() {
   return nanoid();
 }
 
-export function createMutators(
-  authData: DecodedJWT | undefined,
-): CustomMutatorDefs<typeof schema> {
+export function createMutators(authData: DecodedJWT | undefined) {
   return {
     chat: {
       sendMessage: async (
-        tx,
+        tx: Transaction<Schema>,
         {
           conversationId,
           content,
@@ -116,7 +114,7 @@ export function createMutators(
       // },
 
       startConversation: async (
-        tx,
+        tx: Transaction<Schema>,
         {
           subject,
           pageUrl,
@@ -196,7 +194,7 @@ export function createMutators(
 
     cart: {
       add: async (
-        tx,
+        tx: Transaction<Schema>,
         { albumID, addedAt }: { addedAt: number; albumID: string },
       ) => {
         if (!authData) {
@@ -214,7 +212,7 @@ export function createMutators(
         }
       },
 
-      remove: async (tx, albumId: string) => {
+      remove: async (tx: Transaction<Schema>, albumId: string) => {
         if (!authData) {
           throw new Error("Not authenticated");
         }
@@ -231,7 +229,7 @@ export function createMutators(
         });
       },
     },
-  } as const satisfies CustomMutatorDefs<typeof schema>;
+  };
 }
 
 export type Mutators = ReturnType<typeof createMutators>;

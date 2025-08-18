@@ -84,10 +84,10 @@ export default tseslint.config(
       "unused-imports/no-unused-imports": "error",
       // TODO: not clear if we really need `consistent-type-imports` since we also have `import/consistent-type-specifier-style` in place...
       // this rule improves tree-shaking by ensuring types are consistently imported in a way that allows them to be removed from production bundles
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        { prefer: "type-imports", fixStyle: "inline-type-imports" },
-      ],
+      // "@typescript-eslint/consistent-type-imports": [
+      //   "error",
+      //   { prefer: "type-imports", fixStyle: "separate-type-imports" },
+      // ],
       // disallows unsafe type casting
       "@typescript-eslint/consistent-type-assertions": [
         "error",
@@ -110,7 +110,11 @@ export default tseslint.config(
       "@typescript-eslint/no-non-null-assertion": "error",
       // `prefer-nullish-coalescing` can lead to bugs in cases where `||` is needed
       "@typescript-eslint/prefer-nullish-coalescing": "off",
-      "import/consistent-type-specifier-style": ["error", "prefer-inline"],
+      // inline type imports can lead to side effect imports after transpilation, which can cause difficult to track bugs
+      // eg `export {type Schema} from "./schema.gen.ts" can be transpiled to `export "./schema.gen.js"`
+      // this side effect import can lead to issues like server code being included in the client bundle, an issue that occured in the past
+      // when a side effect import from the hono server led to Node/Postgres code in the client bundle
+      "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
       "max-params": ["error", 3],
       "no-restricted-imports": [
         "error",

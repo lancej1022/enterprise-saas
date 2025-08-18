@@ -1,12 +1,8 @@
-import {
-  ANYONE_CAN,
-  definePermissions,
-  type ExpressionBuilder,
-  type PermissionsConfig,
-  type Row,
-} from "@rocicorp/zero";
+import { ANYONE_CAN, definePermissions } from "@rocicorp/zero";
+import type { ExpressionBuilder, PermissionsConfig, Row } from "@rocicorp/zero";
 
-import { schema, type Schema } from "./schema.gen";
+import { schema } from "./schema.gen";
+import type { Schema } from "./schema.gen";
 
 export { schema, type Schema };
 

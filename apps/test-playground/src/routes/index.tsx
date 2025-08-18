@@ -12,7 +12,6 @@ export const Route = createFileRoute("/")({
 
 function App() {
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- TODO: fix the types of bundled package
     boot({
       app_id: "123",
       email: "test@test.com",
