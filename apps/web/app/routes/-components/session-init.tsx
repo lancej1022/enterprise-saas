@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { RouterContextProvider, useRouter } from "@tanstack/react-router";
 import { authClient } from "auth/client";
-import { type User } from "better-auth";
+import type { User } from "better-auth";
 import { Cookies, useCookies } from "react-cookie";
 
 export interface SessionContextType {

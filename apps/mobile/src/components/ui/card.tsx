@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Text, View, type TextProps, type ViewProps } from "react-native";
+import { Text, View } from "react-native";
+import type { TextProps, ViewProps } from "react-native";
 
 import { TextClassContext } from "#/components/ui/text";
 import { cn } from "#/lib/utils";

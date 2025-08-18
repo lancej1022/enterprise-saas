@@ -8,10 +8,8 @@ import {
   FormProvider,
   useFormContext,
   useFormState,
-  type ControllerProps,
-  type FieldPath,
-  type FieldValues,
 } from "react-hook-form";
+import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import { Label } from "@solved-contact/ui/components/label";
 import { cn } from "@solved-contact/ui/lib/utils";
 

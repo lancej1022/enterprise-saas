@@ -6,11 +6,8 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react";
-import {
-  DayPicker,
-  getDefaultClassNames,
-  type DayButton,
-} from "react-day-picker";
+import { DayPicker, getDefaultClassNames } from "react-day-picker";
+import type { DayButton } from "react-day-picker";
 import { Button, buttonVariants } from "@solved-contact/ui/components/button";
 import { cn } from "@solved-contact/ui/lib/utils";
 

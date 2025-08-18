@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
@@ -13,7 +13,7 @@ import { CookiesProvider } from "react-cookie";
 import { must } from "shared/must";
 
 import { DefaultCatchBoundary } from "#/components/catch-boundary";
-import { type RouterContext } from "#/router";
+import type { RouterContext } from "#/router";
 import { SessionInit } from "#/routes/-components/session-init";
 import { ZeroInit } from "#/routes/-components/zero-init";
 

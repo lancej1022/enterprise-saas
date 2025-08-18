@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { type SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
+import type { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 
 import guitars from "#/data/example-guitars";
 

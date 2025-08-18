@@ -1,4 +1,5 @@
-import { forwardRef, type AnchorHTMLAttributes } from "react";
+import { forwardRef } from "react";
+import type { AnchorHTMLAttributes } from "react";
 import { createLink } from "@tanstack/react-router";
 
 type MouseDownLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>;

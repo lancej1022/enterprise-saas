@@ -1,8 +1,10 @@
 import * as React from "react";
-import { View, type ViewProps } from "react-native";
+import { View } from "react-native";
+import type { ViewProps } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { cva, type VariantProps } from "class-variance-authority";
-import { type LucideIcon } from "lucide-react-native";
+import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
+import type { LucideIcon } from "lucide-react-native";
 
 import { Text } from "#/components/ui/text";
 import { cn } from "#/lib/utils";

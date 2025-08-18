@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { type Zero } from "@rocicorp/zero";
+import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { useQuery as useTanstackQuery } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useDebouncedCallback } from "use-debounce";
-import { type Mutators } from "@solved-contact/auth-server/zero/mutators";
-import { type Schema } from "@solved-contact/auth-server/zero/schema";
+import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
+import type { Schema } from "@solved-contact/auth-server/zero/schema";
 import { Input } from "@solved-contact/ui/components/input";
 import { Label } from "@solved-contact/ui/components/label";
 

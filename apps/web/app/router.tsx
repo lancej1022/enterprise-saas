@@ -1,11 +1,11 @@
-import { type Zero } from "@rocicorp/zero";
+import type { Zero } from "@rocicorp/zero";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { type Mutators } from "@solved-contact/auth-server/zero/mutators";
-import { type Schema } from "@solved-contact/auth-server/zero/schema";
+import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
+import type { Schema } from "@solved-contact/auth-server/zero/schema";
 
-import { type SessionContextType } from "./routes/-components/session-init";
+import type { SessionContextType } from "./routes/-components/session-init";
 import { routeTree } from "./routeTree.gen";
 import { orpc } from "./utils/orpc";
 

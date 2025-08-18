@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Platform, Text, View, type TextProps } from "react-native";
+import { Platform, Text, View } from "react-native";
+import type { TextProps } from "react-native";
 import * as MenubarPrimitive from "@rn-primitives/menubar";
 
 import { TextClassContext } from "#/components/ui/text";

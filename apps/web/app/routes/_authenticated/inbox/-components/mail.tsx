@@ -17,7 +17,7 @@ import {
 } from "@solved-contact/ui/components/tabs";
 import { TooltipProvider } from "@solved-contact/ui/components/tooltip";
 
-import { type Mail } from "./data";
+import type { Mail } from "./data";
 import { ConversationList } from "./mail-list";
 
 interface ConversationsProps {

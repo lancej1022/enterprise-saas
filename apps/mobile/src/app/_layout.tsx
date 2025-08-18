@@ -12,8 +12,8 @@ import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
-  type Theme,
 } from "@react-navigation/native";
+import type { Theme } from "@react-navigation/native";
 
 import { ThemeToggle } from "#/components/theme-toggle/theme-toggle";
 import { setAndroidNavigationBar } from "#/lib/android-navigation-bar";

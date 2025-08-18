@@ -16,7 +16,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint . --cache --cache-location ./.cache/.eslintcache",
-    "format": "prettier",
+    "format": "prettier --write . --ignore-path ../../.gitignore --ignore-path .prettierignore",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit"
   },

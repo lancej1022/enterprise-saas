@@ -2,7 +2,8 @@
 
 import { useLayoutEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,

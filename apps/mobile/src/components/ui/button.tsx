@@ -1,6 +1,8 @@
 import * as React from "react";
-import { Animated, Pressable, type GestureResponderEvent } from "react-native";
-import { cva, type VariantProps } from "class-variance-authority";
+import { Animated, Pressable } from "react-native";
+import type { GestureResponderEvent } from "react-native";
+import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 
 import { TextClassContext } from "#/components/ui/text";
 import { cn } from "#/lib/utils";

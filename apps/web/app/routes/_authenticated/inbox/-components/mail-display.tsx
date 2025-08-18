@@ -40,7 +40,7 @@ import {
   TooltipTrigger,
 } from "@solved-contact/ui/components/tooltip";
 
-import { type Mail } from "./data";
+import type { Mail } from "./data";
 
 interface MailDisplayProps {
   mail: Mail | null;

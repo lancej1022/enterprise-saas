@@ -1,11 +1,11 @@
-import { type ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { Link, useParams } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import { Badge } from "@solved-contact/ui/components/badge";
 import { ScrollArea } from "@solved-contact/ui/components/scroll-area";
 import { cn } from "@solved-contact/ui/lib/utils";
 
-import { type Mail } from "./data";
+import type { Mail } from "./data";
 
 interface ConversationListProps {
   items: Mail[];

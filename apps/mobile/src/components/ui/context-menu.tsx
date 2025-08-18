@@ -1,13 +1,6 @@
 import * as React from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  type StyleProp,
-  type TextProps,
-  type ViewStyle,
-} from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
+import type { StyleProp, TextProps, ViewStyle } from "react-native";
 import * as ContextMenuPrimitive from "@rn-primitives/context-menu";
 
 import { TextClassContext } from "#/components/ui/text";

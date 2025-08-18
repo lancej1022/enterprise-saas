@@ -1,8 +1,8 @@
 import { hairlineWidth } from "nativewind/theme";
-import { type Config } from "tailwindcss";
+import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
+  darkMode: "class",
   content: ["src/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -42,7 +42,7 @@ export default {
         },
       },
       borderWidth: {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call -- no types from nativewind
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- no types from nativewind
         hairline: hairlineWidth(),
       },
       borderColor: {

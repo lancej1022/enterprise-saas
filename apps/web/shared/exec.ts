@@ -1,4 +1,5 @@
-import { execSync, type ExecSyncOptions } from "child_process";
+import { execSync } from "child_process";
+import type { ExecSyncOptions } from "child_process";
 
 export function exec(command: string, options?: ExecSyncOptions) {
   // eslint-disable-next-line no-console -- taken from ztunes
