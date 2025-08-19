@@ -82,12 +82,13 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": "off",
       // provides an autofixable version of no-unused-vars, for imports specifically
       "unused-imports/no-unused-imports": "error",
-      // TODO: not clear if we really need `consistent-type-imports` since we also have `import/consistent-type-specifier-style` in place...
-      // this rule improves tree-shaking by ensuring types are consistently imported in a way that allows them to be removed from production bundles
-      // "@typescript-eslint/consistent-type-imports": [
-      //   "error",
-      //   { prefer: "type-imports", fixStyle: "separate-type-imports" },
-      // ],
+      // This rule works in tandem with `import/consistent-type-specifier-style`. This rule ensures usage of `import type` instead of `import` for type imports.
+      // (which improves tree-shaking by ensuring types are consistently imported in a way that allows them to be removed from production bundles)
+      // while the other rule auto-fixes the import style from `import {type thing}` to `import type {thing}`
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { prefer: "type-imports", fixStyle: "separate-type-imports" },
+      ],
       // disallows unsafe type casting
       "@typescript-eslint/consistent-type-assertions": [
         "error",
