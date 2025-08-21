@@ -45,9 +45,7 @@ function OrganizationSettings() {
     Record<string, "error" | "success" | "testing">
   >({});
 
-  const [jwtSecret, _setJwtSecret] = useState(
-    "sk_live_51H7qYKJ2eZvKYlo2C8ZvKYlo2C8ZvKYlo2C8ZvKYlo2C8ZvKYlo2C8ZvKYlo2C8ZvKYlo2C8",
-  );
+  const [jwtSecret, _setJwtSecret] = useState("example_secret_goes_here");
   const [showSecret, setShowSecret] = useState(false);
 
   async function copySecret() {
