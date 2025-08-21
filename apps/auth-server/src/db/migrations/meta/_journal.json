@@ -50,6 +50,13 @@
       "when": 1755363582757,
       "tag": "0006_true_nova",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1755749881145,
+      "tag": "0007_violet_frog_thor",
+      "breakpoints": true
     }
   ]
 }

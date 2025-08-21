@@ -1,18 +1,19 @@
+import type { Zero } from "@rocicorp/zero";
 import type { QueryClient } from "@tanstack/react-query";
-import {
-  createRootRouteWithContext,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
+import { createRootRouteWithContext, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
+import type { Schema } from "@solved-contact/auth-server/zero/schema";
 
 import TanStackQueryLayout from "../integrations/tanstack-query/layout";
 
-export interface MyRouterContext {
+// Define router context interface similar to web app
+export interface ChatWidgetRouterContext {
   queryClient: QueryClient;
+  zero: Zero<Schema, Mutators>;
 }
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<ChatWidgetRouterContext>()({
   // head: () => ({
   //   meta: [
   //     {
@@ -44,7 +45,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     //   </head>
     //   <body>
     <div>
-      <HeadContent />
       {children}
       <TanStackRouterDevtools />
       <TanStackQueryLayout />

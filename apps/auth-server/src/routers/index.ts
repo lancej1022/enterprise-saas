@@ -1,4 +1,5 @@
 import { protectedProcedure, publicProcedure } from "../lib/orpc";
+import { chatRouter } from "./chat";
 
 export const appRouter = {
   healthCheck: publicProcedure.handler(() => {
@@ -11,5 +12,6 @@ export const appRouter = {
       user: context.session?.user,
     };
   }),
+  chat: chatRouter,
 };
 export type AppRouter = typeof appRouter;

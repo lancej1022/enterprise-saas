@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
@@ -22,11 +20,9 @@ import { Route as AuthenticatedInboxIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedInboxConversationIdRouteImport } from './routes/_authenticated/inbox/$conversation-id'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminTeamsRouteImport } from './routes/_authenticated/admin/teams'
+import { Route as AuthenticatedAdminOrganizationSettingsRouteImport } from './routes/_authenticated/admin/organization-settings'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users_.$userId'
 import { Route as AuthenticatedAdminUsersAddUserRouteImport } from './routes/_authenticated/admin/users.add-user'
-import { ServerRoute as ApiAuthRefreshServerRouteImport } from './routes/api/auth/refresh'
-
-const rootServerRouteImport = createServerRootRoute()
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -83,6 +79,12 @@ const AuthenticatedAdminTeamsRoute = AuthenticatedAdminTeamsRouteImport.update({
   path: '/admin/teams',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminOrganizationSettingsRoute =
+  AuthenticatedAdminOrganizationSettingsRouteImport.update({
+    id: '/admin/organization-settings',
+    path: '/admin/organization-settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminUsersUserIdRoute =
   AuthenticatedAdminUsersUserIdRouteImport.update({
     id: '/admin/users_/$userId',
@@ -95,11 +97,6 @@ const AuthenticatedAdminUsersAddUserRoute =
     path: '/add-user',
     getParentRoute: () => AuthenticatedAdminUsersRoute,
   } as any)
-const ApiAuthRefreshServerRoute = ApiAuthRefreshServerRouteImport.update({
-  id: '/api/auth/refresh',
-  path: '/api/auth/refresh',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
@@ -108,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/artist': typeof AuthenticatedArtistRoute
   '/cart': typeof AuthenticatedCartRoute
   '/': typeof AuthenticatedIndexRoute
+  '/admin/organization-settings': typeof AuthenticatedAdminOrganizationSettingsRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/inbox/$conversation-id': typeof AuthenticatedInboxConversationIdRoute
@@ -121,6 +119,7 @@ export interface FileRoutesByTo {
   '/artist': typeof AuthenticatedArtistRoute
   '/cart': typeof AuthenticatedCartRoute
   '/': typeof AuthenticatedIndexRoute
+  '/admin/organization-settings': typeof AuthenticatedAdminOrganizationSettingsRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/inbox/$conversation-id': typeof AuthenticatedInboxConversationIdRoute
@@ -137,6 +136,7 @@ export interface FileRoutesById {
   '/_authenticated/artist': typeof AuthenticatedArtistRoute
   '/_authenticated/cart': typeof AuthenticatedCartRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/admin/organization-settings': typeof AuthenticatedAdminOrganizationSettingsRoute
   '/_authenticated/admin/teams': typeof AuthenticatedAdminTeamsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/_authenticated/inbox/$conversation-id': typeof AuthenticatedInboxConversationIdRoute
@@ -153,6 +153,7 @@ export interface FileRouteTypes {
     | '/artist'
     | '/cart'
     | '/'
+    | '/admin/organization-settings'
     | '/admin/teams'
     | '/admin/users'
     | '/inbox/$conversation-id'
@@ -166,6 +167,7 @@ export interface FileRouteTypes {
     | '/artist'
     | '/cart'
     | '/'
+    | '/admin/organization-settings'
     | '/admin/teams'
     | '/admin/users'
     | '/inbox/$conversation-id'
@@ -181,6 +183,7 @@ export interface FileRouteTypes {
     | '/_authenticated/artist'
     | '/_authenticated/cart'
     | '/_authenticated/'
+    | '/_authenticated/admin/organization-settings'
     | '/_authenticated/admin/teams'
     | '/_authenticated/admin/users'
     | '/_authenticated/inbox/$conversation-id'
@@ -193,27 +196,6 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
-}
-export interface FileServerRoutesByFullPath {
-  '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/auth/refresh': typeof ApiAuthRefreshServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/refresh'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/refresh'
-  id: '__root__' | '/api/auth/refresh'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiAuthRefreshServerRoute: typeof ApiAuthRefreshServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -295,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminTeamsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/organization-settings': {
+      id: '/_authenticated/admin/organization-settings'
+      path: '/admin/organization-settings'
+      fullPath: '/admin/organization-settings'
+      preLoaderRoute: typeof AuthenticatedAdminOrganizationSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/users_/$userId': {
       id: '/_authenticated/admin/users_/$userId'
       path: '/admin/users/$userId'
@@ -308,17 +297,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/users/add-user'
       preLoaderRoute: typeof AuthenticatedAdminUsersAddUserRouteImport
       parentRoute: typeof AuthenticatedAdminUsersRoute
-    }
-  }
-}
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/auth/refresh': {
-      id: '/api/auth/refresh'
-      path: '/api/auth/refresh'
-      fullPath: '/api/auth/refresh'
-      preLoaderRoute: typeof ApiAuthRefreshServerRouteImport
-      parentRoute: typeof rootServerRouteImport
     }
   }
 }
@@ -359,6 +337,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedArtistRoute: typeof AuthenticatedArtistRoute
   AuthenticatedCartRoute: typeof AuthenticatedCartRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedAdminOrganizationSettingsRoute: typeof AuthenticatedAdminOrganizationSettingsRoute
   AuthenticatedAdminTeamsRoute: typeof AuthenticatedAdminTeamsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRouteWithChildren
   AuthenticatedAdminUsersUserIdRoute: typeof AuthenticatedAdminUsersUserIdRoute
@@ -369,6 +348,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedArtistRoute: AuthenticatedArtistRoute,
   AuthenticatedCartRoute: AuthenticatedCartRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedAdminOrganizationSettingsRoute:
+    AuthenticatedAdminOrganizationSettingsRoute,
   AuthenticatedAdminTeamsRoute: AuthenticatedAdminTeamsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRouteWithChildren,
   AuthenticatedAdminUsersUserIdRoute: AuthenticatedAdminUsersUserIdRoute,
@@ -385,9 +366,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiAuthRefreshServerRoute: ApiAuthRefreshServerRoute,
-}
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()

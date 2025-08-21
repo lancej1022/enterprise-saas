@@ -70,7 +70,7 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
 async function zeroAuth(error?: "invalid-token") {
   if (error) {
     // TODO: Pull the URL from the env
-    await fetch("http://localhost:3000/api/auth/refresh", {
+    await fetch("http://localhost:3000/api/zero/refresh", {
       credentials: "include",
     });
   }

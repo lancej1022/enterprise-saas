@@ -220,6 +220,28 @@ export const auth = betterAuth({
             //   input: true,
             //   required: false,
             // },
+
+            // Security fields
+            chatSecurityLevel: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatAllowedDomains: {
+              type: "string", // JSON array of domains
+              input: true,
+              required: false,
+            },
+            chatJwtSecret: {
+              type: "string",
+              input: true,
+              required: false,
+            },
+            chatSessionDuration: {
+              type: "number",
+              input: true,
+              required: false,
+            },
           },
         },
         member: {

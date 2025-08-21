@@ -118,6 +118,11 @@ export const organizations = pgTable("organizations", {
   chatWelcomeMessage: text("chat_welcome_message"),
   chatCollectEmail: boolean("chat_collect_email"),
   chatCollectName: boolean("chat_collect_name"),
+  chatSecurityLevel: text("chat_security_level").default("basic").notNull(),
+  // TODO: JSON array of domains, so we should probably store this differently...
+  chatAllowedDomains: text("chat_allowed_domains"),
+  chatJwtSecret: text("chat_jwt_secret"),
+  chatSessionDuration: integer("chat_session_duration"),
 });
 
 export const members = pgTable("members", {
@@ -170,6 +175,23 @@ export const teamMembers = pgTable("team_members", {
   createdAt: timestamp("created_at"),
 });
 
+export const chatSessions = pgTable("chat_sessions", {
+  id: text("id").primaryKey(),
+  organizationId: text("organization_id")
+    .notNull()
+    .references(() => organizations.id, { onDelete: "cascade" }),
+  sessionToken: text("session_token").notNull().unique(),
+  userIdentifier: text("user_identifier"), // Customer's user ID
+  domain: text("domain"), // Domain where session was initiated
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+  updatedAt: timestamp("updated_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
@@ -197,6 +219,7 @@ export const organizationsRelations = relations(organizations, ({ many }) => ({
   members: many(members),
   invitations: many(invitations),
   teams: many(teams),
+  chatSessions: many(chatSessions),
 }));
 
 export const membersRelations = relations(members, ({ one }) => ({
@@ -237,5 +260,12 @@ export const teamMembersRelations = relations(teamMembers, ({ one }) => ({
   user: one(users, {
     fields: [teamMembers.userId],
     references: [users.id],
+  }),
+}));
+
+export const chatSessionsRelations = relations(chatSessions, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [chatSessions.organizationId],
+    references: [organizations.id],
   }),
 }));

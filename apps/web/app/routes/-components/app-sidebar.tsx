@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   AudioWaveform,
-  BookOpen,
   Command,
   Frame,
   GalleryVerticalEnd,
@@ -46,6 +45,7 @@ const data = {
     },
   ],
   navMain: [
+    // TODO: Need to import the router or something and use `satisfies + `as const` in order to make the urls type safe
     {
       title: "Admin",
       url: "/admin", // TODO: dont think this URL is actually used anywhere?
@@ -61,8 +61,8 @@ const data = {
           url: "/admin/teams",
         },
         {
-          title: "Settings",
-          url: "/settings",
+          title: "Organization Settings",
+          url: "/admin/organization-settings",
         },
       ],
     },
@@ -102,30 +102,7 @@ const data = {
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
+      title: "User Settings",
       url: "#",
       icon: Settings2,
       items: [

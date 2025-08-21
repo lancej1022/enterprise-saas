@@ -1,3 +1,4 @@
+import type { Zero } from "@rocicorp/zero";
 import {
   createMemoryHistory,
   createRouter as createTanstackRouter,
@@ -5,11 +6,16 @@ import {
 } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import ReactDOM from "react-dom/client";
+import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
+import type { Schema } from "@solved-contact/auth-server/zero/schema";
 
 import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
+import { ZeroInit } from "./integrations/zero/zero-init";
 import { routeTree } from "./routeTree.gen";
 // import "./demo.index.css";
 import "./styles.css";
+
+import type { ChatWidgetRouterContext } from "./routes/__root";
 
 // Used to ensure that changing the route within the chat-widget doesnt actually impact the browser URL
 const memoryHistory = createMemoryHistory({
@@ -24,12 +30,16 @@ export function createRouter() {
       routeTree,
       defaultSsr: false,
       history: memoryHistory,
-      context: { ...rqContext },
+      context: {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- following web app pattern
+        zero: undefined as unknown as Zero<Schema, Mutators>, // populated in ZeroInit
+        ...rqContext,
+      } satisfies ChatWidgetRouterContext,
       defaultPreload: "intent",
       Wrap: (props: { children: React.ReactNode }) => {
         return (
           <TanstackQuery.Provider {...rqContext}>
-            {props.children}
+            <ZeroInit>{props.children}</ZeroInit>
           </TanstackQuery.Provider>
         );
       },

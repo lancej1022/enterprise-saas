@@ -13,8 +13,9 @@ import { logger } from "hono/logger";
 import * as jose from "jose";
 import postgres from "postgres";
 
-import { auth } from "./lib/auth";
+import { auth, setCookies } from "./lib/auth";
 import { createContext } from "./lib/context";
+// import { startScheduledTasks } from "./lib/scheduled-tasks";
 import { appRouter } from "./routers/index";
 import { createMutators } from "./zero/mutators";
 import { schema } from "./zero/schema";
@@ -45,6 +46,52 @@ app.use(
     credentials: true,
   }),
 );
+
+// eslint-disable-next-line max-params -- TODO: fix this
+function createResponse(
+  status: number,
+  userid: string,
+  email: string,
+  jwt: string,
+) {
+  const headers = new Headers();
+  setCookies(headers, {
+    userid,
+    email,
+    jwt,
+  });
+  // TODO: does this work with Hono...?
+  return new Response(null, {
+    status,
+    headers,
+  });
+}
+
+app.get("/api/zero/refresh", async (c) => {
+  const session = await auth.api.getSession({
+    headers: c.req.raw.headers,
+  });
+  if (!session) {
+    // eslint-disable-next-line no-console -- taken from ztunes
+    console.info("Could not get session");
+    return createResponse(401, "", "", "");
+  }
+
+  // TODO: pretty sure causes this endpoint to call the auth server again :| not good
+  const token = await auth.api.getToken({
+    headers: c.req.raw.headers,
+  });
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO
+  if (!token) {
+    // eslint-disable-next-line no-console -- taken from ztunes
+    console.info("Could not get JWT token");
+    return createResponse(401, "", "", "");
+  }
+
+  // eslint-disable-next-line no-console -- taken from ztunes
+  console.info("Refreshed JWT token");
+  return createResponse(200, session.user.id, session.user.email, token.token);
+});
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
@@ -100,6 +147,9 @@ serve(
   (info) => {
     // eslint-disable-next-line no-console -- intentionally signaling that the server is running
     console.log(`Server is running on http://localhost:${info.port}`);
+
+    // Start scheduled maintenance tasks
+    // startScheduledTasks();
   },
 );
 

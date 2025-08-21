@@ -11,6 +11,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { CookiesProvider } from "react-cookie";
 import { must } from "shared/must";
+import { Toaster } from "@solved-contact/ui/components/sonner";
 
 import { DefaultCatchBoundary } from "#/components/catch-boundary";
 import type { RouterContext } from "#/router";
@@ -58,6 +59,7 @@ function RootComponent() {
           <ZeroInit>
             <QueryClientProvider client={queryClient}>
               <Outlet />
+              <Toaster />
             </QueryClientProvider>
           </ZeroInit>
         </SessionInit>
