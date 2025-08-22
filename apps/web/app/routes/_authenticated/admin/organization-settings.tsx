@@ -220,7 +220,7 @@ function OrganizationSettings() {
                   value={newDomain}
                 />
               </div>
-              <Button disabled={!newDomain} type="submit">
+              <Button disabled={!newDomain.trim()} type="submit">
                 <Plus className="mr-2 h-4 w-4" />
                 Add Domain
               </Button>
