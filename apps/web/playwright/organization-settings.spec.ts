@@ -119,7 +119,20 @@ test.describe("Organization Settings page", () => {
   test("should handle JWT secret management, visibility, copy, and rotation", async ({
     page,
   }) => {
-    // 1. Verify JWT secret management section elements are present
+    const jwtSwitch = page.getByRole("switch", {
+      name: "JWT Authentication Required",
+    });
+    const isJwtEnabled = await jwtSwitch.isChecked();
+
+    if (!isJwtEnabled) {
+      // If JWT is not enabled, the Current Secret Key should not be visible
+      await expect(page.getByText("Current Secret Key")).not.toBeVisible();
+
+      // Enable JWT authentication
+      await jwtSwitch.click();
+      await page.waitForTimeout(500); // Wait for UI update
+    }
+
     await expect(page.getByText("Current Secret Key")).toBeVisible();
     await expect(page.getByText("Secret Key Management")).toBeVisible();
     await expect(
@@ -133,7 +146,6 @@ test.describe("Organization Settings page", () => {
       ),
     ).toBeVisible();
 
-    // 2. Test JWT secret visibility toggle
     const secretInput = page.locator("#jwt-secret");
     const toggleButton = page.getByRole("button", {
       name: /Show secret|Hide secret/,
@@ -151,8 +163,7 @@ test.describe("Organization Settings page", () => {
     expect(secretValue).toBeTruthy();
     expect(secretValue.length).toBeGreaterThan(0);
 
-    // 3. Test copy secret functionality
-    const copyButton = page.getByRole("button", { name: "Copy" });
+    const copyButton = page.getByRole("button", { name: "Copy" }).nth(1);
 
     // Grant clipboard permissions
     await page
@@ -183,7 +194,6 @@ test.describe("Organization Settings page", () => {
       // We'll just continue with the test without clipboard verification
     }
 
-    // 4. Test secret key rotation functionality
     const rotateButton = page.getByRole("button", {
       name: "Rotate Secret Key",
     });
@@ -201,7 +211,6 @@ test.describe("Organization Settings page", () => {
     // For now, we just verify the button was clickable and the initial secret existed
     expect(initialSecret).toBeTruthy();
 
-    // 5. Test hiding the secret again
     await toggleButton.click();
     await expect(secretInput).toHaveAttribute("type", "password");
   });

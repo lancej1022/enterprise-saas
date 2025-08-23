@@ -1,7 +1,14 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useChat } from "ai/react";
-import { MessageCircle, Minimize2, Send, X } from "lucide-react";
+import {
+  AlertTriangle,
+  MessageCircle,
+  Minimize2,
+  Send,
+  Shield,
+  X,
+} from "lucide-react";
 import { Button } from "@solved-contact/ui/components/button";
 import { Card } from "@solved-contact/ui/components/card";
 import { Input } from "@solved-contact/ui/components/input";
@@ -12,6 +19,8 @@ import {
 } from "@solved-contact/ui/components/popover";
 import { cn } from "@solved-contact/ui/lib/utils";
 
+import { useChatSecurity } from "../hooks/use-chat-security";
+
 const suggestedQuestions = [
   "What services do you offer?",
   "How can I get started?",
@@ -20,9 +29,45 @@ const suggestedQuestions = [
   "How do I contact sales?",
 ];
 
-export function ChatWidget() {
+export interface ChatWidgetProps {
+  domain?: string; // Optional domain override (defaults to auto-detection)
+  onSecurityError?: (error: string, code: string) => void;
+  organizationId: string;
+  userJWT?: string;
+}
+
+export function ChatWidget({
+  organizationId,
+  userJWT,
+  domain,
+  onSecurityError,
+}: ChatWidgetProps) {
+  const {
+    isInitialized,
+    isLoading: isSecurityLoading,
+    error: securityError,
+    securityLevel,
+    sessionInfo,
+    retry: retrySecurity,
+  } = useChatSecurity({
+    organizationId,
+    userJWT,
+    domain,
+    onSecurityError,
+    autoRetry: true,
+  });
+
+  // TODO: remove this shit
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat();
+    useChat({
+      api: `${import.meta.env.VITE_SERVER_URL}/api/chat`,
+      headers: sessionInfo?.sessionToken
+        ? {
+            Authorization: `Bearer ${sessionInfo.sessionToken}`,
+          }
+        : undefined,
+    });
+
   const [isMinimized, setIsMinimized] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -70,6 +115,46 @@ export function ChatWidget() {
   }, [messages]);
 
   const hasMessages = messages.length > 0;
+
+  // Security status indicators
+  function renderSecurityStatus() {
+    if (isSecurityLoading) {
+      return (
+        <div className="flex items-center justify-center py-8">
+          <div className="flex items-center space-x-3">
+            <Shield className="h-5 w-5 animate-pulse text-emerald-600" />
+            <span className="text-sm text-slate-600">
+              Initializing secure connection...
+            </span>
+          </div>
+        </div>
+      );
+    }
+
+    if (securityError && !isInitialized) {
+      return (
+        <div className="p-4 text-center">
+          <div className="mb-3 flex items-center justify-center">
+            <AlertTriangle className="h-6 w-6 text-red-500" />
+          </div>
+          <h4 className="mb-2 font-semibold text-slate-800">Security Error</h4>
+          <p className="mb-4 text-sm text-slate-600">{securityError}</p>
+          <Button
+            className="bg-emerald-600 hover:bg-emerald-700"
+            onClick={() => void retrySecurity()}
+            size="sm"
+          >
+            Retry Connection
+          </Button>
+        </div>
+      );
+    }
+
+    return null;
+  }
+
+  const showSecurityStatus =
+    isSecurityLoading || (securityError && !isInitialized);
 
   return (
     <Popover onOpenChange={handleOpenChange} open={isOpen}>
@@ -135,7 +220,9 @@ export function ChatWidget() {
             )}
           >
             <div className="h-80 space-y-4 overflow-y-auto bg-slate-50 p-4">
-              {!hasMessages && (
+              {showSecurityStatus ? (
+                renderSecurityStatus()
+              ) : !hasMessages && isInitialized ? (
                 <div className="py-8 text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
                     <MessageCircle className="h-6 w-6 text-emerald-600" />
@@ -160,30 +247,31 @@ export function ChatWidget() {
                     ))}
                   </div>
                 </div>
-              )}
+              ) : null}
 
-              {messages.map((message) => (
-                <div
-                  className={cn(
-                    "flex",
-                    message.role === "user" ? "justify-end" : "justify-start",
-                  )}
-                  key={message.id}
-                >
+              {isInitialized &&
+                messages.map((message) => (
                   <div
                     className={cn(
-                      "max-w-[80%] rounded-2xl px-4 py-2 text-sm",
-                      message.role === "user"
-                        ? "rounded-br-md bg-emerald-600 text-white"
-                        : "rounded-bl-md border bg-white text-slate-800 shadow-sm",
+                      "flex",
+                      message.role === "user" ? "justify-end" : "justify-start",
                     )}
+                    key={message.id}
                   >
-                    {message.content}
+                    <div
+                      className={cn(
+                        "max-w-[80%] rounded-2xl px-4 py-2 text-sm",
+                        message.role === "user"
+                          ? "rounded-br-md bg-emerald-600 text-white"
+                          : "rounded-bl-md border bg-white text-slate-800 shadow-sm",
+                      )}
+                    >
+                      {message.content}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
-              {isLoading && (
+              {isInitialized && isLoading && (
                 <div className="flex justify-start">
                   <div className="rounded-2xl rounded-bl-md border bg-white px-4 py-2 text-sm text-slate-800 shadow-sm">
                     <div className="flex space-x-1">
@@ -208,23 +296,33 @@ export function ChatWidget() {
               <form className="flex space-x-2" onSubmit={handleSubmit}>
                 <Input
                   className="flex-1 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500"
-                  disabled={isLoading}
+                  disabled={!isInitialized || isLoading}
                   onChange={handleInputChange}
-                  placeholder="Type your message..."
+                  placeholder={
+                    !isInitialized ? "Connecting..." : "Type your message..."
+                  }
                   ref={inputRef}
                   value={input}
                 />
                 <Button
                   className="bg-emerald-600 px-3 hover:bg-emerald-700"
-                  disabled={isLoading || !input.trim()}
+                  disabled={!isInitialized || isLoading || !input.trim()}
                   type="submit"
                 >
                   <Send className="h-4 w-4" />
                 </Button>
               </form>
-              <p className="mt-2 text-center text-xs text-slate-500">
-                Powered by AI • We're here to help 24/7
-              </p>
+              <div className="mt-2 flex items-center justify-between text-xs">
+                <p className="text-slate-500">
+                  Powered by AI • We're here to help 24/7
+                </p>
+                {securityLevel && (
+                  <div className="flex items-center space-x-1 text-slate-400">
+                    <Shield className="h-3 w-3" />
+                    <span className="capitalize">{securityLevel}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </Card>

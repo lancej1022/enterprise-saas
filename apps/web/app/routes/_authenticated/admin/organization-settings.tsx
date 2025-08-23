@@ -128,7 +128,6 @@ function OrganizationSettings() {
     removeDomainMutation.mutate({ domain, organizationId });
   }
 
-  // Handle security level change
   function handleSecurityLevelChange(isEnabled: boolean) {
     const securityLevel = isEnabled ? "jwt_required" : "basic";
     updateSecurityLevelMutation.mutate({ organizationId, securityLevel });
@@ -150,6 +149,51 @@ function OrganizationSettings() {
             </p>
           </div>
         </div>
+
+        {/* Organization Information */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="h-5 w-5" />
+              Organization Information
+            </CardTitle>
+            <CardDescription>
+              Current organization details and identification
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="org-id">Organization ID</Label>
+              <div className="flex gap-2">
+                <Input
+                  className="font-mono text-sm"
+                  id="org-id"
+                  readOnly
+                  value={organizationId || "No organization selected"}
+                />
+                <Button
+                  disabled={!organizationId}
+                  onClick={async () => {
+                    if (organizationId) {
+                      await navigator.clipboard.writeText(organizationId);
+                      toast("Organization ID copied", {
+                        description:
+                          "Organization ID has been copied to clipboard.",
+                      });
+                    }
+                  }}
+                  variant="outline"
+                >
+                  <Copy className="mr-2 h-4 w-4" />
+                  Copy
+                </Button>
+              </div>
+              <p className="text-muted-foreground text-sm">
+                Use this ID when configuring external integrations or API calls
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Security Level */}
         <Card>
@@ -294,87 +338,87 @@ function OrganizationSettings() {
         </Card>
 
         {/* JWT Secret Management */}
-        {/* {isJWTRequired && ( */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Key className="h-5 w-5" />
-              JWT Secret Key
-            </CardTitle>
-            <CardDescription>
-              Generate and manage JWT secret keys for secure authentication. Use
-              this key to sign JWT tokens for your chat widget.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Current Secret */}
-            <div className="space-y-3">
-              <Label htmlFor="jwt-secret">Current Secret Key</Label>
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <Input
-                    className="pr-10 font-mono text-sm"
-                    id="jwt-secret"
-                    readOnly
-                    type={showSecret ? "text" : "password"}
-                    value={jwtSecret}
-                  />
-                  <Button
-                    aria-label={showSecret ? "Hide secret" : "Show secret"}
-                    className="absolute top-1/2 right-1 h-8 w-8 -translate-y-1/2 p-0"
-                    onClick={() => setShowSecret(!showSecret)}
-                    size="sm"
-                    variant="ghost"
-                  >
-                    {showSecret ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
+        {isJWTRequired && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Key className="h-5 w-5" />
+                JWT Secret Key
+              </CardTitle>
+              <CardDescription>
+                Generate and manage JWT secret keys for secure authentication.
+                Use this key to sign JWT tokens for your chat widget.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Current Secret */}
+              <div className="space-y-3">
+                <Label htmlFor="jwt-secret">Current Secret Key</Label>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Input
+                      className="pr-10 font-mono text-sm"
+                      id="jwt-secret"
+                      readOnly
+                      type={showSecret ? "text" : "password"}
+                      value={jwtSecret}
+                    />
+                    <Button
+                      aria-label={showSecret ? "Hide secret" : "Show secret"}
+                      className="absolute top-1/2 right-1 h-8 w-8 -translate-y-1/2 p-0"
+                      onClick={() => setShowSecret(!showSecret)}
+                      size="sm"
+                      variant="ghost"
+                    >
+                      {showSecret ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  <Button onClick={copySecret} variant="outline">
+                    <Copy className="mr-2 h-4 w-4" />
+                    Copy
                   </Button>
                 </div>
-                <Button onClick={copySecret} variant="outline">
-                  <Copy className="mr-2 h-4 w-4" />
-                  Copy
-                </Button>
-              </div>
-            </div>
-
-            <Separator />
-
-            {/* Secret Management Actions */}
-            <div className="space-y-4">
-              <div>
-                <p className="mb-2 text-lg font-medium">
-                  Secret Key Management
-                </p>
-                <p className="text-muted-foreground mb-4 text-sm">
-                  Rotate your secret key regularly for enhanced security. This
-                  will invalidate all existing JWT tokens.
-                </p>
               </div>
 
-              <div className="flex gap-3">
-                <Button variant="destructive">
-                  <>
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    Rotate Secret Key
-                  </>
-                </Button>
-              </div>
+              <Separator />
 
-              <Alert>
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  <strong>Important:</strong> Rotating the secret key will
-                  invalidate all existing JWT tokens. Make sure to update your
-                  applications with the new key before rotating.
-                </AlertDescription>
-              </Alert>
-            </div>
-          </CardContent>
-        </Card>
-        {/* )} */}
+              {/* Secret Management Actions */}
+              <div className="space-y-4">
+                <div>
+                  <p className="mb-2 text-lg font-medium">
+                    Secret Key Management
+                  </p>
+                  <p className="text-muted-foreground mb-4 text-sm">
+                    Rotate your secret key regularly for enhanced security. This
+                    will invalidate all existing JWT tokens.
+                  </p>
+                </div>
+
+                <div className="flex gap-3">
+                  <Button variant="destructive">
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Rotate Secret Key
+                    </>
+                  </Button>
+                </div>
+
+                <Alert>
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    <strong>Important:</strong> Rotating the secret key will
+                    invalidate all existing JWT tokens. Make sure to update your
+                    applications with the new key before rotating.
+                  </AlertDescription>
+                </Alert>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

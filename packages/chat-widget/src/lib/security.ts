@@ -3,7 +3,7 @@
  * Handles initialization, authentication, and session management
  */
 
-import { createChatORPCClient } from "./orpc";
+import { client } from "./orpc";
 
 export interface ChatWidgetSecurityConfig {
   apiBaseUrl?: string;
@@ -45,16 +45,10 @@ export function getCurrentDomain(): string {
 export async function initializeChatSecurity(
   config: ChatWidgetSecurityConfig,
 ): Promise<SecurityValidationResult> {
-  const {
-    organizationId,
-    userJWT,
-    apiBaseUrl = "",
-    domain: domainOverride,
-  } = config;
+  const { organizationId, userJWT, domain: domainOverride } = config;
 
   try {
     // Create ORPC client with the specified API base URL
-    const { client } = createChatORPCClient(apiBaseUrl);
 
     // Use domain override if provided, otherwise auto-detect
     const domain = domainOverride || getCurrentDomain();
@@ -88,10 +82,7 @@ export async function initializeChatSecurity(
 /**
  * Get organization security configuration
  */
-export async function getOrganizationConfig(
-  organizationId: string,
-  apiBaseUrl = "",
-): Promise<{
+export async function getOrganizationConfig(organizationId: string): Promise<{
   config?: {
     allowedDomains: string[];
     securityLevel: "basic" | "jwt_required";
@@ -102,7 +93,6 @@ export async function getOrganizationConfig(
 }> {
   try {
     // Create ORPC client with the specified API base URL
-    const { client } = createChatORPCClient(apiBaseUrl);
 
     // Make type-safe request to get organization configuration
     const result = await client.chat.getConfig({
@@ -130,11 +120,9 @@ export async function getOrganizationConfig(
  */
 export async function validateSession(
   sessionToken: string,
-  apiBaseUrl = "",
 ): Promise<{ error?: string; valid: boolean }> {
   try {
     // Create ORPC client with the specified API base URL
-    const { client } = createChatORPCClient(apiBaseUrl);
 
     // Make type-safe request to validate session
     const result = await client.chat.validateSession({

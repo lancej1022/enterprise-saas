@@ -10,9 +10,8 @@ import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
 import type { Schema } from "@solved-contact/auth-server/zero/schema";
 
 import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
-import { ZeroInit } from "./integrations/zero/zero-init";
 import { routeTree } from "./routeTree.gen";
-// import "./demo.index.css";
+
 import "./styles.css";
 
 import type { ChatWidgetRouterContext } from "./routes/__root";
@@ -39,7 +38,7 @@ export function createRouter() {
       Wrap: (props: { children: React.ReactNode }) => {
         return (
           <TanstackQuery.Provider {...rqContext}>
-            <ZeroInit>{props.children}</ZeroInit>
+            {props.children}
           </TanstackQuery.Provider>
         );
       },
@@ -68,12 +67,18 @@ export function boot({
   created_at,
   name,
   user_id,
+  organizationId,
+  userJWT,
+  onSecurityError,
 }: {
   app_id: string;
   created_at?: number;
   email: string;
   name: string;
+  onSecurityError?: (error: string, code: string) => void;
+  organizationId: string;
   user_id: string;
+  userJWT?: string;
 }) {
   // Check if widget is already mounted to prevent duplicate instances
   const existingWidget = document.getElementById("chat-widget-root");
@@ -108,7 +113,10 @@ export function boot({
       created_at?: number;
       email: string;
       name: string;
+      onSecurityError?: (error: string, code: string) => void;
+      organizationId: string;
       user_id: string;
+      userJWT?: string;
     };
   }
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO: claude
@@ -118,5 +126,8 @@ export function boot({
     created_at,
     name,
     user_id,
+    organizationId,
+    userJWT,
+    onSecurityError,
   };
 }

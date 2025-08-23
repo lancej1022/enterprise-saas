@@ -13,13 +13,15 @@ export const Route = createFileRoute("/")({
 function App() {
   useEffect(() => {
     boot({
+      organizationId: "d5a651ba-e4ef-44d1-a2cc-8809b84c6091", // Fixed: changed app_id to organizationId
       app_id: "123",
-      email: "test@test.com",
+      email: "external-user@test.com",
       created_at: 123,
       name: "Test User",
       user_id: "123",
     });
   }, []);
+
   return (
     <div className="text-center">
       <header className="flex min-h-screen flex-col items-center justify-center bg-[#282c34] text-[calc(10px+2vmin)] text-white">

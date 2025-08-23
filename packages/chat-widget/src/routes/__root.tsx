@@ -5,6 +5,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
 import type { Schema } from "@solved-contact/auth-server/zero/schema";
 
+import { ZeroInit } from "#/integrations/zero/zero-init";
 import TanStackQueryLayout from "../integrations/tanstack-query/layout";
 
 // Define router context interface similar to web app
@@ -45,7 +46,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     //   </head>
     //   <body>
     <div>
-      {children}
+      <ZeroInit>{children}</ZeroInit>
       <TanStackRouterDevtools />
       <TanStackQueryLayout />
       <Scripts />

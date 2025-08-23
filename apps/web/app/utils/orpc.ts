@@ -10,7 +10,7 @@ if (typeof import.meta.env === "undefined") {
 }
 
 // TODO: the only reason we need the `process.env` fallback is because playwright somehow trips over `import.meta.env`
-export const link = new RPCLink({
+const link = new RPCLink({
   url: `${import.meta.env.VITE_SERVER_URL || process.env.VITE_SERVER_URL}/rpc`,
   fetch(url, options) {
     return fetch(url, {

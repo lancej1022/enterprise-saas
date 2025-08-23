@@ -41,6 +41,8 @@ const config = defineConfig({
   ],
 
   build: {
+    // TODO: Need to minify UMD builds, but should be fine to leave ESM unminified so that the built code is readable
+    minify: false,
     lib: {
       entry: resolve(__dirname, "src/router.tsx"),
       name: "ChatWidget",

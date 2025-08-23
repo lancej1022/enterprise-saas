@@ -15,9 +15,13 @@ if (typeof import.meta.env === "undefined") {
   import.meta.env = {};
 }
 
+// TODO: this eventually needs to be hardcoded to a public server URL otherwise it wont work for consumers...
 const serverURL = must<string>(
   // TODO: the only reason we need the `process.env` fallback is because playwright somehow trips over `import.meta.env`
-  import.meta.env.VITE_PUBLIC_SERVER || process.env.VITE_PUBLIC_SERVER,
+  import.meta.env.VITE_PUBLIC_SERVER ||
+    (typeof process !== "undefined"
+      ? process.env.VITE_PUBLIC_SERVER
+      : undefined),
   "VITE_PUBLIC_SERVER is required",
 );
 
