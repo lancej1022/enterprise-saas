@@ -14,6 +14,7 @@
     "clean:workspaces": "turbo run clean",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "knip": "DATABASE_URL=postgres://user:mypassword@localhost:5432/postgres knip",
     "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest -i tailwindcss",
     "postinstall": "pnpm lint:ws",
@@ -33,7 +34,9 @@
     "@ls-lint/ls-lint": "2.3.1",
     "@solved-contact/prettier-config": "workspace:*",
     "@turbo/gen": "^2.5.4",
+    "@types/node": "catalog:",
     "husky": "^9.1.7",
+    "knip": "5.63.0",
     "prettier": "catalog:",
     "turbo": "^2.5.4",
     "typescript": "catalog:"
