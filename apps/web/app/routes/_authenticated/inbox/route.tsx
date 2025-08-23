@@ -22,7 +22,7 @@ function RouteComponent() {
 }
 
 function Image(props: React.ComponentProps<"img">) {
-  return <img {...props} />;
+  return <img alt={props.alt ?? "placeholder"} {...props} />;
 }
 
 export default function MailPage() {

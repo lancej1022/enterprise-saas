@@ -7,7 +7,7 @@ export function LoginPage() {
     <main className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <a className="flex items-center gap-2 font-medium" href="#">
+          <a className="flex items-center gap-2 font-medium" href="#todo">
             <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
               <GalleryVerticalEnd className="size-4" />
             </div>
@@ -22,7 +22,7 @@ export function LoginPage() {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <img
-          alt="Image"
+          alt="thumbnail todo"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
           src="https://4kwallpapers.com/images/walls/thumbs_3t/13248.jpg"
         />

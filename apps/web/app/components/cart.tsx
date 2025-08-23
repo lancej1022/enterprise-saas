@@ -1,7 +1,5 @@
 import { useQuery } from "@rocicorp/zero/react";
-import { useRouter } from "@tanstack/react-router";
-
-import { Link } from "./link";
+import { Link, useRouter } from "@tanstack/react-router";
 
 export function Cart() {
   const { zero, session } = useRouter().options.context;

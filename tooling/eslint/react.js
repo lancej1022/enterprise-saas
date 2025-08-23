@@ -1,3 +1,4 @@
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactPlugin from "eslint-plugin-react";
 import * as reactHooks from "eslint-plugin-react-hooks";
 import reactYouMightNotNeedAnEffect from "eslint-plugin-react-you-might-not-need-an-effect";
@@ -6,6 +7,7 @@ import reactYouMightNotNeedAnEffect from "eslint-plugin-react-you-might-not-need
 export default [
   reactHooks.configs.recommended,
   reactYouMightNotNeedAnEffect.configs.recommended,
+  jsxA11y.flatConfigs.recommended,
   {
     files: ["**/*.ts", "**/*.tsx"],
     plugins: {

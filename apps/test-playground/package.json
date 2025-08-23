@@ -16,7 +16,6 @@
   "dependencies": {
     "@sentry/tanstackstart-react": "^9.12.0",
     "@solved-contact/chat-widget": "workspace:^",
-    "@solved-contact/ui": "workspace:*",
     "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-query-devtools": "^5.66.5",
@@ -24,7 +23,6 @@
     "@tanstack/react-router-devtools": "catalog:",
     "@tanstack/react-router-with-query": "catalog:",
     "@tanstack/react-start": "catalog:",
-    "@tanstack/react-virtual": "^3.13.9",
     "react": "catalog:",
     "react-dom": "catalog:",
     "vite": "catalog:",

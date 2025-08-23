@@ -121,7 +121,7 @@ export function LoginForm(props: React.ComponentProps<"form">) {
                     </Label>
                     <a
                       className="ml-auto text-sm underline-offset-4 hover:underline"
-                      href="#"
+                      href="#todo"
                     >
                       Forgot your password?
                     </a>
