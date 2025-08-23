@@ -14,7 +14,7 @@ import type {
   ChatWidgetSecurityConfig,
 } from "../lib/security";
 
-export interface UseChatSecurityOptions {
+interface UseChatSecurityOptions {
   autoRetry?: boolean;
   domain?: string; // Optional domain override
   onSecurityError?: (error: string, code: string) => void;
@@ -22,7 +22,7 @@ export interface UseChatSecurityOptions {
   userJWT?: string;
 }
 
-export interface ChatSecurityState {
+interface ChatSecurityState {
   clearSession: () => void;
   error: null | string;
   // Actions

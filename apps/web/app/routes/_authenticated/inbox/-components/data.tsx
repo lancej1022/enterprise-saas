@@ -212,8 +212,6 @@ export const accounts = [
   },
 ];
 
-export type Account = (typeof accounts)[number];
-
 export const contacts = [
   {
     name: "Emma Johnson",
@@ -296,5 +294,3 @@ export const contacts = [
     email: "scarlett.adams@example.com",
   },
 ];
-
-export type Contact = (typeof contacts)[number];

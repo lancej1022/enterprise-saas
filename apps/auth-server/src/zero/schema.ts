@@ -1,22 +1,10 @@
 import { ANYONE_CAN, definePermissions } from "@rocicorp/zero";
-import type { ExpressionBuilder, PermissionsConfig, Row } from "@rocicorp/zero";
+import type { ExpressionBuilder, PermissionsConfig } from "@rocicorp/zero";
 
 import { schema } from "./schema.gen";
 import type { Schema } from "./schema.gen";
 
 export { schema, type Schema };
-
-export type Artist = Row<typeof schema.tables.artist>;
-export type Album = Row<typeof schema.tables.album>;
-
-// Chat types
-export type ChatUser = Row<typeof schema.tables.chatUsers>;
-export type Conversation = Row<typeof schema.tables.conversations>;
-export type Message = Row<typeof schema.tables.messages>;
-export type Attachment = Row<typeof schema.tables.attachments>;
-export type ConversationAssignment = Row<
-  typeof schema.tables.conversationAssignments
->;
 
 // The decoded value of the JWT. Im not 100% sure, but it seems this is the main (only?) way for Zero Cache Server to access logged-in user's information
 export interface DecodedJWT {

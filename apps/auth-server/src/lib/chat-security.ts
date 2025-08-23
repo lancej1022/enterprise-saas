@@ -6,14 +6,14 @@ import * as schema from "../db/schema/auth";
 
 export type SecurityLevel = "basic" | "jwt_required";
 
-export interface ChatSecurityConfig {
+interface ChatSecurityConfig {
   allowedDomains: string[];
   jwtSecret?: string;
   securityLevel: SecurityLevel;
   sessionDuration: number;
 }
 
-export interface ValidationResult {
+interface ValidationResult {
   error?: string;
   sessionToken?: string;
   success: boolean;
@@ -23,7 +23,7 @@ export interface ValidationResult {
 /**
  * Standard JWT payload structure for chat widget authentication
  */
-export interface ChatWidgetJWTPayload {
+interface ChatWidgetJWTPayload {
   /** Standard JWT audience - your chat service identifier */
   aud: string;
   /** Standard JWT expiration time (Unix timestamp) */

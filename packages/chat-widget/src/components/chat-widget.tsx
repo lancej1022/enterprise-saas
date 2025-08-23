@@ -29,7 +29,7 @@ const suggestedQuestions = [
   "How do I contact sales?",
 ];
 
-export interface ChatWidgetProps {
+interface ChatWidgetProps {
   domain?: string; // Optional domain override (defaults to auto-detection)
   onSecurityError?: (error: string, code: string) => void;
   organizationId: string;

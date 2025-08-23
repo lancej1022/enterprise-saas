@@ -2,7 +2,7 @@ import type { Context as HonoContext } from "hono";
 
 import { auth } from "./auth";
 
-export interface CreateContextOptions {
+interface CreateContextOptions {
   context: HonoContext;
 }
 

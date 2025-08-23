@@ -10,7 +10,7 @@ import Header from "../components/header";
 import TanStackQueryLayout from "../integrations/tanstack-query/layout";
 import appCss from "../styles.css?url";
 
-export interface MyRouterContext {
+interface MyRouterContext {
   queryClient: QueryClient;
 }
 

@@ -22,7 +22,7 @@ export interface ChatSessionInfo {
   userIdentifier?: null | string;
 }
 
-export interface SecurityValidationResult {
+interface SecurityValidationResult {
   error?: string;
   securityLevel?: "basic" | "jwt_required";
   sessionInfo?: ChatSessionInfo;

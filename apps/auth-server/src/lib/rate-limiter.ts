@@ -6,13 +6,13 @@ interface RateLimitEntry {
 // In-memory rate limiting (for production, use Redis or similar)
 const rateLimitMap = new Map<string, RateLimitEntry>();
 
-export interface RateLimitOptions {
+interface RateLimitOptions {
   keyGenerator: (request: Request) => string;
   maxRequests: number;
   windowMs: number;
 }
 
-export interface RateLimitResult {
+interface RateLimitResult {
   allowed: boolean;
   error?: string;
   remaining: number;

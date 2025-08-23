@@ -3,7 +3,7 @@
  * Comprehensive logging for security events, compliance, and monitoring
  */
 
-export interface SecurityEvent {
+interface SecurityEvent {
   details: Record<string, unknown>;
   domain?: string;
   eventType: SecurityEventType;
@@ -17,7 +17,7 @@ export interface SecurityEvent {
   userIdentifier?: string;
 }
 
-export type SecurityEventType =
+type SecurityEventType =
   | "chat_widget_init"
   | "configuration_access"
   | "domain_validation"
@@ -31,7 +31,7 @@ export type SecurityEventType =
   | "suspicious_activity"
   | "unauthorized_access";
 
-export type SecuritySeverity = "critical" | "high" | "low" | "medium";
+type SecuritySeverity = "critical" | "high" | "low" | "medium";
 
 /**
  * Security audit logger class

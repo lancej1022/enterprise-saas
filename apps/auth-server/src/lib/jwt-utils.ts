@@ -5,6 +5,7 @@ import * as jose from "jose";
 import { db } from "../db";
 import * as schema from "../db/schema/auth";
 
+/** @lintignore -- knip thinks this is unused, but TS errors within `chat.ts` if this isnt exported */
 export interface ChatJWTPayload {
   // Index signature to satisfy JWTPayload interface
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: Claude lol

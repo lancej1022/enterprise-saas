@@ -1,10 +1,14 @@
 export default {
   $schema: "https://unpkg.com/knip@5/schema.json",
-  ignore: ["apps/mobile/**", "apps/mobile"],
+  ignore: ["**/routeTree.gen.ts"],
   ignoreWorkspaces: ["apps/mobile", "apps/mobile/**", "backend"],
+  tags: ["-lintignore"],
   workspaces: {
     "apps/web": {
       entry: ["app/{index,router}.tsx"],
+    },
+    "apps/auth-server": {
+      entry: ["src/zero/mutators.ts", "src/db/schema/auth.ts"],
     },
     "apps/test-playground": {
       entry: ["src/router.tsx"],
