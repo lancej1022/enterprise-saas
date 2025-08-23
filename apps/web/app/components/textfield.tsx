@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type * as LabelPrimitive from "@radix-ui/react-label";
+// TODO: remove this dep
 import { Slot } from "@radix-ui/react-slot";
 import { Input } from "@solved-contact/ui/components/input";
 import { Label } from "@solved-contact/ui/components/label";
@@ -47,7 +47,7 @@ function useFormField() {
 function FormLabel({
   className,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+}: React.ComponentProps<typeof Label>) {
   const { formItemId } = useFormField();
 
   return (

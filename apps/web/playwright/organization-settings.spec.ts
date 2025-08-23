@@ -33,6 +33,7 @@ test.describe("Organization Settings page", () => {
     // Toggle the switch
     await jwtToggle.click();
     await page.waitForTimeout(500); // TODO: this is a hack to wait for the API call
+    await page.waitForLoadState("networkidle");
 
     // Verify the badge changes
     if (initialState) {

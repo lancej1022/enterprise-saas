@@ -4,22 +4,13 @@ export default {
   ignoreWorkspaces: ["apps/mobile", "apps/mobile/**", "backend"],
   workspaces: {
     "apps/web": {
-      entry: [
-        "app/{index,router}.tsx",
-        //  "eslint.config.js"
-      ],
+      entry: ["app/{index,router}.tsx"],
     },
     "apps/test-playground": {
-      entry: ["src/router.tsx", "eslint.config.js"],
+      entry: ["src/router.tsx"],
     },
-    // "apps/auth-server": {
-    //   entry: ["eslint.config.js"],
-    // },
     "packages/chat-widget": {
-      entry: ["eslint.config.js", "src/index.ts", "src/router.tsx"],
-    },
-    "packages/web-ui": {
-      entry: ["eslint.config.js"],
+      entry: ["src/index.ts", "src/router.tsx"],
     },
   },
 };

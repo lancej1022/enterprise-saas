@@ -19,6 +19,7 @@
     "@orpc/client": "catalog:",
     "@orpc/server": "catalog:",
     "@orpc/tanstack-query": "catalog:",
+    "@radix-ui/react-slot": "^1.2.3",
     "@rocicorp/zero": "catalog:",
     "@solved-contact/auth-server": "workspace:*",
     "@solved-contact/ui": "workspace:*",
@@ -34,9 +35,11 @@
     "dotenv": "^16.5.0",
     "dotenv-expand": "^12.0.2",
     "js-cookie": "^3.0.5",
+    "lucide-react": "catalog:",
     "react": "catalog:",
-    "react-cookie": "^8.0.1",
+    "react-cookie": "catalog:",
     "react-dom": "catalog:",
+    "sonner": "catalog:",
     "use-debounce": "^10.0.4",
     "vinxi": "^0.5.6",
     "vite": "catalog:",
@@ -58,6 +61,7 @@
     "tailwindcss": "4.0.15",
     "tsx": "^4.19.4",
     "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
     "vite-tsconfig-paths": "^5.1.4",
     "wait-on": "^8.0.3"
   }
