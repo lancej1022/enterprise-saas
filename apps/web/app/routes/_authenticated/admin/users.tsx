@@ -15,14 +15,14 @@ import {
   Users,
 } from "lucide-react";
 import { z } from "zod/v4";
-import { Button } from "@solved-contact/ui/components/button";
+import { Button } from "@solved-contact/web-ui/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@solved-contact/ui/components/card";
+} from "@solved-contact/web-ui/components/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,7 +30,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
+} from "@solved-contact/web-ui/components/dropdown-menu";
 
 import { UsersSearchInput } from "./-components/users-search-input";
 import { query, UsersTable } from "./-components/users-table";

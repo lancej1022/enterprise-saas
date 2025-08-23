@@ -2,20 +2,20 @@
 
 import { Outlet } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { Input } from "@solved-contact/ui/components/input";
+import { Input } from "@solved-contact/web-ui/components/input";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@solved-contact/ui/components/resizable";
-import { Separator } from "@solved-contact/ui/components/separator";
+} from "@solved-contact/web-ui/components/resizable";
+import { Separator } from "@solved-contact/web-ui/components/separator";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@solved-contact/ui/components/tabs";
-import { TooltipProvider } from "@solved-contact/ui/components/tooltip";
+} from "@solved-contact/web-ui/components/tabs";
+import { TooltipProvider } from "@solved-contact/web-ui/components/tooltip";
 
 import type { Mail } from "./data";
 import { ConversationList } from "./mail-list";

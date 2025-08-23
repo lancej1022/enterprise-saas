@@ -27,14 +27,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@solved-contact/ui/components/alert-dialog";
+} from "@solved-contact/web-ui/components/alert-dialog";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@solved-contact/ui/components/avatar";
-import { Badge } from "@solved-contact/ui/components/badge";
-import { Button } from "@solved-contact/ui/components/button";
+} from "@solved-contact/web-ui/components/avatar";
+import { Badge } from "@solved-contact/web-ui/components/badge";
+import { Button } from "@solved-contact/web-ui/components/button";
 import {
   Card,
   CardContent,
@@ -42,30 +42,30 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@solved-contact/ui/components/card";
+} from "@solved-contact/web-ui/components/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
-import { Input } from "@solved-contact/ui/components/input";
-import { Label } from "@solved-contact/ui/components/label";
+} from "@solved-contact/web-ui/components/dropdown-menu";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Label } from "@solved-contact/web-ui/components/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@solved-contact/ui/components/select";
-import { Separator } from "@solved-contact/ui/components/separator";
+} from "@solved-contact/web-ui/components/select";
+import { Separator } from "@solved-contact/web-ui/components/separator";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@solved-contact/ui/components/tabs";
+} from "@solved-contact/web-ui/components/tabs";
 
 function individualUserQuery(
   z: Zero<Schema, Mutators>,

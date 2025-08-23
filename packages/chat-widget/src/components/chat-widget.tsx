@@ -9,15 +9,15 @@ import {
   Shield,
   X,
 } from "lucide-react";
-import { Button } from "@solved-contact/ui/components/button";
-import { Card } from "@solved-contact/ui/components/card";
-import { Input } from "@solved-contact/ui/components/input";
+import { Button } from "@solved-contact/web-ui/components/button";
+import { Card } from "@solved-contact/web-ui/components/card";
+import { Input } from "@solved-contact/web-ui/components/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@solved-contact/ui/components/popover";
-import { cn } from "@solved-contact/ui/lib/utils";
+} from "@solved-contact/web-ui/components/popover";
+import { cn } from "@solved-contact/web-ui/lib/utils";
 
 import { useChatSecurity } from "../hooks/use-chat-security";
 

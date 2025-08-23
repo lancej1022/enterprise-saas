@@ -18,7 +18,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@solved-contact/ui/components/sidebar";
+} from "@solved-contact/web-ui/components/sidebar";
 
 import { NavMain } from "./nav-main";
 import { NavProjects } from "./nav-projects";

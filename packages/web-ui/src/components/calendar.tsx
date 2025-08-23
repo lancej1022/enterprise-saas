@@ -8,8 +8,11 @@ import {
 } from "lucide-react";
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import type { DayButton } from "react-day-picker";
-import { Button, buttonVariants } from "@solved-contact/ui/components/button";
-import { cn } from "@solved-contact/ui/lib/utils";
+import {
+  Button,
+  buttonVariants,
+} from "@solved-contact/web-ui/components/button";
+import { cn } from "@solved-contact/web-ui/lib/utils";
 
 function Calendar({
   className,

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as ProgressPrimitive from "@radix-ui/react-progress";
-import { cn } from "@solved-contact/ui/lib/utils";
+import { cn } from "@solved-contact/web-ui/lib/utils";
 
 function Progress({
   className,

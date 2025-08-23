@@ -3,7 +3,7 @@ import { useQuery } from "@rocicorp/zero/react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
 import type { Schema } from "@solved-contact/auth-server/zero/schema";
-import { Button } from "@solved-contact/ui/components/button";
+import { Button } from "@solved-contact/web-ui/components/button";
 
 function query(z: Zero<Schema, Mutators>, userID: string | undefined) {
   return z.query.cartItem

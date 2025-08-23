@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
+} from "@solved-contact/web-ui/components/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@solved-contact/ui/components/sidebar";
+} from "@solved-contact/web-ui/components/sidebar";
 
 export function NavProjects({
   projects,

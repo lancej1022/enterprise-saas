@@ -5,25 +5,25 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
 import { PanelLeftIcon } from "lucide-react";
-import { Button } from "@solved-contact/ui/components/button";
-import { Input } from "@solved-contact/ui/components/input";
-import { Separator } from "@solved-contact/ui/components/separator";
+import { Button } from "@solved-contact/web-ui/components/button";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Separator } from "@solved-contact/web-ui/components/separator";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@solved-contact/ui/components/sheet";
-import { Skeleton } from "@solved-contact/ui/components/skeleton";
+} from "@solved-contact/web-ui/components/sheet";
+import { Skeleton } from "@solved-contact/web-ui/components/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@solved-contact/ui/components/tooltip";
-import { useIsMobile } from "@solved-contact/ui/hooks/use-mobile";
-import { cn } from "@solved-contact/ui/lib/utils";
+} from "@solved-contact/web-ui/components/tooltip";
+import { useIsMobile } from "@solved-contact/web-ui/hooks/use-mobile";
+import { cn } from "@solved-contact/web-ui/lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

@@ -8,10 +8,10 @@ import { authClient } from "auth/client";
 // TODO: replace with shadcn toast
 import { toast } from "sonner";
 import { z } from "zod/v4";
-import { Button } from "@solved-contact/ui/components/button";
-import { Input } from "@solved-contact/ui/components/input";
-import { Label } from "@solved-contact/ui/components/label";
-import { cn } from "@solved-contact/ui/lib/utils";
+import { Button } from "@solved-contact/web-ui/components/button";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Label } from "@solved-contact/web-ui/components/label";
+import { cn } from "@solved-contact/web-ui/lib/utils";
 
 import { useAppForm } from "#/components/tanstack-form";
 

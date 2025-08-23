@@ -15,20 +15,23 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { Alert, AlertDescription } from "@solved-contact/ui/components/alert";
-import { Badge } from "@solved-contact/ui/components/badge";
-import { Button } from "@solved-contact/ui/components/button";
+import {
+  Alert,
+  AlertDescription,
+} from "@solved-contact/web-ui/components/alert";
+import { Badge } from "@solved-contact/web-ui/components/badge";
+import { Button } from "@solved-contact/web-ui/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@solved-contact/ui/components/card";
-import { Input } from "@solved-contact/ui/components/input";
-import { Label } from "@solved-contact/ui/components/label";
-import { Separator } from "@solved-contact/ui/components/separator";
-import { Switch } from "@solved-contact/ui/components/switch";
+} from "@solved-contact/web-ui/components/card";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Label } from "@solved-contact/web-ui/components/label";
+import { Separator } from "@solved-contact/web-ui/components/separator";
+import { Switch } from "@solved-contact/web-ui/components/switch";
 
 export const Route = createFileRoute(
   "/_authenticated/admin/organization-settings",

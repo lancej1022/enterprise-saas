@@ -6,8 +6,8 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useDebouncedCallback } from "use-debounce";
 import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
 import type { Schema } from "@solved-contact/auth-server/zero/schema";
-import { Input } from "@solved-contact/ui/components/input";
-import { Label } from "@solved-contact/ui/components/label";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Label } from "@solved-contact/web-ui/components/label";
 
 const limit = 20;
 

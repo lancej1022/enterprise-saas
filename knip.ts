@@ -11,6 +11,8 @@ export default {
   },
   ignore: ["**/routeTree.gen.ts"],
   ignoreWorkspaces: ["apps/mobile", "apps/mobile/**", "backend"],
+  // wait-on is currently used in the auth-server dev script but knip cannot detect it because it is run through `concurrently`
+  ignoreDependencies: ["wait-on"],
   tags: ["-lintignore"],
   workspaces: {
     ".": {

@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { useSearch } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
-import { Button } from "@solved-contact/ui/components/button";
-import { Input } from "@solved-contact/ui/components/input";
-import { Label } from "@solved-contact/ui/components/label";
+import { Button } from "@solved-contact/web-ui/components/button";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Label } from "@solved-contact/web-ui/components/label";
 
 import { useDebouncedSearchParam } from "#/shared/hooks/use-debounced-search-params";
 

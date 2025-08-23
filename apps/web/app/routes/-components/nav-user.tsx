@@ -13,7 +13,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@solved-contact/ui/components/avatar";
+} from "@solved-contact/web-ui/components/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,13 +22,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
+} from "@solved-contact/web-ui/components/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@solved-contact/ui/components/sidebar";
+} from "@solved-contact/web-ui/components/sidebar";
 
 import { authClient } from "../../../auth/client";
 

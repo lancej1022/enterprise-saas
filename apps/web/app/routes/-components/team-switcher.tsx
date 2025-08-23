@@ -10,13 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
+} from "@solved-contact/web-ui/components/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@solved-contact/ui/components/sidebar";
+} from "@solved-contact/web-ui/components/sidebar";
 
 export function TeamSwitcher({
   teams,

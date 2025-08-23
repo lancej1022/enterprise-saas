@@ -1,17 +1,17 @@
 import { Moon, Sun } from "lucide-react";
-import { Button } from "@solved-contact/ui/components/button";
+import { Button } from "@solved-contact/web-ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
+} from "@solved-contact/web-ui/components/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@solved-contact/ui/components/tooltip";
+} from "@solved-contact/web-ui/components/tooltip";
 
 function toggleTheme(theme: "dark" | "light" | "system") {
   localStorage.theme = theme;

@@ -11,13 +11,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@solved-contact/ui/components/breadcrumb";
-import { Separator } from "@solved-contact/ui/components/separator";
+} from "@solved-contact/web-ui/components/breadcrumb";
+import { Separator } from "@solved-contact/web-ui/components/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@solved-contact/ui/components/sidebar";
+} from "@solved-contact/web-ui/components/sidebar";
 
 import { Cart } from "#/components/cart";
 import { ModeToggle } from "#/components/theme/mode-toggle";

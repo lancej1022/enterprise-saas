@@ -9,17 +9,17 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@solved-contact/ui/components/avatar";
-import { Badge } from "@solved-contact/ui/components/badge";
-import { Button } from "@solved-contact/ui/components/button";
-import { Checkbox } from "@solved-contact/ui/components/checkbox";
+} from "@solved-contact/web-ui/components/avatar";
+import { Badge } from "@solved-contact/web-ui/components/badge";
+import { Button } from "@solved-contact/web-ui/components/button";
+import { Checkbox } from "@solved-contact/web-ui/components/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
+} from "@solved-contact/web-ui/components/dropdown-menu";
 import {
   Pagination,
   PaginationContent,
@@ -28,7 +28,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@solved-contact/ui/components/pagination";
+} from "@solved-contact/web-ui/components/pagination";
 import {
   Table,
   TableBody,
@@ -36,7 +36,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@solved-contact/ui/components/table";
+} from "@solved-contact/web-ui/components/table";
 
 const limit = 20;
 

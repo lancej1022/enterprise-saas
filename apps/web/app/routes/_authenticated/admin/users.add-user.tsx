@@ -8,7 +8,7 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { Button } from "@solved-contact/ui/components/button";
+import { Button } from "@solved-contact/web-ui/components/button";
 import {
   Dialog,
   DialogContent,
@@ -16,16 +16,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@solved-contact/ui/components/dialog";
-import { Input } from "@solved-contact/ui/components/input";
-import { Label } from "@solved-contact/ui/components/label";
+} from "@solved-contact/web-ui/components/dialog";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Label } from "@solved-contact/web-ui/components/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@solved-contact/ui/components/select";
+} from "@solved-contact/web-ui/components/select";
 
 // const teams = [
 //   { label: "Customer Support", value: "customer-support" },

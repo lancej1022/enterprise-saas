@@ -10,15 +10,15 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@solved-contact/ui/components/avatar";
-import { Button } from "@solved-contact/ui/components/button";
+} from "@solved-contact/web-ui/components/avatar";
+import { Button } from "@solved-contact/web-ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@solved-contact/ui/components/dropdown-menu";
-import { Textarea } from "@solved-contact/ui/components/textarea";
+} from "@solved-contact/web-ui/components/dropdown-menu";
+import { Textarea } from "@solved-contact/web-ui/components/textarea";
 
 function conversationQuery(
   zero: Zero<Schema, Mutators>,

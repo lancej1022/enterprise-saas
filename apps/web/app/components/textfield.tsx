@@ -3,9 +3,9 @@
 import React from "react";
 // TODO: remove this dep
 import { Slot } from "@radix-ui/react-slot";
-import { Input } from "@solved-contact/ui/components/input";
-import { Label } from "@solved-contact/ui/components/label";
-import { cn } from "@solved-contact/ui/lib/utils";
+import { Input } from "@solved-contact/web-ui/components/input";
+import { Label } from "@solved-contact/web-ui/components/label";
+import { cn } from "@solved-contact/web-ui/lib/utils";
 
 import { useFieldContext } from "./tanstack-form";
 

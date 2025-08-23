@@ -11,10 +11,10 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@solved-contact/ui/components",
-    "utils": "@solved-contact/ui/lib/utils",
-    "hooks": "@solved-contact/ui/hooks",
-    "lib": "@solved-contact/ui/lib",
-    "ui": "@solved-contact/ui/components"
+    "components": "@solved-contact/web-ui/components",
+    "utils": "@solved-contact/web-ui/lib/utils",
+    "hooks": "@solved-contact/web-ui/hooks",
+    "lib": "@solved-contact/web-ui/lib",
+    "ui": "@solved-contact/web-ui/components"
   }
 }

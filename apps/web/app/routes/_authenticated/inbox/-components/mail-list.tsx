@@ -1,9 +1,9 @@
 import type { ComponentProps } from "react";
 import { Link, useParams } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
-import { Badge } from "@solved-contact/ui/components/badge";
-import { ScrollArea } from "@solved-contact/ui/components/scroll-area";
-import { cn } from "@solved-contact/ui/lib/utils";
+import { Badge } from "@solved-contact/web-ui/components/badge";
+import { ScrollArea } from "@solved-contact/web-ui/components/scroll-area";
+import { cn } from "@solved-contact/web-ui/lib/utils";
 
 import type { Mail } from "./data";
 

@@ -5,7 +5,7 @@
     "jsx": "preserve",
     "rootDir": ".",
     "paths": {
-      "@solved-contact/ui/*": ["./src/*"]
+      "@solved-contact/web-ui/*": ["./src/*"]
     }
   },
   "include": ["src"],

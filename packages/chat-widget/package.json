@@ -27,7 +27,7 @@
     "@rocicorp/zero": "catalog:",
     "@sentry/tanstackstart-react": "^9.12.0",
     "@solved-contact/auth-server": "workspace:*",
-    "@solved-contact/ui": "workspace:*",
+    "@solved-contact/web-ui": "workspace:*",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-query-devtools": "catalog:",
     "@tanstack/react-router": "catalog:",
