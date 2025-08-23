@@ -4,7 +4,6 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,9 +22,6 @@ import {
 import { Cart } from "#/components/cart";
 import { ModeToggle } from "#/components/theme/mode-toggle";
 import { AppSidebar } from "#/routes/-components/app-sidebar";
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function -- taken from ztunes
-export const getAuthFromHeaders = createServerFn().handler(async () => {});
 
 // Naming this file `route.tsx` creates a layout route that is used to wrap ALL the other routes nested under this directory
 export const Route = createFileRoute("/_authenticated")({

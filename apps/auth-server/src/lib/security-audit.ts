@@ -390,19 +390,17 @@ class SecurityAuditLogger {
 }
 
 // Export singleton instance
-export const securityAudit = new SecurityAuditLogger();
+const securityAudit = new SecurityAuditLogger();
 
 // Export convenience functions
 export const auditChatWidgetInit =
   securityAudit.logChatWidgetInit.bind(securityAudit);
 export const auditJWTValidation =
   securityAudit.logJWTValidation.bind(securityAudit);
-export const auditDomainValidation =
-  securityAudit.logDomainValidation.bind(securityAudit);
+
 export const auditRateLimit = securityAudit.logRateLimit.bind(securityAudit);
 export const auditUnauthorizedAccess =
   securityAudit.logUnauthorizedAccess.bind(securityAudit);
-export const auditSuspiciousActivity =
-  securityAudit.logSuspiciousActivity.bind(securityAudit);
+
 export const auditConfigurationChange =
   securityAudit.logConfigurationChange.bind(securityAudit);

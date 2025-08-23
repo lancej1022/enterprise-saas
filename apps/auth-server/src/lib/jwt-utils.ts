@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import * as jose from "jose";
 
@@ -22,29 +21,6 @@ export interface ChatJWTPayload {
     email?: string;
     name?: string;
   };
-}
-
-/**
- * Generate a JWT secret for an organization
- */
-export function generateJWTSecret(): string {
-  return crypto.randomBytes(32).toString("base64");
-}
-
-/**
- * Update organization with a new JWT secret
- */
-export async function updateOrganizationJWTSecret(
-  organizationId: string,
-): Promise<string> {
-  const secret = generateJWTSecret();
-
-  await db
-    .update(schema.organizations)
-    .set({ chatJwtSecret: secret })
-    .where(eq(schema.organizations.id, organizationId));
-
-  return secret;
 }
 
 /**
@@ -88,18 +64,6 @@ export async function createSampleChatJWT(
     .sign(secret);
 
   return jwt;
-}
-
-/**
- * Validate JWT structure (for testing/debugging)
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: Claude lol
-export function decodeJWT(token: string): any {
-  try {
-    return jose.decodeJwt(token);
-  } catch (error) {
-    throw new Error("Invalid JWT format");
-  }
 }
 
 /**

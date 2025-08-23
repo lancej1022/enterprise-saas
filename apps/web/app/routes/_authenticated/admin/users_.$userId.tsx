@@ -67,7 +67,7 @@ import {
   TabsTrigger,
 } from "@solved-contact/ui/components/tabs";
 
-export function individualUserQuery(
+function individualUserQuery(
   z: Zero<Schema, Mutators>,
   options: {
     organizationId: string;

@@ -78,7 +78,7 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
   },
 });
 
-export function UserManagement() {
+function UserManagement() {
   const {
     status = "All Statuses",
     team = "All Teams",

@@ -84,10 +84,7 @@ export async function getOrganizationSecurity(
 /**
  * Validate domain against organization's allowed domains
  */
-export function validateDomain(
-  domain: string,
-  allowedDomains: string[],
-): boolean {
+function validateDomain(domain: string, allowedDomains: string[]): boolean {
   if (allowedDomains.length === 0) {
     // If no domains configured, allow all (backward compatibility)
     return true;
@@ -122,7 +119,7 @@ export function validateDomain(
 /**
  * Extract domain from request headers
  */
-export function getDomainFromRequest(request: Request): null | string {
+function getDomainFromRequest(request: Request): null | string {
   // Try Origin header first (more reliable)
   const origin = request.headers.get("origin");
   if (origin) {
@@ -149,7 +146,7 @@ export function getDomainFromRequest(request: Request): null | string {
 /**
  * Generate a secure session token
  */
-export function generateSessionToken(): string {
+function generateSessionToken(): string {
   return crypto.randomUUID() + "_" + Date.now().toString(36);
 }
 

@@ -23,7 +23,7 @@ interface RateLimitResult {
  * Simple rate limiter implementation
  * In production, this should use a distributed cache like Redis
  */
-export function rateLimit(
+function rateLimit(
   request: Request,
   options: RateLimitOptions,
 ): RateLimitResult {
@@ -75,7 +75,7 @@ export function rateLimit(
 /**
  * Get client IP address from request
  */
-export function getClientIP(request: Request) {
+function getClientIP(request: Request) {
   // Check for forwarded IP headers (for proxies/load balancers)
   const forwardedFor = request.headers.get("x-forwarded-for");
   if (forwardedFor) {
@@ -92,27 +92,17 @@ export function getClientIP(request: Request) {
 /**
  * Generate rate limit key for IP-based limiting
  */
-export function ipBasedKeyGenerator(request: Request): string {
+function ipBasedKeyGenerator(request: Request): string {
   return `ip:${getClientIP(request)}`;
 }
 
 /**
  * Generate rate limit key for organization-based limiting
  */
-export function orgBasedKeyGenerator(
+function orgBasedKeyGenerator(
   organizationId: string,
 ): (request: Request) => string {
   return () => `org:${organizationId}`;
-}
-
-/**
- * Generate rate limit key combining IP and organization
- */
-export function ipOrgBasedKeyGenerator(
-  organizationId: string,
-): (request: Request) => string {
-  return (request: Request) =>
-    `ip-org:${getClientIP(request)}:${organizationId}`;
 }
 
 /**

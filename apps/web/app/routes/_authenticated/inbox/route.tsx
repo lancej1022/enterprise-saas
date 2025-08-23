@@ -25,7 +25,7 @@ function Image(props: React.ComponentProps<"img">) {
   return <img alt={props.alt ?? "placeholder"} {...props} />;
 }
 
-export default function MailPage() {
+function MailPage() {
   const router = useRouter();
   const { zero, session } = router.options.context;
 

@@ -11,4 +11,5 @@ if [ -n "$CHANGED_FILES" ]; then
   git add $CHANGED_FILES
 fi
 
+pnpm knip
 pnpm turbo typecheck lint test --output-logs=new-only

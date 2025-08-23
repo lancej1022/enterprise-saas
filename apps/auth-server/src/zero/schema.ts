@@ -47,7 +47,7 @@ function allowIfConversationParticipant(
   return eb.cmp("organizationId", authData.activeOrganizationId);
 }
 
-// TODO: I have no idea whether this is 100% correct
+/** @lintignore */
 export const permissions = definePermissions<DecodedJWT, Schema>(schema, () => {
   return {
     album: {

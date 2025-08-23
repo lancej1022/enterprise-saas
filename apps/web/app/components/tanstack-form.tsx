@@ -2,7 +2,7 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 
 import { TextField } from "./textfield";
 
-// export useFieldContext for use in your custom components
+/** @lintignore */
 export const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts();
 
@@ -36,35 +36,5 @@ function SubscribeButton({ label }: { label: string }) {
         </button>
       )}
     </form.Subscribe>
-  );
-}
-
-export function TanstackForm() {
-  const form = useAppForm({
-    // Supports all useForm options
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  return (
-    <form.AppForm>
-      {/* Notice the `AppField` instead of `Field`; `AppField` provides the required context */}
-      <form.AppField
-        children={(field) => (
-          <field.TextField description="Email" label="Email" />
-        )}
-        name="email"
-      />
-      <form.AppField
-        children={(field) => (
-          <field.TextField description="Password" label="Password" />
-        )}
-        name="password"
-      />
-      {/* Notice the `AppForm` component wrapper; `AppForm` provides the required context */}
-      <form.SubscribeButton label="Submit" />
-    </form.AppForm>
   );
 }
