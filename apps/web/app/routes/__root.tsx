@@ -14,6 +14,7 @@ import { must } from "shared/must";
 import { Toaster } from "@solved-contact/ui/components/sonner";
 
 import { DefaultCatchBoundary } from "#/components/catch-boundary";
+import { seo } from "#/lib/seo";
 import type { RouterContext } from "#/router";
 import { SessionInit } from "#/routes/-components/session-init";
 import { ZeroInit } from "#/routes/-components/zero-init";
@@ -38,6 +39,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       {
         title: "Solved Contact",
       },
+      ...seo({
+        title: "Solved Contact",
+        description: "Solved Contact",
+      }),
     ],
     // scripts: [
     //   {

@@ -29,10 +29,7 @@ interface SecurityValidationResult {
   success: boolean;
 }
 
-/**
- * Get the current domain from window.location
- */
-export function getCurrentDomain(): string {
+function getCurrentDomain(): string {
   if (typeof window === "undefined") {
     return "unknown";
   }

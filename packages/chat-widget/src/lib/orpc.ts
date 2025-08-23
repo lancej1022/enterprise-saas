@@ -18,4 +18,5 @@ const link = new RPCLink({
 });
 
 export const client: RouterClient<typeof appRouter> = createORPCClient(link);
+/** @lintignore -- this will be used eventually */
 export const orpc = createTanstackQueryUtils(client);
