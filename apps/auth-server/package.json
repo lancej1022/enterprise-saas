@@ -77,5 +77,6 @@
       "import": "./dist/src/zero/mutators.js",
       "default": "./dist/src/zero/mutators.js"
     }
-  }
+  },
+  "prettier": "@solved-contact/prettier-config"
 }
