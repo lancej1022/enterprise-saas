@@ -9,6 +9,7 @@ import { Conversations } from "./-components/mail";
 function conversationsQuery(zero: Zero<Schema, Mutators>, orgId: string) {
   return zero.query.conversations
     .where("organizationId", orgId)
+    .limit(10)
     .orderBy("updatedAt", "desc")
     .related("chatUser", (chatUser) => chatUser.one());
 }

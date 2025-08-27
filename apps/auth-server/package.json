@@ -9,7 +9,7 @@
     "dev:db": "tsx scripts/dev-db.ts",
     "dev:clean": "tsx scripts/clean.ts",
     "dev:server": "tsx watch src/index.ts",
-    "dev:zero": "npx zero-cache-dev",
+    "dev:zero": "npx zero-cache-dev --log-level=warn",
     "format": "prettier --write . --ignore-path ../../.gitignore --ignore-path .prettierignore",
     "lint": "eslint . --cache --cache-location ./.cache/.eslintcache",
     "start": "node dist/src/index.js",

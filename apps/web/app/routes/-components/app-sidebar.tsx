@@ -127,8 +127,8 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
-      url: "#",
+      name: "Client",
+      url: "/clients",
       icon: Frame,
     },
     {

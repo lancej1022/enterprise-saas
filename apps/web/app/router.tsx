@@ -55,6 +55,7 @@ export function createRouter() {
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- taken from ztunes
       session: undefined as unknown as SessionContextType, // populated in SessionProvider
     } satisfies RouterContext,
+    defaultStructuralSharing: true,
   });
 
   return router;

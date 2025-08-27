@@ -84,7 +84,14 @@ function UserManagement() {
     team = "All Teams",
     location = "All Locations",
     role = "All Roles",
-  } = Route.useSearch();
+  } = Route.useSearch({
+    select: (s) => ({
+      status: s.status,
+      team: s.team,
+      location: s.location,
+      role: s.role,
+    }),
+  });
   const navigate = useNavigate({ from: Route.fullPath });
 
   return (

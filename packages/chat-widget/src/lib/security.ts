@@ -136,9 +136,16 @@ export async function validateSession(
  * Error types for better error handling
  */
 export class ChatSecurityError extends Error {
+  code:
+    | "DOMAIN_NOT_ALLOWED"
+    | "JWT_INVALID"
+    | "JWT_REQUIRED"
+    | "ORGANIZATION_NOT_FOUND"
+    | "RATE_LIMITED"
+    | "UNKNOWN";
   constructor(
     message: string,
-    public code:
+    code:
       | "DOMAIN_NOT_ALLOWED"
       | "JWT_INVALID"
       | "JWT_REQUIRED"
@@ -148,6 +155,7 @@ export class ChatSecurityError extends Error {
   ) {
     super(message);
     this.name = "ChatSecurityError";
+    this.code = code;
   }
 }
 

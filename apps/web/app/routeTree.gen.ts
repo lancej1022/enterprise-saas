@@ -13,6 +13,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedClientsRouteImport } from './routes/_authenticated/clients'
 import { Route as AuthenticatedCartRouteImport } from './routes/_authenticated/cart'
 import { Route as AuthenticatedArtistRouteImport } from './routes/_authenticated/artist'
 import { Route as AuthenticatedInboxRouteRouteImport } from './routes/_authenticated/inbox/route'
@@ -41,6 +42,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedClientsRoute = AuthenticatedClientsRouteImport.update({
+  id: '/clients',
+  path: '/clients',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedCartRoute = AuthenticatedCartRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/inbox': typeof AuthenticatedInboxRouteRouteWithChildren
   '/artist': typeof AuthenticatedArtistRoute
   '/cart': typeof AuthenticatedCartRoute
+  '/clients': typeof AuthenticatedClientsRoute
   '/': typeof AuthenticatedIndexRoute
   '/admin/organization-settings': typeof AuthenticatedAdminOrganizationSettingsRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/artist': typeof AuthenticatedArtistRoute
   '/cart': typeof AuthenticatedCartRoute
+  '/clients': typeof AuthenticatedClientsRoute
   '/': typeof AuthenticatedIndexRoute
   '/admin/organization-settings': typeof AuthenticatedAdminOrganizationSettingsRoute
   '/admin/teams': typeof AuthenticatedAdminTeamsRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/_authenticated/inbox': typeof AuthenticatedInboxRouteRouteWithChildren
   '/_authenticated/artist': typeof AuthenticatedArtistRoute
   '/_authenticated/cart': typeof AuthenticatedCartRoute
+  '/_authenticated/clients': typeof AuthenticatedClientsRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/admin/organization-settings': typeof AuthenticatedAdminOrganizationSettingsRoute
   '/_authenticated/admin/teams': typeof AuthenticatedAdminTeamsRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/artist'
     | '/cart'
+    | '/clients'
     | '/'
     | '/admin/organization-settings'
     | '/admin/teams'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/artist'
     | '/cart'
+    | '/clients'
     | '/'
     | '/admin/organization-settings'
     | '/admin/teams'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/_authenticated/inbox'
     | '/_authenticated/artist'
     | '/_authenticated/cart'
+    | '/_authenticated/clients'
     | '/_authenticated/'
     | '/_authenticated/admin/organization-settings'
     | '/_authenticated/admin/teams'
@@ -226,6 +238,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/clients': {
+      id: '/_authenticated/clients'
+      path: '/clients'
+      fullPath: '/clients'
+      preLoaderRoute: typeof AuthenticatedClientsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/cart': {
@@ -336,6 +355,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedInboxRouteRoute: typeof AuthenticatedInboxRouteRouteWithChildren
   AuthenticatedArtistRoute: typeof AuthenticatedArtistRoute
   AuthenticatedCartRoute: typeof AuthenticatedCartRoute
+  AuthenticatedClientsRoute: typeof AuthenticatedClientsRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedAdminOrganizationSettingsRoute: typeof AuthenticatedAdminOrganizationSettingsRoute
   AuthenticatedAdminTeamsRoute: typeof AuthenticatedAdminTeamsRoute
@@ -347,6 +367,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedInboxRouteRoute: AuthenticatedInboxRouteRouteWithChildren,
   AuthenticatedArtistRoute: AuthenticatedArtistRoute,
   AuthenticatedCartRoute: AuthenticatedCartRoute,
+  AuthenticatedClientsRoute: AuthenticatedClientsRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedAdminOrganizationSettingsRoute:
     AuthenticatedAdminOrganizationSettingsRoute,

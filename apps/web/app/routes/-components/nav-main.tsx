@@ -34,7 +34,10 @@ export function NavMain({
     url: string;
   }[];
 }) {
-  const matches = useRouterState({ select: (s) => s.matches });
+  const matches = useRouterState({
+    select: (s) => s.matches,
+    structuralSharing: false,
+  });
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   /*
