@@ -157,6 +157,16 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --animate-button-scale: button-scale 0.2s ease-out;
+  @keyframes button-scale {
+    0% {
+      transform: scale(0.95);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
 }
 
 @layer base {
