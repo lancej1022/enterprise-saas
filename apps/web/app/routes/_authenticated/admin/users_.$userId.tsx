@@ -204,8 +204,8 @@ function UserDetails() {
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="container flex-1 space-y-4 overflow-auto p-4">
+    <>
+      <div className="container flex-1 space-y-4 p-4">
         <h1 className="text-center text-2xl font-bold">User Details</h1>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <Card className="md:col-span-1">
@@ -715,6 +715,6 @@ function UserDetails() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </>
   );
 }

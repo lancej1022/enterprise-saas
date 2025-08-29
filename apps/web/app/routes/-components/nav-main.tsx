@@ -93,7 +93,13 @@ export function NavMain({
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <Link to={subItem.url}>
+                          <Link
+                            activeProps={{
+                              className:
+                                "bg-primary not-hover:text-primary-foreground",
+                            }}
+                            to={subItem.url}
+                          >
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>

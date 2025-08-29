@@ -18,6 +18,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@solved-contact/web-ui/components/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@solved-contact/web-ui/components/tooltip";
 
 import { Cart } from "#/components/cart";
 import { ModeToggle } from "#/components/theme/mode-toggle";
@@ -43,11 +48,17 @@ function AuthenticatedLayout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+      <SidebarInset className="max-h-svh overflow-hidden">
+        <header className="bg-background flex h-16 shrink-0 items-center gap-2 border-b group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex w-full items-center gap-2 px-4">
-            {/* TODO: wrap in a tooltip to explain what this does */}
-            <SidebarTrigger className="-ml-1" />
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <SidebarTrigger className="-ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Toggle sidebar</p>
+              </TooltipContent>
+            </Tooltip>
             <Separator
               className="mr-2 data-[orientation=vertical]:h-4"
               orientation="vertical"
@@ -71,7 +82,9 @@ function AuthenticatedLayout() {
           </div>
           <Cart />
         </header>
-        <Outlet />
+        <div className="flex-1 overflow-auto">
+          <Outlet />
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

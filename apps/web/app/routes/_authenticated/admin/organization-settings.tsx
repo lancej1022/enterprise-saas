@@ -137,9 +137,8 @@ function OrganizationSettings() {
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="border-b" />
-      <div className="container flex-1 space-y-6 overflow-auto p-4">
+    <>
+      <div className="container flex-1 space-y-6 p-4">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -423,6 +422,6 @@ function OrganizationSettings() {
           </Card>
         )}
       </div>
-    </div>
+    </>
   );
 }
