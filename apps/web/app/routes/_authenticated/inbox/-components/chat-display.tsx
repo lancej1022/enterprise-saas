@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { useRouter } from "@tanstack/react-router";
@@ -40,7 +40,7 @@ interface ChatDisplayProps {
 export function ChatDisplay({ conversationId }: ChatDisplayProps) {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const router = useRouter();
   const { zero } = router.options.context;
 
@@ -48,13 +48,7 @@ export function ChatDisplay({ conversationId }: ChatDisplayProps) {
   const [conversationList] = useQuery(conversationQuery(zero, conversationId));
   const conversation = conversationList[0]; // Get first (should be only one) conversation
 
-  // Real-time messages
   const [messages] = useQuery(messagesQuery(zero, conversationId));
-
-  // Auto-scroll to bottom when new messages arrive
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
 
   function handleSendMessage(e: React.FormEvent) {
     e.preventDefault();
@@ -69,7 +63,6 @@ export function ChatDisplay({ conversationId }: ChatDisplayProps) {
         content: message,
       });
 
-      // Clear the message input after successful send
       setMessage("");
     } catch (error) {
       console.error("Failed to send message:", error);
@@ -141,7 +134,7 @@ export function ChatDisplay({ conversationId }: ChatDisplayProps) {
             {messages.map((msg) => (
               <MessageBubble key={msg.id} message={msg} />
             ))}
-            <div ref={messagesEndRef} />
+            <div />
           </>
         ) : (
           <div className="flex h-full items-center justify-center">
