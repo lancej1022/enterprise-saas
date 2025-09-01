@@ -24,13 +24,17 @@ export function ConversationList({ items }: ConversationListProps) {
       <div className="flex flex-col gap-2 p-4 pt-0">
         {items.map((item) => (
           <Link
+            aria-label={
+              // TODO: make sure item.name defaults to "anonymous" if not set
+              item.name === "anonymous" ? item.subject : item.name
+            }
             key={item.id}
             params={{ "conversation-id": item.id }}
             to="/inbox/$conversation-id"
           >
-            <button
+            <div
               className={cn(
-                "hover:bg-accent flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all",
+                "hover:bg-accent flex w-full flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all",
                 conversationId === item.id && "bg-muted",
               )}
             >
@@ -72,7 +76,7 @@ export function ConversationList({ items }: ConversationListProps) {
                   ))}
                 </div>
               ) : null}
-            </button>
+            </div>
           </Link>
         ))}
       </div>

@@ -11,17 +11,18 @@ Your JWT must include these standard and custom claims:
 ```typescript
 interface ChatWidgetJWTPayload {
   // Standard JWT claims
-  iss: string;    // Issuer - Your domain (e.g., "app.yourcompany.com")
-  aud: string;    // Audience - Must be "chat-widget"
-  sub: string;    // Subject - Your user's unique identifier
-  exp: number;    // Expiration - Unix timestamp (recommended: 5-15 minutes)
-  iat?: number;   // Issued At - Unix timestamp (optional but recommended)
-  nbf?: number;   // Not Before - Unix timestamp (optional)
-  jti?: string;   // JWT ID - Unique nonce to prevent replay attacks (recommended)
-  
+  iss: string; // Issuer - Your domain (e.g., "app.yourcompany.com")
+  aud: string; // Audience - Must be "chat-widget"
+  sub: string; // Subject - Your user's unique identifier
+  exp: number; // Expiration - Unix timestamp (recommended: 5-15 minutes)
+  iat?: number; // Issued At - Unix timestamp (optional but recommended)
+  nbf?: number; // Not Before - Unix timestamp (optional)
+  jti?: string; // JWT ID - Unique nonce to prevent replay attacks (recommended)
+
   // Custom claims
   org_id: string; // Your organization ID from our system
-  user_data?: {   // Optional user information for personalization
+  user_data?: {
+    // Optional user information for personalization
     name?: string;
     email?: string;
     avatar?: string;
@@ -35,26 +36,32 @@ interface ChatWidgetJWTPayload {
 ### Node.js (using jsonwebtoken)
 
 ```javascript
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-function generateChatJWT(userId, userEmail, userName, organizationId, jwtSecret) {
+function generateChatJWT(
+  userId,
+  userEmail,
+  userName,
+  organizationId,
+  jwtSecret,
+) {
   const now = Math.floor(Date.now() / 1000);
-  
+
   const payload = {
-    iss: 'yourdomain.com', // Your domain
-    aud: 'chat-widget',    // Required audience
-    sub: userId,           // Your user's ID
-    exp: now + (15 * 60),  // 15 minutes from now
-    iat: now,              // Issued now
+    iss: "yourdomain.com", // Your domain
+    aud: "chat-widget", // Required audience
+    sub: userId, // Your user's ID
+    exp: now + 15 * 60, // 15 minutes from now
+    iat: now, // Issued now
     jti: generateUniqueId(), // Unique ID for replay prevention
     org_id: organizationId,
     user_data: {
       name: userName,
-      email: userEmail
-    }
+      email: userEmail,
+    },
   };
-  
-  return jwt.sign(payload, jwtSecret, { algorithm: 'HS256' });
+
+  return jwt.sign(payload, jwtSecret, { algorithm: "HS256" });
 }
 
 function generateUniqueId() {
@@ -72,7 +79,7 @@ import string
 
 def generate_chat_jwt(user_id, user_email, user_name, organization_id, jwt_secret):
     now = int(time.time())
-    
+
     payload = {
         'iss': 'yourdomain.com',  # Your domain
         'aud': 'chat-widget',     # Required audience
@@ -86,7 +93,7 @@ def generate_chat_jwt(user_id, user_email, user_name, organization_id, jwt_secre
             'email': user_email
         }
     }
-    
+
     return jwt.encode(payload, jwt_secret, algorithm='HS256')
 
 def generate_unique_id():
@@ -101,7 +108,7 @@ use Firebase\JWT\Key;
 
 function generateChatJWT($userId, $userEmail, $userName, $organizationId, $jwtSecret) {
     $now = time();
-    
+
     $payload = [
         'iss' => 'yourdomain.com',  // Your domain
         'aud' => 'chat-widget',     // Required audience
@@ -115,7 +122,7 @@ function generateChatJWT($userId, $userEmail, $userName, $organizationId, $jwtSe
             'email' => $userEmail
         ]
     ];
-    
+
     return JWT::encode($payload, $jwtSecret, 'HS256');
 }
 ```
@@ -128,9 +135,9 @@ Once you have generated the JWT server-side, pass it to the chat widget:
 <script>
   // Initialize chat widget with JWT authentication
   const chatWidget = new ChatWidget({
-    organizationId: 'your-org-id',
-    userJWT: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...', // Generated server-side
-    apiBaseUrl: 'https://your-api-domain.com'
+    organizationId: "your-org-id",
+    userJWT: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...", // Generated server-side
+    apiBaseUrl: "https://your-api-domain.com",
   });
 </script>
 ```
@@ -138,16 +145,19 @@ Once you have generated the JWT server-side, pass it to the chat widget:
 ## Security Requirements
 
 ### 1. Server-Side Generation Only
+
 - **NEVER** generate JWTs in client-side JavaScript
 - **NEVER** expose your JWT secret to the frontend
 - Always generate tokens on your backend server
 
 ### 2. Short Expiration Times
+
 - Recommended: 5-15 minutes maximum
 - Tokens longer than 15 minutes will be rejected
 - Generate new tokens as needed for long sessions
 
 ### 3. Proper Claims Validation
+
 - `iss` (issuer): Must match the domain making the request
 - `aud` (audience): Must be exactly "chat-widget"
 - `sub` (subject): Required - your user's unique identifier
@@ -155,11 +165,13 @@ Once you have generated the JWT server-side, pass it to the chat widget:
 - `org_id`: Must match your organization ID
 
 ### 4. Replay Attack Prevention
+
 - Include `jti` (JWT ID) with a unique value
 - Each JWT should have a unique `jti` to prevent reuse
 - Used `jti` values are tracked to prevent replay attacks
 
 ### 5. Domain Validation
+
 - The `iss` claim should match the domain where the widget is embedded
 - Requests from mismatched domains will be rejected
 
@@ -167,18 +179,19 @@ Once you have generated the JWT server-side, pass it to the chat widget:
 
 Common JWT validation errors and their meanings:
 
-| Error | Cause | Solution |
-|-------|--------|----------|
-| "Missing user identifier (sub)" | `sub` claim is missing | Include user ID in `sub` claim |
-| "Invalid or missing audience (aud)" | `aud` is not "chat-widget" | Set `aud` to "chat-widget" |
-| "Token expired" | `exp` is in the past | Generate a new token |
-| "Token expiration time too far in future" | `exp` is more than 15 minutes away | Reduce expiration time |
-| "JWT issuer does not match request domain" | `iss` doesn't match embedding domain | Ensure `iss` matches the domain |
-| "Token has already been used" | `jti` has been used before | Generate new token with unique `jti` |
+| Error                                      | Cause                                | Solution                             |
+| ------------------------------------------ | ------------------------------------ | ------------------------------------ |
+| "Missing user identifier (sub)"            | `sub` claim is missing               | Include user ID in `sub` claim       |
+| "Invalid or missing audience (aud)"        | `aud` is not "chat-widget"           | Set `aud` to "chat-widget"           |
+| "Token expired"                            | `exp` is in the past                 | Generate a new token                 |
+| "Token expiration time too far in future"  | `exp` is more than 15 minutes away   | Reduce expiration time               |
+| "JWT issuer does not match request domain" | `iss` doesn't match embedding domain | Ensure `iss` matches the domain      |
+| "Token has already been used"              | `jti` has been used before           | Generate new token with unique `jti` |
 
 ## Testing Your Implementation
 
 1. **Generate a Test JWT**: Use our API endpoint to create a sample JWT:
+
    ```bash
    curl -X POST /api/chat/create-sample-jwt \
      -H "Authorization: Bearer YOUR_API_KEY" \
@@ -209,17 +222,20 @@ Common JWT validation errors and their meanings:
 ## Troubleshooting
 
 ### Widget Won't Initialize
+
 - Check browser console for error messages
 - Verify organization ID is correct
 - Ensure JWT is generated server-side
 - Confirm domain matches `iss` claim
 
 ### "JWT Required" Error
+
 - Your organization is set to require JWT authentication
 - Generate and pass a valid JWT token
 - Contact support if you need to change security level
 
 ### "Domain Not Allowed" Error
+
 - The embedding domain isn't in your allowed domains list
 - Add the domain through your admin panel
 - Ensure domain matches exactly (no www vs www differences)
@@ -227,6 +243,7 @@ Common JWT validation errors and their meanings:
 ## Support
 
 For additional help with JWT implementation:
+
 - Check our API documentation
 - Review error messages in browser console
 - Contact our support team with specific error messages

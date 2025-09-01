@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Widget - Basic Integration Example</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        line-height: 1.6;
+      }
+      .code-block {
+        background: #f5f5f5;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+        overflow-x: auto;
+      }
+      .example-button {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 0.5rem;
+      }
+      .example-button:hover {
+        background: #059669;
+      }
+      .error-display {
+        background: #fef2f2;
+        border: 1px solid #fca5a5;
+        color: #dc2626;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Chat Widget Integration Examples</h1>
+
+    <p>
+      This page demonstrates different ways to integrate the secure chat widget.
+    </p>
+
+    <h2>Basic Security (Domain Validation)</h2>
+    <div class="code-block">
+      <pre>
+window.ChatWidget.boot({
+  app_id: "demo_app",
+  organizationId: "demo_org_123",
+  apiBaseUrl: "http://localhost:3000",
+  email: "demo@example.com",
+  name: "Demo User",
+  user_id: "demo_user_123",
+  onSecurityError: (error, code) => {
+    console.error("Security error:", error, code);
+  }
+});</pre
+      >
+    </div>
+
+    <button class="example-button" onclick="initBasicWidget()">
+      Initialize Basic Widget
+    </button>
+
+    <h2>Enhanced Security (JWT Authentication)</h2>
+    <div class="code-block">
+      <pre>
+// Generate JWT server-side, then:
+window.ChatWidget.boot({
+  app_id: "demo_app", 
+  organizationId: "demo_org_123",
+  userJWT: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...", // Your JWT
+  apiBaseUrl: "http://localhost:3000",
+  email: "secure@example.com",
+  name: "Secure User",
+  user_id: "secure_user_123"
+});</pre
+      >
+    </div>
+
+    <button class="example-button" onclick="initJWTWidget()">
+      Initialize JWT Widget
+    </button>
+
+    <h2>Test Configuration</h2>
+    <button class="example-button" onclick="testConfig()">
+      Test Organization Config
+    </button>
+
+    <button class="example-button" onclick="getJWTDocs()">
+      Get JWT Documentation
+    </button>
+
+    <button class="example-button" onclick="destroyWidget()">
+      Destroy Widget
+    </button>
+
+    <div id="error-display" class="error-display">
+      <h3>Security Error</h3>
+      <p id="error-message"></p>
+      <p id="error-code"></p>
+    </div>
+
+    <h2>Integration Code</h2>
+    <p>Include the chat widget script in your page:</p>
+    <div class="code-block">
+      <pre>
+&lt;script src="https://your-cdn.com/chat-widget.js"&gt;&lt;/script&gt;</pre
+      >
+    </div>
+
+    <script>
+      // Error display handler
+      function showError(error, code) {
+        const errorDiv = document.getElementById("error-display");
+        const errorMessage = document.getElementById("error-message");
+        const errorCode = document.getElementById("error-code");
+
+        errorMessage.textContent = error;
+        errorCode.textContent = `Error Code: ${code}`;
+        errorDiv.style.display = "block";
+
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+          errorDiv.style.display = "none";
+        }, 10000);
+      }
+
+      // Basic widget initialization
+      function initBasicWidget() {
+        console.log("Initializing basic widget...");
+
+        // For demo purposes, we'll simulate the widget boot function
+        // In reality, this would be provided by the chat widget script
+        if (typeof window.ChatWidget === "undefined") {
+          alert(
+            "Chat widget script not loaded. In a real implementation, include the widget script first.",
+          );
+          return;
+        }
+
+        window.ChatWidget.boot({
+          app_id: "demo_app",
+          organizationId: "demo_org_123",
+          apiBaseUrl: "http://localhost:3000",
+          email: "demo@example.com",
+          name: "Demo User",
+          user_id: "demo_user_123",
+          onSecurityError: showError,
+        });
+      }
+
+      // JWT widget initialization
+      function initJWTWidget() {
+        console.log("Initializing JWT widget...");
+
+        if (typeof window.ChatWidget === "undefined") {
+          alert(
+            "Chat widget script not loaded. In a real implementation, include the widget script first.",
+          );
+          return;
+        }
+
+        // In a real implementation, you'd fetch this JWT from your server
+        const sampleJWT =
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJhdWQiOiJjaGF0LXdpZGdldCIsInN1YiI6InNlY3VyZV91c2VyXzEyMyIsImV4cCI6MTcwNDEzOTIwMCwiaWF0IjoxNzA0MTM4MzAwLCJvcmdfaWQiOiJkZW1vX29yZ18xMjMiLCJ1c2VyX2RhdGEiOnsibmFtZSI6IlNlY3VyZSBVc2VyIiwiZW1haWwiOiJzZWN1cmVAZXhhbXBsZS5jb20ifX0.example_signature";
+
+        window.ChatWidget.boot({
+          app_id: "demo_app",
+          organizationId: "demo_org_123",
+          userJWT: sampleJWT,
+          apiBaseUrl: "http://localhost:3000",
+          email: "secure@example.com",
+          name: "Secure User",
+          user_id: "secure_user_123",
+          onSecurityError: showError,
+        });
+      }
+
+      // Test organization configuration
+      async function testConfig() {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/rpc/chat.getConfig",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                organizationId: "demo_org_123",
+              }),
+            },
+          );
+
+          const result = await response.json();
+          console.log("Organization config:", result);
+          alert(
+            `Config loaded:\nSecurity Level: ${result.securityLevel}\nAllowed Domains: ${result.allowedDomains.length} configured`,
+          );
+        } catch (error) {
+          console.error("Failed to get config:", error);
+          alert(
+            "Failed to get organization config. Make sure the auth server is running.",
+          );
+        }
+      }
+
+      // Get JWT documentation
+      async function getJWTDocs() {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/rpc/chat.getJWTDocs",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                organizationId: "demo_org_123",
+              }),
+            },
+          );
+
+          const result = await response.json();
+          console.log("JWT Documentation:", result);
+
+          // Display in a new window for better readability
+          const newWindow = window.open("", "_blank");
+          newWindow.document.write(`
+                    <html>
+                        <head><title>JWT Documentation</title></head>
+                        <body>
+                            <h1>JWT Implementation Guide</h1>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </body>
+                    </html>
+                `);
+        } catch (error) {
+          console.error("Failed to get JWT docs:", error);
+          alert(
+            "Failed to get JWT documentation. Make sure the auth server is running.",
+          );
+        }
+      }
+
+      // Destroy widget
+      function destroyWidget() {
+        const widget = document.getElementById("chat-widget-root");
+        if (widget) {
+          widget.remove();
+          console.log("Widget destroyed");
+        } else {
+          alert("No widget found to destroy");
+        }
+      }
+
+      // Demo widget interface (since the actual widget isn't loaded)
+      if (typeof window.ChatWidget === "undefined") {
+        window.ChatWidget = {
+          boot: function (config) {
+            console.log("Demo ChatWidget.boot called with config:", config);
+
+            // Simulate widget creation
+            const existingWidget = document.getElementById("chat-widget-root");
+            if (existingWidget) {
+              existingWidget.remove();
+            }
+
+            const widget = document.createElement("div");
+            widget.id = "chat-widget-root";
+            widget.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        background: #10b981;
+                        color: white;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        z-index: 1000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    `;
+            widget.innerHTML = "💬";
+            widget.onclick = () => {
+              alert(
+                "Demo widget clicked! In real implementation, this would open the chat interface.",
+              );
+            };
+
+            document.body.appendChild(widget);
+
+            // Simulate security validation
+            setTimeout(() => {
+              if (config.organizationId === "demo_org_123") {
+                console.log("Demo: Security validation successful");
+              } else {
+                config.onSecurityError?.(
+                  "Demo: Invalid organization ID",
+                  "ORGANIZATION_NOT_FOUND",
+                );
+              }
+            }, 1000);
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
