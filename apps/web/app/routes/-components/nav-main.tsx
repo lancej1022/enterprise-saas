@@ -96,7 +96,7 @@ export function NavMain({
                           <Link
                             activeProps={{
                               className:
-                                "bg-primary not-hover:text-primary-foreground",
+                                "dark:not-hover:text-[#00bfff] not-hover:text-primary",
                             }}
                             to={subItem.url}
                           >
