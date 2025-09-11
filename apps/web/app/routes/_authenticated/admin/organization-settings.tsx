@@ -400,23 +400,23 @@ function OrganizationSettings() {
                   </p>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex items-center gap-3">
                   <Button variant="destructive">
                     <>
                       <RefreshCw className="mr-2 h-4 w-4" />
                       Rotate Secret Key
                     </>
                   </Button>
-                </div>
 
-                <Alert>
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    <strong>Important:</strong> Rotating the secret key will
-                    invalidate all existing JWT tokens. Make sure to update your
-                    applications with the new key before rotating.
-                  </AlertDescription>
-                </Alert>
+                  <Alert variant="warning">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      <strong>Important:</strong> Rotating the secret key will
+                      invalidate all existing JWT tokens. Make sure to update
+                      your applications with the new key before rotating.
+                    </AlertDescription>
+                  </Alert>
+                </div>
               </div>
             </CardContent>
           </Card>
