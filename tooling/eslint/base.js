@@ -111,6 +111,7 @@ export default tseslint.config(
       "@typescript-eslint/no-non-null-assertion": "error",
       // `prefer-nullish-coalescing` can lead to bugs in cases where `||` is needed
       "@typescript-eslint/prefer-nullish-coalescing": "off",
+      "preserve-caught-error": "error",
       // inline type imports can lead to side effect imports after transpilation, which can cause difficult to track bugs
       // eg `export {type Schema} from "./schema.gen.ts" can be transpiled to `export "./schema.gen.js"`
       // this side effect import can lead to issues like server code being included in the client bundle, an issue that occured in the past

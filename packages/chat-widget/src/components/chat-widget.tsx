@@ -1,6 +1,6 @@
-import type React from "react";
+// import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { useChat } from "ai/react";
+// import { useChat } from "ai/react";
 import {
   AlertTriangle,
   MessageCircle,
@@ -36,6 +36,49 @@ interface ChatWidgetProps {
   userJWT?: string;
 }
 
+// function handleSuggestedQuestion(question: string) {
+
+// const syntheticEvent = {
+//   preventDefault: () => {
+//     return;
+//   },
+//   target: { value: question },
+// } as React.ChangeEvent<HTMLInputElement>;
+
+// handleInputChange(syntheticEvent);
+
+// TODO: This looks like AI BS
+// void Promise.resolve().then(() => {
+// const submitEvent = new Event("submit", {
+//   bubbles: true,
+//   cancelable: true,
+// });
+// // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any -- from v0
+// handleSubmit(submitEvent as any);
+//   });
+// }
+
+function handleSuggestedQuestion(_question: string) {
+  // const syntheticEvent = {
+  //   preventDefault: () => {
+  //     return;
+  //   },
+  //   target: { value: question },
+  // } as React.ChangeEvent<HTMLInputElement>;
+
+  // handleInputChange(syntheticEvent);
+
+  // TODO: This looks like AI BS
+  void Promise.resolve().then(() => {
+    // const submitEvent = new Event("submit", {
+    //   bubbles: true,
+    //   cancelable: true,
+    // });
+    // // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any -- from v0
+    // handleSubmit(submitEvent as any);
+  });
+}
+
 export function ChatWidget({
   organizationId,
   userJWT,
@@ -47,7 +90,7 @@ export function ChatWidget({
     isLoading: isSecurityLoading,
     error: securityError,
     securityLevel,
-    sessionInfo,
+    // sessionInfo,
     retry: retrySecurity,
   } = useChatSecurity({
     organizationId,
@@ -58,15 +101,15 @@ export function ChatWidget({
   });
 
   // TODO: remove this shit
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      api: `${import.meta.env.VITE_SERVER_URL}/api/chat`,
-      headers: sessionInfo?.sessionToken
-        ? {
-            Authorization: `Bearer ${sessionInfo.sessionToken}`,
-          }
-        : undefined,
-    });
+  // const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  //   useChat({
+  //     api: `${import.meta.env.VITE_SERVER_URL}/api/chat`,
+  //     headers: sessionInfo?.sessionToken
+  //       ? {
+  //           Authorization: `Bearer ${sessionInfo.sessionToken}`,
+  //         }
+  //       : undefined,
+  //   });
 
   const [isMinimized, setIsMinimized] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -88,33 +131,16 @@ export function ChatWidget({
     }
   }
 
-  function handleSuggestedQuestion(question: string) {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- from v0
-    const syntheticEvent = {
-      preventDefault: () => {
-        return;
-      },
-      target: { value: question },
-    } as React.ChangeEvent<HTMLInputElement>;
+  useEffect(
+    () => {
+      scrollToBottom();
+    },
+    [
+      // messages
+    ],
+  );
 
-    handleInputChange(syntheticEvent);
-
-    // TODO: This looks like AI BS
-    void Promise.resolve().then(() => {
-      const submitEvent = new Event("submit", {
-        bubbles: true,
-        cancelable: true,
-      });
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any -- from v0
-      handleSubmit(submitEvent as any);
-    });
-  }
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const hasMessages = messages.length > 0;
+  const hasMessages = false; // messages.length > 0;
 
   // Security status indicators
   function renderSecurityStatus() {
@@ -222,7 +248,8 @@ export function ChatWidget({
             <div className="h-80 space-y-4 overflow-y-auto bg-slate-50 p-4">
               {showSecurityStatus ? (
                 renderSecurityStatus()
-              ) : !hasMessages && isInitialized ? (
+              ) : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO
+              !hasMessages && isInitialized ? (
                 <div className="py-8 text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
                     <MessageCircle className="h-6 w-6 text-emerald-600" />
@@ -250,28 +277,35 @@ export function ChatWidget({
               ) : null}
 
               {isInitialized &&
-                messages.map((message) => (
+                // messages.map((message) => (
+                [].map((message) => (
                   <div
                     className={cn(
                       "flex",
+                      // @ts-expect-error -- TODO
                       message.role === "user" ? "justify-end" : "justify-start",
                     )}
+                    // @ts-expect-error -- TODO
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO
                     key={message.id}
                   >
                     <div
                       className={cn(
                         "max-w-[80%] rounded-2xl px-4 py-2 text-sm",
+                        // @ts-expect-error -- TODO
                         message.role === "user"
                           ? "rounded-br-md bg-emerald-600 text-white"
                           : "rounded-bl-md border bg-white text-slate-800 shadow-sm",
                       )}
                     >
+                      {/* @ts-expect-error -- TODO */}
                       {message.content}
                     </div>
                   </div>
                 ))}
 
-              {isInitialized && isLoading && (
+              {/* {isInitialized && isLoading && ( */}
+              {isInitialized && (
                 <div className="flex justify-start">
                   <div className="rounded-2xl rounded-bl-md border bg-white px-4 py-2 text-sm text-slate-800 shadow-sm">
                     <div className="flex space-x-1">
@@ -293,20 +327,28 @@ export function ChatWidget({
             </div>
 
             <div className="border-t bg-white p-4">
-              <form className="flex space-x-2" onSubmit={handleSubmit}>
+              {/* eslint-disable-next-line @typescript-eslint/no-empty-function -- TODO */}
+              <form className="flex space-x-2" onSubmit={() => {}}>
+                {/* <form className="flex space-x-2" onSubmit={handleSubmit}> */}
                 <Input
                   className="flex-1 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500"
-                  disabled={!isInitialized || isLoading}
-                  onChange={handleInputChange}
+                  // disabled={!isInitialized || isLoading}
+                  disabled={!isInitialized || false}
+                  // onChange={handleInputChange}
+                  // eslint-disable-next-line @typescript-eslint/no-empty-function -- TODO
+                  onChange={() => {}}
+                  // onChange={handleInputChange}
                   placeholder={
                     !isInitialized ? "Connecting..." : "Type your message..."
                   }
                   ref={inputRef}
-                  value={input}
+                  value={""}
+                  // value={input}
                 />
                 <Button
                   className="bg-emerald-600 px-3 hover:bg-emerald-700"
-                  disabled={!isInitialized || isLoading || !input.trim()}
+                  // disabled={!isInitialized || isLoading || !input.trim()}
+                  disabled={!isInitialized || false}
                   type="submit"
                 >
                   <Send className="h-4 w-4" />

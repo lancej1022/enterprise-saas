@@ -34,7 +34,6 @@
     "@tanstack/react-router-devtools": "catalog:",
     "@tanstack/react-router-with-query": "catalog:",
     "@tanstack/router-plugin": "catalog:",
-    "ai": "^4.1.65",
     "highlight.js": "11.11.1",
     "lucide-react": "catalog:",
     "react": "catalog:",
