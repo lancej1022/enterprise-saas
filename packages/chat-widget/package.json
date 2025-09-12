@@ -39,8 +39,7 @@
     "react": "catalog:",
     "react-cookie": "catalog:",
     "react-dom": "catalog:",
-    "tw-animate-css": "catalog:",
-    "zod": "catalog:"
+    "tw-animate-css": "catalog:"
   },
   "devDependencies": {
     "@solved-contact/eslint-config": "workspace:*",
@@ -59,6 +58,6 @@
     "vite-plugin-dts": "4.5.4",
     "vite-plugin-no-bundle": "4.0.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.5"
+    "vitest": "3.0.5"
   }
 }

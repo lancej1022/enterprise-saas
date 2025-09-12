@@ -1,24 +1,26 @@
-import { createRouter as createTanstackRouter } from '@tanstack/solid-router'
+import { createRouter as createTanStackRouter } from "@tanstack/solid-router";
 
-// Import the generated route tree
-import { routeTree } from './routeTree.gen'
+import { DefaultCatchBoundary } from "./components/default-catch-boundary";
+import { NotFound } from "./components/not-found";
+import { routeTree } from "./routeTree.gen";
 
-import './styles.css'
+import "./styles.css";
 
-// Create a new router instance
-export const createRouter = () => {
-  const router = createTanstackRouter({
+export function createRouter() {
+  const router = createTanStackRouter({
     routeTree,
+    defaultPreload: "intent",
+    defaultErrorComponent: DefaultCatchBoundary,
+    defaultNotFoundComponent: () => <NotFound />,
+    defaultStructuralSharing: true,
     scrollRestoration: true,
-  })
-  return router
+  });
+
+  return router;
 }
 
-const router = createRouter()
-
-// Register the router instance for type safety
-declare module '@tanstack/solid-router' {
+declare module "@tanstack/solid-router" {
   interface Register {
-    router: typeof router
+    router: ReturnType<typeof createRouter>;
   }
 }
