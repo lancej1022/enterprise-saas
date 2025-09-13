@@ -10,7 +10,7 @@ export default {
       ].join("\n"),
   },
   ignore: ["**/routeTree.gen.ts"],
-  ignoreWorkspaces: ["apps/mobile", "apps/mobile/**", "backend"],
+  ignoreWorkspaces: ["apps/mobile", "apps/mobile/**"],
   // wait-on is currently used in the auth-server dev script but knip cannot detect it because it is run through `concurrently`
   // seems like `web-solid` is using `@tanstack/router-plugin` but knip cannot detect it? Or is it truly unused...?
   ignoreDependencies: ["wait-on", "@tanstack/router-plugin"],
