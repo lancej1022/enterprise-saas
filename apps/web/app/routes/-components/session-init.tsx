@@ -33,7 +33,7 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
       email: cookies.email,
       // TODO: is this safe since it comes from useSession, rather than the cookies? Or are we fine as long as `userId` + `email` are cookie based, while the rest isnt...?
       user: sessionData?.user,
-      // TODO: this should realistically never be undefined thanks to the `databaseHooks` in `auth-server`, but I havent bothered to make the FE understand that
+      // TODO: this should realistically never be undefined thanks to the `databaseHooks` in `backend`, but I havent bothered to make the FE understand that
       activeOrganizationId: activeOrganizationId ?? "",
     };
   }, [cookies.userid, cookies.email, sessionData?.user, activeOrganizationId]);
@@ -66,7 +66,7 @@ export function SessionInit({ children }: { children: React.ReactNode }) {
   );
 }
 
-// TODO: Need to verify whether this actually works after consolidating this logic from `web` into `auth-server`
+// TODO: Need to verify whether this actually works after consolidating this logic from `web` into `backend`
 async function zeroAuth(error?: "invalid-token") {
   if (error) {
     // TODO: Pull the URL from the env

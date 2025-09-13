@@ -76,7 +76,7 @@
     "@babel/core": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
     "@babel/runtime": "^7.27.4",
-    "@solved-contact/auth-server": "workspace:*",
+    "@solved-contact/backend": "workspace:*",
     "@solved-contact/eslint-config": "workspace:*",
     "@solved-contact/prettier-config": "workspace:*",
     "@solved-contact/tsconfig": "workspace:*",

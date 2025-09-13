@@ -6,7 +6,7 @@ This file contains the next steps to complete the chat widget implementation aft
 
 The following has been successfully implemented:
 
-- ✅ **Database Schema**: Chat tables added to auth-server and integrated with Zero
+- ✅ **Database Schema**: Chat tables added to backend and integrated with Zero
 - ✅ **Zero Integration**: Schema generated, permissions configured, types exported
 - ✅ **Basic Mutators**: `sendMessage` and `startConversation` mutators created
 - ✅ **UI Components**: `ChatDisplay` component with modern chat interface
@@ -253,7 +253,7 @@ The following has been successfully implemented:
 
 ### Database Schema Notes
 
-- Chat tables are in `apps/auth-server/src/db/schema/chat.ts`
+- Chat tables are in `apps/backend/src/db/schema/chat.ts`
 - Exported to web app via `apps/web/db/schema.ts`
 - Zero schema auto-generated in `apps/web/zero/schema.gen.ts`
 

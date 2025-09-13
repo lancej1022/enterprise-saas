@@ -21,7 +21,7 @@
     "@orpc/tanstack-query": "catalog:",
     "@radix-ui/react-slot": "^1.2.3",
     "@rocicorp/zero": "catalog:",
-    "@solved-contact/auth-server": "workspace:*",
+    "@solved-contact/backend": "workspace:*",
     "@solved-contact/web-ui": "workspace:*",
     "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",

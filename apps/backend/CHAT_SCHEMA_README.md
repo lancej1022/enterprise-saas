@@ -214,7 +214,7 @@ To apply the schema:
 1. **Generate migration** (already done):
 
    ```bash
-   cd apps/auth-server
+   cd apps/backend
    npm run db:generate
    ```
 

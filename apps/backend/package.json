@@ -1,5 +1,5 @@
 {
-  "name": "@solved-contact/auth-server",
+  "name": "@solved-contact/backend",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {

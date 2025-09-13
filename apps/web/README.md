@@ -21,7 +21,7 @@ In production, point it at any Postgres database using the `ZERO_UPSTREAM_DB` an
 
 The schema is managed using Drizzle (see `db/schema.ts`).
 
-[`drizzle-zero`](https://github.com/BriefHQ/drizzle-zero) is used to generate the Zero schema (in `zero/schema.gen.ts`). Since the ACTUAL drizzle schema comes from `/apps/auth-server`, any time that schema changes YOU NEED TO RUN `generate-zero-schema` package.json script!
+[`drizzle-zero`](https://github.com/BriefHQ/drizzle-zero) is used to generate the Zero schema (in `zero/schema.gen.ts`). Since the ACTUAL drizzle schema comes from `/apps/backend`, any time that schema changes YOU NEED TO RUN `generate-zero-schema` package.json script!
 
 TODO: The Zero schema is auto-generated during dev when the Drizzle schema changes, but its not aware of the auth server. Need to fix this
 

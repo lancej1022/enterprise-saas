@@ -15,7 +15,7 @@ Turborepo Monorepo housing the entire stack for a customer support chat-widget a
 
 - `apps/web` - TanStack Start web application with admin dashboard and chat dashboard
 - `apps/mobile` - React Native Expo app containg the mobile app with similar functionality to `apps/web`
-- `apps/auth-server` - Authentication and API server with Drizzle ORM, Postgres, Hono, oRPC, and Better Auth
+- `apps/backend` - Authentication and API server with Drizzle ORM, Postgres, Hono, oRPC, and Better Auth
 - `apps/test-playground` - Development testing environment
 
 ### Packages

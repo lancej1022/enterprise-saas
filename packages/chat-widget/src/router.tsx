@@ -6,8 +6,8 @@ import {
 } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import ReactDOM from "react-dom/client";
-import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
-import type { Schema } from "@solved-contact/auth-server/zero/schema";
+import type { Mutators } from "@solved-contact/backend/zero/mutators";
+import type { Schema } from "@solved-contact/backend/zero/schema";
 
 import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
 import { routeTree } from "./routeTree.gen";

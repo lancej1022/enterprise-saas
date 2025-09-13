@@ -3,10 +3,10 @@ import type { Zero } from "@rocicorp/zero";
 import { ZeroProvider } from "@rocicorp/zero/react";
 import { useRouter } from "@tanstack/react-router";
 import { Cookies } from "react-cookie";
-import { createMutators } from "@solved-contact/auth-server/zero/mutators";
-import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
-import { schema } from "@solved-contact/auth-server/zero/schema";
-import type { Schema } from "@solved-contact/auth-server/zero/schema";
+import { createMutators } from "@solved-contact/backend/zero/mutators";
+import type { Mutators } from "@solved-contact/backend/zero/mutators";
+import { schema } from "@solved-contact/backend/zero/schema";
+import type { Schema } from "@solved-contact/backend/zero/schema";
 
 import { must } from "#/shared/must";
 
@@ -61,7 +61,7 @@ export function ZeroInit({ children }: { children: React.ReactNode }) {
   return <ZeroProvider {...opts}>{children}</ZeroProvider>;
 }
 
-// TODO: Need to verify whether this actually works after consolidating this logic from `web` into `auth-server`
+// TODO: Need to verify whether this actually works after consolidating this logic from `web` into `backend`
 async function zeroAuth(error?: "invalid-token") {
   if (error) {
     // TODO: Pull the URL from the env

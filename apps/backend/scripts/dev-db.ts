@@ -5,17 +5,17 @@ import "#/shared/env";
 function main() {
   try {
     // eslint-disable-next-line no-console -- taken from ztunes
-    console.log("Attempting to start existing auth-server container...");
+    console.log("Attempting to start existing backend container...");
     // exec("docker start -a ztunes");
     exec("docker compose up -d");
     // eslint-disable-next-line no-console -- taken from ztunes
-    console.log("auth-server container started.");
+    console.log("backend container started.");
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, no-console -- this cast was taken from ztunes
     console.log((error as Error).message);
     // eslint-disable-next-line no-console -- taken from ztunes
     console.log(
-      "Existing auth-server container not found or could not be started. Creating a new one...",
+      "Existing backend container not found or could not be started. Creating a new one...",
     );
     try {
       exec(

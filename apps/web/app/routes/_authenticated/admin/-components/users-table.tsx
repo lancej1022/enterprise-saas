@@ -3,8 +3,8 @@ import type { Row, Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { Link, useRouter, useSearch } from "@tanstack/react-router";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
-import type { Schema } from "@solved-contact/auth-server/zero/schema";
+import type { Mutators } from "@solved-contact/backend/zero/mutators";
+import type { Schema } from "@solved-contact/backend/zero/schema";
 import {
   Avatar,
   AvatarFallback,

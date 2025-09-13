@@ -3,8 +3,8 @@ import { expect, test } from "@playwright/test";
 import type { Zero } from "@rocicorp/zero";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
-import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
-import type { Schema } from "@solved-contact/auth-server/zero/schema";
+import type { Mutators } from "@solved-contact/backend/zero/mutators";
+import type { Schema } from "@solved-contact/backend/zero/schema";
 
 import type { SessionContextType } from "#/routes/-components/session-init";
 import { routeTree } from "#/routeTree.gen";

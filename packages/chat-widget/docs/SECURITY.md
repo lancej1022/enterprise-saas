@@ -18,7 +18,7 @@ For basic security with domain validation:
 window.ChatWidget.boot({
   app_id: "your_app_id",
   organizationId: "your_organization_id",
-  apiBaseUrl: "https://your-auth-server.com",
+  apiBaseUrl: "https://your-backend.com",
   email: "user@example.com",
   name: "User Name",
   user_id: "user_123",
@@ -83,7 +83,7 @@ async function initializeChatWidget() {
       app_id: "your_app_id",
       organizationId: "your_organization_id",
       userJWT: token, // Include JWT for enhanced security
-      apiBaseUrl: "https://your-auth-server.com",
+      apiBaseUrl: "https://your-backend.com",
       email: "user@example.com",
       name: "User Name",
       user_id: "user_123",

@@ -2,8 +2,8 @@ import type { Zero } from "@rocicorp/zero";
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
-import type { Schema } from "@solved-contact/auth-server/zero/schema";
+import type { Mutators } from "@solved-contact/backend/zero/mutators";
+import type { Schema } from "@solved-contact/backend/zero/schema";
 
 import { ZeroInit } from "#/integrations/zero/zero-init";
 import TanStackQueryLayout from "../integrations/tanstack-query/layout";

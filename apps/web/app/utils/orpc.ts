@@ -2,7 +2,7 @@ import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
 import type { RouterClient } from "@orpc/server";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
-import type { appRouter } from "@solved-contact/auth-server/routers";
+import type { appRouter } from "@solved-contact/backend/routers";
 
 if (typeof import.meta.env === "undefined") {
   // @ts-expect-error -- this is a hack to make sure `import.meta.env` doesnt crash playwright

@@ -16,8 +16,8 @@ import {
   UserCog,
 } from "lucide-react";
 import { toast } from "sonner";
-import type { Mutators } from "@solved-contact/auth-server/zero/mutators";
-import type { Schema } from "@solved-contact/auth-server/zero/schema";
+import type { Mutators } from "@solved-contact/backend/zero/mutators";
+import type { Schema } from "@solved-contact/backend/zero/schema";
 import {
   AlertDialog,
   AlertDialogAction,
