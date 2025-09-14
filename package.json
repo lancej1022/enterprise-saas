@@ -41,7 +41,7 @@
     "turbo": "^2.5.6",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.16.1",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@rocicorp/zero-sqlite3",

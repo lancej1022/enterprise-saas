@@ -15,8 +15,7 @@ export const Route = createFileRoute("/_authenticated/artist")({
   loaderDeps: ({ search }) => ({ artistId: search.id }),
   loader: ({ context, deps: { artistId } }) => {
     const { zero } = context;
-    // eslint-disable-next-line no-console -- taken from ztunes
-    console.log("preloading artist", artistId);
+
     if (artistId) {
       zero.preload(getArtistQuery(artistId));
     }
