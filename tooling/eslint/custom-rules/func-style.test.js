@@ -290,6 +290,198 @@ describe("func-style rule", () => {
     });
   });
 
+  describe("with async functions", () => {
+    test("should preserve async keyword when converting to declarations", () => {
+      ruleTester.run("func-style-async-to-declaration", funcStyleRule, {
+        valid: [
+          // Async function declarations should be valid
+          {
+            code: "async function fetchData() { return await fetch('/api'); }",
+            options: ["declaration"],
+          },
+        ],
+        invalid: [
+          // Async function expression should convert to async declaration
+          {
+            code: "const fetchData = async function() { return await fetch('/api'); };",
+            options: ["declaration"],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "async function fetchData() { return await fetch('/api'); }",
+          },
+          // Async arrow function should convert to async declaration
+          {
+            code: "const processAsync = async (data) => { return await processData(data); };",
+            options: ["declaration", { allowArrowFunctions: false }],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "async function processAsync(data) { return await processData(data); }",
+          },
+          // Async arrow function with expression body
+          {
+            code: "const quickFetch = async (url) => await fetch(url);",
+            options: ["declaration", { allowArrowFunctions: false }],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "async function quickFetch(url) {\n  return await fetch(url);\n}",
+          },
+          // Complex async arrow function with multiple statements
+          {
+            code: `const copyToClipboard = async (text) => {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+          };`,
+            options: ["declaration", { allowArrowFunctions: false }],
+            errors: [{ messageId: "declaration" }],
+            output: `async function copyToClipboard(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+          }`,
+          },
+          // Exported async function expression
+          {
+            code: "export const apiCall = async function(endpoint) { return await fetch(endpoint); };",
+            options: [
+              "declaration",
+              { overrides: { namedExports: "declaration" } },
+            ],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "export async function apiCall(endpoint) { return await fetch(endpoint); }",
+          },
+        ],
+      });
+    });
+
+    test("should preserve async keyword when converting to expressions", () => {
+      ruleTester.run("func-style-async-to-expression", funcStyleRule, {
+        valid: [
+          // Async function expressions should be valid
+          {
+            code: "const fetchData = async function() { return await fetch('/api'); };",
+            options: ["expression"],
+          },
+        ],
+        invalid: [
+          // Async function declaration should convert to async expression
+          {
+            code: "async function fetchData() { return await fetch('/api'); }",
+            options: ["expression"],
+            errors: [{ messageId: "expression" }],
+            output:
+              "const fetchData = async function() { return await fetch('/api'); }",
+          },
+          // Complex async function declaration
+          {
+            code: `async function processData(data) {
+            const result = await transformData(data);
+            return result.filter(item => item.valid);
+          }`,
+            options: ["expression"],
+            errors: [{ messageId: "expression" }],
+            output: `const processData = async function(data) {
+            const result = await transformData(data);
+            return result.filter(item => item.valid);
+          }`,
+          },
+          // Exported async function declaration with override
+          {
+            code: "export async function saveData(data) { return await database.save(data); }",
+            options: [
+              "expression",
+              { overrides: { namedExports: "expression" } },
+            ],
+            errors: [{ messageId: "expression" }],
+            output:
+              "export const saveData = async function(data) { return await database.save(data); }",
+          },
+        ],
+      });
+    });
+
+    test("should handle async functions with TypeScript types", () => {
+      ruleTester.run("func-style-async-typescript", funcStyleRule, {
+        valid: [
+          // Async function declarations with types should be valid
+          {
+            code: "async function fetchUser(id: string): Promise<User> { return await api.getUser(id); }",
+            options: ["declaration"],
+          },
+        ],
+        invalid: [
+          // Async function expression with types
+          {
+            code: "const fetchUser = async function(id: string): Promise<User> { return await api.getUser(id); };",
+            options: ["declaration"],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "async function fetchUser(id: string): Promise<User> { return await api.getUser(id); }",
+          },
+          // Async arrow function with types
+          {
+            code: "const createUser = async (data: UserData): Promise<User> => await userService.create(data);",
+            options: ["declaration", { allowArrowFunctions: false }],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "async function createUser(data: UserData): Promise<User> {\n  return await userService.create(data);\n}",
+          },
+          // Convert async declaration to expression with types
+          {
+            code: "async function updateUser(id: string, data: Partial<User>): Promise<User> { return await api.updateUser(id, data); }",
+            options: ["expression"],
+            errors: [{ messageId: "expression" }],
+            output:
+              "const updateUser = async function(id: string, data: Partial<User>): Promise<User> { return await api.updateUser(id, data); }",
+          },
+        ],
+      });
+    });
+
+    test("should handle async functions with generics", () => {
+      ruleTester.run("func-style-async-generics", funcStyleRule, {
+        valid: [
+          // Async generic function declarations should be valid
+          {
+            code: "async function fetchData<T>(url: string): Promise<T> { return await fetch(url).then(r => r.json()); }",
+            options: ["declaration"],
+          },
+        ],
+        invalid: [
+          // Async generic function expression
+          {
+            code: "const fetchData = async function<T>(url: string): Promise<T> { return await fetch(url).then(r => r.json()); };",
+            options: ["declaration"],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "async function fetchData<T>(url: string): Promise<T> { return await fetch(url).then(r => r.json()); }",
+          },
+          // Async generic arrow function
+          {
+            code: "const processItems = async <T>(items: T[], processor: (item: T) => Promise<T>): Promise<T[]> => Promise.all(items.map(processor));",
+            options: ["declaration", { allowArrowFunctions: false }],
+            errors: [{ messageId: "declaration" }],
+            output:
+              "async function processItems<T>(items: T[], processor: (item: T) => Promise<T>): Promise<T[]> {\n  return Promise.all(items.map(processor));\n}",
+          },
+          // Convert async generic declaration to expression
+          {
+            code: "async function transform<T, U>(data: T, transformer: (input: T) => Promise<U>): Promise<U> { return await transformer(data); }",
+            options: ["expression"],
+            errors: [{ messageId: "expression" }],
+            output:
+              "const transform = async function<T, U>(data: T, transformer: (input: T) => Promise<U>): Promise<U> { return await transformer(data); }",
+          },
+        ],
+      });
+    });
+  });
+
   describe("with TypeScript generic type parameters", () => {
     test("should preserve generics when converting to declarations", () => {
       ruleTester.run("func-style-generics-to-declaration", funcStyleRule, {

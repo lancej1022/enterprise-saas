@@ -115,6 +115,9 @@ export default {
       const variableDeclaration = variableDeclarator.parent;
       const functionName = variableDeclarator.id.name;
 
+      const isAsync = functionNode.async || false;
+      const asyncKeyword = isAsync ? "async " : "";
+
       // Get generic type parameters if present
       const typeParameters = functionNode.typeParameters
         ? sourceCode.getText(functionNode.typeParameters)
@@ -140,7 +143,7 @@ export default {
         : "";
 
       // Construct the function declaration
-      const functionDeclaration = `function ${functionName}${typeParameters}(${params})${returnType} ${bodyText}`;
+      const functionDeclaration = `${asyncKeyword}function ${functionName}${typeParameters}(${params})${returnType} ${bodyText}`;
 
       return fixer.replaceText(variableDeclaration, functionDeclaration);
     }
@@ -154,6 +157,9 @@ export default {
     function fixToExpression(fixer, functionDeclaration) {
       const sourceCode = context.getSourceCode();
       const functionName = functionDeclaration.id.name;
+
+      const isAsync = functionDeclaration.async || false;
+      const asyncKeyword = isAsync ? "async " : "";
 
       // Get generic type parameters if present
       const typeParameters = functionDeclaration.typeParameters
@@ -170,7 +176,7 @@ export default {
         ? sourceCode.getText(functionDeclaration.returnType)
         : "";
 
-      const functionExpression = `const ${functionName} = function${typeParameters}(${params})${returnType} ${body}`;
+      const functionExpression = `const ${functionName} = ${asyncKeyword}function${typeParameters}(${params})${returnType} ${body}`;
 
       return fixer.replaceText(functionDeclaration, functionExpression);
     }
