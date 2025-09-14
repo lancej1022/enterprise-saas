@@ -6,14 +6,13 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "noEmit": false,
+    "noEmitOnError": false,
     "baseUrl": "./",
     "paths": {
       "#/*": ["./src/*"]
     },
     "outDir": "./dist",
-    "types": ["node"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "types": ["node"]
   },
   "tsc-alias": {
     "resolveFullPaths": true

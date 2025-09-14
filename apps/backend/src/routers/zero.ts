@@ -3,19 +3,19 @@ import {
   PushProcessor,
   ZQLDatabase,
 } from "@rocicorp/zero/pg";
+import { handleGetQueriesRequest } from "@rocicorp/zero/server";
 import { Hono } from "hono";
 import * as jose from "jose";
 import postgres from "postgres";
+import { must } from "@solved-contact/utilities/must";
 
+import { getQuery } from "#/zero/get-queries";
 import { auth, setCookies } from "../lib/auth";
 import { createMutators } from "../zero/mutators";
 import { schema } from "../zero/schema";
 
 // Validate required environment variables
-const pgURL = process.env.PG_URL;
-if (!pgURL) {
-  throw new Error("PG_URL is not set");
-}
+const pgURL = must(process.env.PG_URL, "PG_URL is not set");
 
 // Initialize Zero infrastructure
 const processor = new PushProcessor(
@@ -78,7 +78,7 @@ async function getUserAuth(request: Request) {
     }
 
     return {
-      sub: sub,
+      sub: must(sub, "Empty sub in token"),
       activeOrganizationId: activeOrganizationId,
     };
   } catch (err) {
@@ -144,6 +144,29 @@ app.post("/push", async (c) => {
     console.error("Zero push error:", err);
     return c.json({ error: "Invalid token" }, { status: 401 });
   }
+});
+
+app.post("/get-queries", async (c) => {
+  const userAuth = await getUserAuth(c.req.raw);
+  if (
+    typeof userAuth === "object" &&
+    userAuth !== null &&
+    "error" in userAuth
+  ) {
+    return c.json(userAuth, { status: 401 });
+  }
+
+  const userID = userAuth?.sub;
+  if (!userID) {
+    return c.json({ error: "Invalid token" }, { status: 401 });
+  }
+
+  const result = await handleGetQueriesRequest(
+    (name, args) => getQuery(userID, name, args),
+    schema,
+    c.req.raw,
+  );
+  return c.json(result);
 });
 
 export default app;

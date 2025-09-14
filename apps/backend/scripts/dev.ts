@@ -1,7 +1,6 @@
 import { createConnection } from "net";
 import { concurrently } from "concurrently";
-
-import { must } from "#/shared/must";
+import { must } from "@solved-contact/utilities/must";
 
 import "#/shared/env";
 

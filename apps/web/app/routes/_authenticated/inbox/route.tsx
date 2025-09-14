@@ -1,18 +1,8 @@
-import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import type { Mutators } from "@solved-contact/backend/zero/mutators";
-import type { Schema } from "@solved-contact/backend/zero/schema";
+import { getConversationsQuery } from "@solved-contact/backend/zero/get-queries";
 
 import { Conversations } from "./-components/mail";
-
-function conversationsQuery(zero: Zero<Schema, Mutators>, orgId: string) {
-  return zero.query.conversations
-    .where("organizationId", orgId)
-    .limit(10)
-    .orderBy("updatedAt", "desc")
-    .related("chatUser", (chatUser) => chatUser.one());
-}
 
 export const Route = createFileRoute("/_authenticated/inbox")({
   component: RouteComponent,
@@ -28,11 +18,11 @@ function Image(props: React.ComponentProps<"img">) {
 
 function MailPage() {
   const router = useRouter();
-  const { zero, session } = router.options.context;
+  const { session } = router.options.context;
 
   // Get conversations for the current organization
   const [conversations] = useQuery(
-    conversationsQuery(zero, session.data?.activeOrganizationId || ""),
+    getConversationsQuery(session.data?.activeOrganizationId || ""),
   );
 
   // Show loading state when no data

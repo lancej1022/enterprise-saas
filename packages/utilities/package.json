@@ -1,0 +1,28 @@
+{
+  "name": "@solved-contact/utilities",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./must": {
+      "types": "./src/must.ts",
+      "import": "./src/must.ts"
+    }
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "format": "prettier --write . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "devDependencies": {
+    "@solved-contact/eslint-config": "workspace:*",
+    "@solved-contact/prettier-config": "workspace:*",
+    "@solved-contact/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "prettier": "@solved-contact/prettier-config"
+}

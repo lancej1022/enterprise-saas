@@ -2,11 +2,11 @@ import { useMemo } from "react";
 import type { Zero } from "@rocicorp/zero";
 import { ZeroProvider } from "@rocicorp/zero/react";
 import { useRouter } from "@tanstack/react-router";
-import { must } from "shared/must";
 import { createMutators } from "@solved-contact/backend/zero/mutators";
 import type { Mutators } from "@solved-contact/backend/zero/mutators";
 import { schema } from "@solved-contact/backend/zero/schema";
 import type { Schema } from "@solved-contact/backend/zero/schema";
+import { must } from "@solved-contact/utilities/must";
 
 if (typeof import.meta.env === "undefined") {
   // @ts-expect-error -- this is a hack to make sure `import.meta.env` doesnt crash playwright

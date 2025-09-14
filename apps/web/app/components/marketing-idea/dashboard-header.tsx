@@ -1,9 +1,5 @@
 import { Bell, Search, Settings } from "lucide-react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@solved-contact/ui/components/avatar";
+import { Avatar, AvatarFallback } from "@solved-contact/ui/components/avatar";
 import { Badge } from "@solved-contact/ui/components/badge";
 import { Button } from "@solved-contact/ui/components/button";
 import { Input } from "@solved-contact/ui/components/input";
@@ -46,7 +42,7 @@ export function DashboardHeader() {
           </Button>
 
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/professional-headshot.png" />
+            {/* <AvatarImage src="/professional-headshot.png" /> */}
             <AvatarFallback>AM</AvatarFallback>
           </Avatar>
         </div>

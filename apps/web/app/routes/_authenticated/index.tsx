@@ -1,27 +1,18 @@
 import { useEffect, useState } from "react";
-import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { useQuery as useTanstackQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useDebouncedCallback } from "use-debounce";
-import type { Mutators } from "@solved-contact/backend/zero/mutators";
-import type { Schema } from "@solved-contact/backend/zero/schema";
+import { getHomepageArtists } from "@solved-contact/backend/zero/get-queries";
 import { Input } from "@solved-contact/web-ui/components/input";
 import { Label } from "@solved-contact/web-ui/components/label";
 
 const limit = 20;
 
-function query(z: Zero<Schema, Mutators>, q: string | undefined) {
-  let query = z.query.artist.orderBy("popularity", "desc").limit(limit);
-  if (q) {
-    query = query.where("name", "ILIKE", `%${q}%`);
-  }
-  return query;
-}
-
 export const Route = createFileRoute("/_authenticated/")({
   component: Home,
   validateSearch: (search: Record<string, unknown>) => {
+    // TODO: remove this!
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- taken from ztunes
     return {
       q: typeof search.q === "string" ? search.q : undefined,
@@ -36,13 +27,14 @@ export const Route = createFileRoute("/_authenticated/")({
       console.error("zero is undefined");
       return;
     }
-    query(zero, q).preload({ ttl: "5m" }).cleanup();
+
+    zero.preload(getHomepageArtists(q ?? ""));
   },
 });
 
 function Home() {
   const router = useRouter();
-  const { zero, orpc } = router.options.context;
+  const { orpc } = router.options.context;
 
   const privateData = useTanstackQuery(orpc.privateData.queryOptions());
   const healthCheck = useTanstackQuery(orpc.healthCheck.queryOptions());
@@ -58,7 +50,7 @@ function Home() {
   // cache them when the user has paused, which we know by when the
   // QS matches because we already debounce the QS.
   const ttl = search === searchParam ? "5m" : "none";
-  const [artists, { type }] = useQuery(query(zero, search), {
+  const [artists, { type }] = useQuery(getHomepageArtists(search), {
     ttl,
   });
 

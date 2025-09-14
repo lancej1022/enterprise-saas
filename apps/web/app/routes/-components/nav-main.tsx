@@ -1,9 +1,10 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { z } from "zod/v4";
 import {
   Collapsible,
   CollapsibleContent,
@@ -20,6 +21,42 @@ import {
   SidebarMenuSubItem,
 } from "@solved-contact/web-ui/components/sidebar";
 
+const STORAGE_KEY = "nav-main-open-sections";
+
+const openSectionsSchema = z.record(z.string(), z.boolean());
+
+function getStoredOpenSections(): Record<string, boolean> {
+  if (typeof window === "undefined") return {};
+
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return {};
+
+    const parsed: unknown = JSON.parse(stored);
+    const result = openSectionsSchema.safeParse(parsed);
+
+    if (result.success) {
+      return result.data;
+    }
+
+    return {};
+  } catch {
+    return {};
+  }
+}
+
+function saveOpenSections(sections: Record<string, boolean>) {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sections));
+  } catch {
+    console.error(
+      "Failed to save open sections to localStorage during `saveOpenSections`",
+    );
+  }
+}
+
 export function NavMain({
   items,
 }: {
@@ -34,35 +71,19 @@ export function NavMain({
     url: string;
   }[];
 }) {
-  const matches = useRouterState({
-    select: (s) => s.matches,
-    structuralSharing: false,
-  });
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-
-  /*
-    Because the route change can be triggered from anywhere in the app, not just
-    from the sidebar, I think we have to rely on an effect that fires whenever the routes update.
-  */
-  useLayoutEffect(() => {
-    const currentPathname = matches[2]?.pathname;
-    const newOpenSections: Record<string, boolean> = {};
-
-    for (const item of items) {
-      const isActive = currentPathname?.startsWith(
-        `/${item.title.toLowerCase()}`,
-      );
-      newOpenSections[item.title] = isActive || false;
-    }
-
-    setOpenSections(newOpenSections);
-  }, [matches, items]);
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>(
+    () => getStoredOpenSections(),
+  );
 
   function updateOpenSections(itemTitle: string) {
-    setOpenSections((prev) => ({
-      ...prev,
-      [itemTitle]: !prev[itemTitle],
-    }));
+    setOpenSections((prev) => {
+      const newSections = {
+        ...prev,
+        [itemTitle]: !prev[itemTitle],
+      };
+      saveOpenSections(newSections);
+      return newSections;
+    });
   }
 
   return (

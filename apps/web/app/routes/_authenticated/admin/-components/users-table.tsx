@@ -1,10 +1,8 @@
 import { useState } from "react";
-import type { Row, Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { Link, useRouter, useSearch } from "@tanstack/react-router";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import type { Mutators } from "@solved-contact/backend/zero/mutators";
-import type { Schema } from "@solved-contact/backend/zero/schema";
+import { getUsersQuery } from "@solved-contact/backend/zero/get-queries";
 import {
   Avatar,
   AvatarFallback,
@@ -40,27 +38,6 @@ import {
 
 const limit = 20;
 
-// TODO: is there a better place on the file system to share this query from?
-export function query(
-  z: Zero<Schema, Mutators>,
-  options: {
-    organizationId: string;
-    search?: string;
-    // TODO: this doesnt really work the same as a SQL offset since its a cursor. Follow along to https://discord.com/channels/830183651022471199/1401636176997388501 to see better options
-    startAfter?: Row<Schema["tables"]["users"]>;
-  },
-) {
-  // TODO: Zero is flagging this as a slow query. Need to ask in Discord if they have perf improvement ideas or try adding an index
-  return z.query.users
-    .whereExists("members", (q) =>
-      q.where("organizationId", options.organizationId),
-    )
-    .where("name", "ILIKE", options.search ? `%${options.search}%` : "%")
-    .related("members")
-    .orderBy("updatedAt", "desc")
-    .limit(limit);
-}
-
 function getStatusColor(status: string) {
   switch (status) {
     case "Active":
@@ -75,22 +52,16 @@ function getStatusColor(status: string) {
 }
 
 export function UsersTable() {
-  const { zero, session } = useRouter().options.context;
+  const { session } = useRouter().options.context;
   const organizationId = session.data?.activeOrganizationId ?? "";
   const { search, page = 1 } = useSearch({
     from: "/_authenticated/admin/users",
   });
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  const [users] = useQuery(
-    query(zero, {
-      organizationId,
-      search,
-    }),
-    {
-      ttl: "5m",
-    },
-  );
+  const [users] = useQuery(getUsersQuery(organizationId, search ?? null), {
+    ttl: "5m",
+  });
 
   function toggleUserSelection(userId: string) {
     setSelectedUsers((prev) =>

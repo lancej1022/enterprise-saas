@@ -108,6 +108,9 @@ export default tseslint.config(
           allowConstantLoopConditions: true,
         },
       ],
+      "@typescript-eslint/no-unnecessary-type-assertion": "error",
+      "@typescript-eslint/no-unsafe-return": "error",
+
       "@typescript-eslint/no-non-null-assertion": "error",
       // `prefer-nullish-coalescing` can lead to bugs in cases where `||` is needed
       "@typescript-eslint/prefer-nullish-coalescing": "off",

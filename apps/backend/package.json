@@ -28,6 +28,7 @@
     "@hono/node-server": "^1.14.4",
     "@orpc/server": "catalog:",
     "@rocicorp/zero": "catalog:",
+    "@solved-contact/utilities": "workspace:*",
     "better-auth": "catalog:",
     "cookie": "^1.0.2",
     "dotenv": "^16.5.0",
@@ -50,7 +51,7 @@
     "concurrently": "^9.1.2",
     "dotenv-expand": "^12.0.2",
     "drizzle-kit": "^0.31.2",
-    "drizzle-zero": "0.11.0",
+    "drizzle-zero": "0.14.0",
     "eslint": "catalog:",
     "tsc-alias": "^1.8.11",
     "tsx": "^4.19.4",
@@ -59,24 +60,29 @@
   },
   "exports": {
     "./routers": {
-      "types": "./dist/src/routers/index.d.ts",
-      "import": "./dist/src/routers/index.js",
-      "default": "./dist/src/routers/index.js"
+      "types": "./src/routers/index.ts",
+      "import": "./src/routers/index.ts",
+      "default": "./src/routers/index.ts"
     },
     "./auth": {
-      "types": "./dist/src/lib/auth.d.ts",
-      "import": "./dist/src/lib/auth.js",
-      "default": "./dist/src/lib/auth.js"
+      "types": "./src/lib/auth.ts",
+      "import": "./src/lib/auth.ts",
+      "default": "./src/lib/auth.ts"
     },
     "./zero/schema": {
-      "types": "./dist/src/zero/schema.d.ts",
-      "import": "./dist/src/zero/schema.js",
-      "default": "./dist/src/zero/schema.js"
+      "types": "./src/zero/schema.ts",
+      "import": "./src/zero/schema.ts",
+      "default": "./src/zero/schema.ts"
     },
     "./zero/mutators": {
-      "types": "./dist/src/zero/mutators.d.ts",
-      "import": "./dist/src/zero/mutators.js",
-      "default": "./dist/src/zero/mutators.js"
+      "types": "./src/zero/mutators.ts",
+      "import": "./src/zero/mutators.ts",
+      "default": "./src/zero/mutators.ts"
+    },
+    "./zero/get-queries": {
+      "types": "./src/zero/get-queries.ts",
+      "import": "./src/zero/get-queries.ts",
+      "default": "./src/zero/get-queries.ts"
     }
   },
   "prettier": "@solved-contact/prettier-config"

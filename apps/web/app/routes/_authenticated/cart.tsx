@@ -1,17 +1,7 @@
-import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import type { Mutators } from "@solved-contact/backend/zero/mutators";
-import type { Schema } from "@solved-contact/backend/zero/schema";
+import { getCartItemsQuery } from "@solved-contact/backend/zero/get-queries";
 import { Button } from "@solved-contact/web-ui/components/button";
-
-function query(z: Zero<Schema, Mutators>, userID: string | undefined) {
-  return z.query.cartItem
-    .related("album", (album) =>
-      album.one().related("artist", (artist) => artist.one()),
-    )
-    .where("userId", userID ?? "");
-}
 
 export const Route = createFileRoute("/_authenticated/cart")({
   component: RouteComponent,
@@ -22,7 +12,7 @@ export const Route = createFileRoute("/_authenticated/cart")({
     const { zero, session } = context;
     const userID = session.data?.userID;
     if (userID) {
-      query(zero, userID).preload({ ttl: "5m" }).cleanup();
+      zero.preload(getCartItemsQuery(userID));
     }
   },
 });
@@ -30,7 +20,7 @@ export const Route = createFileRoute("/_authenticated/cart")({
 function RouteComponent() {
   const { zero, session } = useRouter().options.context;
   const [cartItems, { type: resultType }] = useQuery(
-    query(zero, session.data?.userID),
+    getCartItemsQuery(session.data?.userID),
   );
 
   if (!session.data) {

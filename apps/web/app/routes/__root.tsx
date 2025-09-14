@@ -1,16 +1,16 @@
+import { useLayoutEffect } from "react";
 import type { ReactNode } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
-  ScriptOnce,
   Scripts,
   useRouter,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { CookiesProvider } from "react-cookie";
-import { must } from "shared/must";
+import { must } from "@solved-contact/utilities/must";
 import { Toaster } from "@solved-contact/web-ui/components/sonner";
 
 import { DefaultCatchBoundary } from "#/components/catch-boundary";
@@ -85,6 +85,24 @@ const serverURL = must(
 );
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  // TODO: what is a faster way to do this -- cookies?
+  useLayoutEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- TODO:
+    const theme = localStorage.theme as "dark" | "light" | "system";
+    const root = window.document.documentElement;
+
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+
+      root.classList.add(systemTheme);
+    } else {
+      root.classList.add(theme);
+    }
+  });
+
   return (
     // TODO: language should be dynamic based on the user's preferences
     <html lang="en-US">
@@ -105,26 +123,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        {/* TODO: Because this logic is purely client-side, it causes a hydration mismatch. Need to switch to a cookie/SSR solution to avoid that without
-        relying on `suppressHydrationWarning`. */}
-        <ScriptOnce>
-          {`
-            const theme = localStorage.theme;
-            const root = window.document.documentElement;
-
-            if (theme === "system") {
-              const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-                .matches
-                ? "dark"
-                : "light";
-
-              root.classList.add(systemTheme);
-              console.log("system theme: ", systemTheme);
-            } else {
-              root.classList.add(theme);
-            }
-            `}
-        </ScriptOnce>
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />

@@ -1,0 +1,11 @@
+{
+  "extends": ["@solved-contact/tsconfig/base.json"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022"
+  },
+  "exclude": ["node_modules", ".cache", ".turbo"]
+}

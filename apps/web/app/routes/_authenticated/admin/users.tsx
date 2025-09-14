@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 import { z } from "zod/v4";
+import { getUsersQuery } from "@solved-contact/backend/zero/get-queries";
 import { Button } from "@solved-contact/web-ui/components/button";
 import {
   Card,
@@ -33,7 +34,7 @@ import {
 } from "@solved-contact/web-ui/components/dropdown-menu";
 
 import { UsersSearchInput } from "./-components/users-search-input";
-import { query, UsersTable } from "./-components/users-table";
+import { UsersTable } from "./-components/users-table";
 
 const statuses = ["All Statuses", "Active", "Away", "Offline"] as const;
 const statusSchema = z.enum(statuses).optional();
@@ -72,9 +73,7 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
   loader: ({ context, deps }) => {
     const { zero, session } = context;
     const organizationId = session.data?.activeOrganizationId ?? "";
-    query(zero, { organizationId, search: deps.search })
-      .preload({ ttl: "5m" })
-      .cleanup();
+    zero.preload(getUsersQuery(organizationId, deps.search ?? null));
   },
 });
 

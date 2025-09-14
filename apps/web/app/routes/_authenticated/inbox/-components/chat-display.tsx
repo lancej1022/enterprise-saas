@@ -1,11 +1,12 @@
 import { useState } from "react";
-import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { useRouter } from "@tanstack/react-router";
 import { format } from "date-fns/format";
 import { MoreVertical, Send } from "lucide-react";
-import type { Mutators } from "@solved-contact/backend/zero/mutators";
-import type { Schema } from "@solved-contact/backend/zero/schema";
+import {
+  getConversationQuery,
+  getMessagesQuery,
+} from "@solved-contact/backend/zero/get-queries";
 import {
   Avatar,
   AvatarFallback,
@@ -20,19 +21,6 @@ import {
 } from "@solved-contact/web-ui/components/dropdown-menu";
 import { Textarea } from "@solved-contact/web-ui/components/textarea";
 
-function conversationQuery(
-  zero: Zero<Schema, Mutators>,
-  conversationId: string,
-) {
-  return zero.query.conversations.where("id", conversationId);
-}
-
-function messagesQuery(zero: Zero<Schema, Mutators>, conversationId: string) {
-  return zero.query.messages
-    .where("conversationId", conversationId)
-    .orderBy("createdAt", "asc");
-}
-
 interface ChatDisplayProps {
   conversationId: string;
 }
@@ -45,10 +33,10 @@ export function ChatDisplay({ conversationId }: ChatDisplayProps) {
   const { zero } = router.options.context;
 
   // Real-time conversation data
-  const [conversationList] = useQuery(conversationQuery(zero, conversationId));
+  const [conversationList] = useQuery(getConversationQuery(conversationId));
   const conversation = conversationList[0]; // Get first (should be only one) conversation
 
-  const [messages] = useQuery(messagesQuery(zero, conversationId));
+  const [messages] = useQuery(getMessagesQuery(conversationId));
 
   function handleSendMessage(e: React.FormEvent) {
     e.preventDefault();

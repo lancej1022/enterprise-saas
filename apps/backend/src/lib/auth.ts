@@ -10,8 +10,8 @@ import {
 } from "better-auth/plugins";
 import cookie from "cookie";
 import { eq } from "drizzle-orm";
+import { must } from "@solved-contact/utilities/must";
 
-import { must } from "#/shared/must";
 import { db } from "../db";
 import * as schema from "../db/schema/auth";
 import { ac, admin, member, owner } from "./permissions";

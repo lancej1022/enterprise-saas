@@ -1,16 +1,7 @@
-import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import type { Mutators } from "@solved-contact/backend/zero/mutators";
-import type { Schema } from "@solved-contact/backend/zero/schema";
+import { getArtistQuery } from "@solved-contact/backend/zero/get-queries";
 import { Button } from "@solved-contact/web-ui/components/button";
-
-function query(zero: Zero<Schema, Mutators>, artistID: string | undefined) {
-  return zero.query.artist
-    .where("id", artistID ?? "")
-    .related("albums", (album) => album.related("cartItems"))
-    .one();
-}
 
 export const Route = createFileRoute("/_authenticated/artist")({
   component: RouteComponent,
@@ -26,7 +17,9 @@ export const Route = createFileRoute("/_authenticated/artist")({
     const { zero } = context;
     // eslint-disable-next-line no-console -- taken from ztunes
     console.log("preloading artist", artistId);
-    query(zero, artistId).preload({ ttl: "5m" }).cleanup();
+    if (artistId) {
+      zero.preload(getArtistQuery(artistId));
+    }
   },
 });
 
@@ -40,7 +33,7 @@ function RouteComponent() {
 
   // eslint-disable-next-line react-hooks/react-compiler -- taken from ztunes
   // eslint-disable-next-line react-hooks/rules-of-hooks -- taken from ztunes
-  const [artist, { type }] = useQuery(query(zero, id), { ttl: "5m" });
+  const [artist, { type }] = useQuery(getArtistQuery(id), { ttl: "5m" });
 
   if (!artist && type === "complete") {
     return <div>Artist not found</div>;

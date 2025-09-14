@@ -102,31 +102,7 @@ test.describe("User Management", () => {
 
 ### Zero Integration
 
-Use [Zero](https://zero.rocicorp.dev/docs/reading-data) for querying and mutating synchronized data:
-
-```typescript
-import { useQuery } from "@rocicorp/zero/react";
-import { useRouter } from "@tanstack/react-router";
-
-export function UsersList() {
-  const router = useRouter();
-  const { zero } = router.options.context;
-
-  // Real-time user data
-  const users = useQuery(zero.query.users
-    .where("organizationId", currentOrgId)
-    .orderBy("createdAt", "desc")
-  );
-
-  return (
-    <div>
-      {users.map(user => (
-        <UserCard key={user.id} user={user} />
-      ))}
-    </div>
-  );
-}
-```
+Use [Zero](https://zero.rocicorp.dev/docs/synced-queries) for querying and mutating synchronized data:
 
 ## Security Patterns
 

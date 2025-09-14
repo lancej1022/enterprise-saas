@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { Zero } from "@rocicorp/zero";
 import { useQuery } from "@rocicorp/zero/react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import {
@@ -16,8 +15,7 @@ import {
   UserCog,
 } from "lucide-react";
 import { toast } from "sonner";
-import type { Mutators } from "@solved-contact/backend/zero/mutators";
-import type { Schema } from "@solved-contact/backend/zero/schema";
+import { getIndividualUserQuery } from "@solved-contact/backend/zero/get-queries";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -66,28 +64,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@solved-contact/web-ui/components/tabs";
-
-function individualUserQuery(
-  z: Zero<Schema, Mutators>,
-  options: {
-    organizationId: string;
-    // TODO: this appears to be a `member` object rather than `unknown`, but Im not 100% sure how to accurately get the type of that from the BE?
-    startAfter?: unknown; // cursor for pagination
-    userId: string;
-  },
-) {
-  // TODO: Zero is flagging this as a slow query. Need to ask in Discord if they have perf improvement ideas or try adding an index
-  return (
-    // TODO: find the member info for THIS ORGANIZATION
-    z.query.users
-      // .whereExists("members", (q) =>
-      //   q.where("organizationId", options.organizationId),
-      // )
-      .where("id", options.userId)
-      .related("members")
-      .one()
-  );
-}
 
 // Mock user data
 const userData = {
@@ -159,9 +135,7 @@ export const Route = createFileRoute("/_authenticated/admin/users_/$userId")({
   loader: ({ context, params }) => {
     const { zero, session } = context;
     const organizationId = session.data?.activeOrganizationId ?? "";
-    individualUserQuery(zero, { organizationId, userId: params.userId })
-      .preload({ ttl: "5m" })
-      .cleanup();
+    zero.preload(getIndividualUserQuery(organizationId, params.userId));
   },
 });
 
@@ -174,16 +148,13 @@ function handleDeleteUser() {
 }
 
 function UserDetails() {
-  const { zero, session } = useRouter().options.context;
+  const { session } = useRouter().options.context;
   const userId = Route.useParams({
     select: (params) => params.userId,
   });
 
   const [dbUser] = useQuery(
-    individualUserQuery(zero, {
-      organizationId: session.data?.activeOrganizationId ?? "",
-      userId,
-    }),
+    getIndividualUserQuery(session.data?.activeOrganizationId ?? "", userId),
   );
 
   // const [user, setUser] = useState(userData);

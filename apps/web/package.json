@@ -22,6 +22,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@rocicorp/zero": "catalog:",
     "@solved-contact/backend": "workspace:*",
+    "@solved-contact/utilities": "workspace:*",
     "@solved-contact/web-ui": "workspace:*",
     "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",

@@ -9,6 +9,7 @@
     "paths": {
       "#/*": ["./src/*"]
     },
+    "declaration": false,
     "jsx": "react-native",
     "checkJs": false,
     "moduleSuffixes": [".ios", ".android", ".native", ""]

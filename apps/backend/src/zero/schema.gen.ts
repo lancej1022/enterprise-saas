@@ -15,6 +15,8 @@
  * ------------------------------------------------------------
  */
 
+import type { Row } from "@rocicorp/zero";
+import { createBuilder } from "@rocicorp/zero";
 import type { DrizzleToZeroSchema, ZeroCustomType } from "drizzle-zero";
 
 import type * as drizzleSchema from "../db/schema/index";
@@ -198,6 +200,213 @@ export const schema = {
             ZeroSchema,
             "album",
             "year"
+          >,
+        },
+      },
+      primaryKey: ["id"],
+    },
+    apikeys: {
+      name: "apikeys",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "id"
+          >,
+        },
+        name: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "name"
+          >,
+        },
+        start: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "start"
+          >,
+        },
+        prefix: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "prefix"
+          >,
+        },
+        key: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "key"
+          >,
+        },
+        userId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "userId"
+          >,
+          serverName: "user_id",
+        },
+        refillInterval: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "refillInterval"
+          >,
+          serverName: "refill_interval",
+        },
+        refillAmount: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "refillAmount"
+          >,
+          serverName: "refill_amount",
+        },
+        lastRefillAt: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "lastRefillAt"
+          >,
+          serverName: "last_refill_at",
+        },
+        enabled: {
+          type: "boolean",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "enabled"
+          >,
+        },
+        rateLimitEnabled: {
+          type: "boolean",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "rateLimitEnabled"
+          >,
+          serverName: "rate_limit_enabled",
+        },
+        rateLimitTimeWindow: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "rateLimitTimeWindow"
+          >,
+          serverName: "rate_limit_time_window",
+        },
+        rateLimitMax: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "rateLimitMax"
+          >,
+          serverName: "rate_limit_max",
+        },
+        requestCount: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "requestCount"
+          >,
+          serverName: "request_count",
+        },
+        remaining: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "remaining"
+          >,
+        },
+        lastRequest: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "lastRequest"
+          >,
+          serverName: "last_request",
+        },
+        expiresAt: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "expiresAt"
+          >,
+          serverName: "expires_at",
+        },
+        createdAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "createdAt"
+          >,
+          serverName: "created_at",
+        },
+        updatedAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "updatedAt"
+          >,
+          serverName: "updated_at",
+        },
+        permissions: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "permissions"
+          >,
+        },
+        metadata: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "apikeys",
+            "metadata"
           >,
         },
       },
@@ -395,6 +604,91 @@ export const schema = {
       },
       primaryKey: ["userId", "albumId"],
       serverName: "cart_item",
+    },
+    chatSessions: {
+      name: "chatSessions",
+      columns: {
+        id: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "id"
+          >,
+        },
+        organizationId: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "organizationId"
+          >,
+          serverName: "organization_id",
+        },
+        sessionToken: {
+          type: "string",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "sessionToken"
+          >,
+          serverName: "session_token",
+        },
+        userIdentifier: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "userIdentifier"
+          >,
+          serverName: "user_identifier",
+        },
+        domain: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "domain"
+          >,
+        },
+        expiresAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "expiresAt"
+          >,
+          serverName: "expires_at",
+        },
+        createdAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "createdAt"
+          >,
+          serverName: "created_at",
+        },
+        updatedAt: {
+          type: "number",
+          optional: false,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "chatSessions",
+            "updatedAt"
+          >,
+          serverName: "updated_at",
+        },
+      },
+      primaryKey: ["id"],
+      serverName: "chat_sessions",
     },
     chatUsers: {
       name: "chatUsers",
@@ -901,6 +1195,26 @@ export const schema = {
           >,
           serverName: "created_at",
         },
+        chatDisplayName: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "members",
+            "chatDisplayName"
+          >,
+          serverName: "chat_display_name",
+        },
+        chatRole: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "members",
+            "chatRole"
+          >,
+          serverName: "chat_role",
+        },
       },
       primaryKey: ["id"],
     },
@@ -1064,6 +1378,136 @@ export const schema = {
             "organizations",
             "metadata"
           >,
+        },
+        chatDomain: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatDomain"
+          >,
+          serverName: "chat_domain",
+        },
+        chatApiKey: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatApiKey"
+          >,
+          serverName: "chat_api_key",
+        },
+        chatWebhookUrl: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatWebhookUrl"
+          >,
+          serverName: "chat_webhook_url",
+        },
+        chatTheme: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatTheme"
+          >,
+          serverName: "chat_theme",
+        },
+        chatPrimaryColor: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatPrimaryColor"
+          >,
+          serverName: "chat_primary_color",
+        },
+        chatPosition: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatPosition"
+          >,
+          serverName: "chat_position",
+        },
+        chatWelcomeMessage: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatWelcomeMessage"
+          >,
+          serverName: "chat_welcome_message",
+        },
+        chatCollectEmail: {
+          type: "boolean",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatCollectEmail"
+          >,
+          serverName: "chat_collect_email",
+        },
+        chatCollectName: {
+          type: "boolean",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatCollectName"
+          >,
+          serverName: "chat_collect_name",
+        },
+        chatSecurityLevel: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatSecurityLevel"
+          >,
+          serverName: "chat_security_level",
+        },
+        chatAllowedDomains: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatAllowedDomains"
+          >,
+          serverName: "chat_allowed_domains",
+        },
+        chatJwtSecret: {
+          type: "string",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatJwtSecret"
+          >,
+          serverName: "chat_jwt_secret",
+        },
+        chatSessionDuration: {
+          type: "number",
+          optional: true,
+          customType: null as unknown as ZeroCustomType<
+            ZeroSchema,
+            "organizations",
+            "chatSessionDuration"
+          >,
+          serverName: "chat_session_duration",
         },
       },
       primaryKey: ["id"],
@@ -1475,6 +1919,16 @@ export const schema = {
         },
       ],
     },
+    chatSessions: {
+      organization: [
+        {
+          sourceField: ["organizationId"],
+          destField: ["id"],
+          destSchema: "organizations",
+          cardinality: "one",
+        },
+      ],
+    },
     chatUsers: {
       organization: [
         {
@@ -1648,6 +2102,14 @@ export const schema = {
           cardinality: "many",
         },
       ],
+      chatSessions: [
+        {
+          sourceField: ["id"],
+          destField: ["organizationId"],
+          destSchema: "chatSessions",
+          cardinality: "many",
+        },
+      ],
     },
     sessions: {
       user: [
@@ -1746,6 +2208,8 @@ export const schema = {
       ],
     },
   },
+  enableLegacyQueries: true,
+  enableLegacyMutators: true,
 } as const;
 
 /**
@@ -1753,3 +2217,111 @@ export const schema = {
  * This type is auto-generated from your Drizzle schema definition.
  */
 export type Schema = typeof schema;
+/**
+ * Represents a row from the "accounts" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Account = Row<Schema["tables"]["accounts"]>;
+/**
+ * Represents a row from the "album" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Album = Row<Schema["tables"]["album"]>;
+/**
+ * Represents a row from the "apikeys" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Apikey = Row<Schema["tables"]["apikeys"]>;
+/**
+ * Represents a row from the "artist" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Artist = Row<Schema["tables"]["artist"]>;
+/**
+ * Represents a row from the "attachments" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Attachment = Row<Schema["tables"]["attachments"]>;
+/**
+ * Represents a row from the "cartItem" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type CartItem = Row<Schema["tables"]["cartItem"]>;
+/**
+ * Represents a row from the "chatSessions" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type ChatSession = Row<Schema["tables"]["chatSessions"]>;
+/**
+ * Represents a row from the "chatUsers" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type ChatUser = Row<Schema["tables"]["chatUsers"]>;
+/**
+ * Represents a row from the "conversationAssignments" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type ConversationAssignment = Row<
+  Schema["tables"]["conversationAssignments"]
+>;
+/**
+ * Represents a row from the "conversations" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Conversation = Row<Schema["tables"]["conversations"]>;
+/**
+ * Represents a row from the "invitations" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Invitation = Row<Schema["tables"]["invitations"]>;
+/**
+ * Represents a row from the "jwkss" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Jwkss = Row<Schema["tables"]["jwkss"]>;
+/**
+ * Represents a row from the "members" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Member = Row<Schema["tables"]["members"]>;
+/**
+ * Represents a row from the "messages" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Message = Row<Schema["tables"]["messages"]>;
+/**
+ * Represents a row from the "organizations" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Organization = Row<Schema["tables"]["organizations"]>;
+/**
+ * Represents a row from the "sessions" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Session = Row<Schema["tables"]["sessions"]>;
+/**
+ * Represents a row from the "teamMembers" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type TeamMember = Row<Schema["tables"]["teamMembers"]>;
+/**
+ * Represents a row from the "teams" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Team = Row<Schema["tables"]["teams"]>;
+/**
+ * Represents a row from the "users" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type User = Row<Schema["tables"]["users"]>;
+/**
+ * Represents a row from the "verifications" table.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export type Verification = Row<Schema["tables"]["verifications"]>;
+
+/**
+ * Represents the Zero schema query builder.
+ * This type is auto-generated from your Drizzle schema definition.
+ */
+export const builder = createBuilder(schema);

@@ -38,7 +38,6 @@ export function createRouter() {
   const router = createTanStackRouter({
     routeTree,
     scrollRestoration: true,
-    // TODO: Consider changing to `intent` with a delay of `1ms` just to slightly reduce the Zero cache activity? Might not matter though, since the DB is local
     defaultPreload: "viewport",
     // It is fine to call Zero multiple times for same query, Zero dedupes the
     // queries internally.

@@ -1,11 +1,19 @@
 import type { Transaction } from "@rocicorp/zero";
 import { nanoid } from "nanoid";
 
-import type { DecodedJWT, Schema } from "./schema";
+import type { Schema } from "./schema";
 
 // TODO: generate this with Drizzle or something instead
 function generateId() {
   return nanoid();
+}
+
+// The decoded value of the JWT.
+interface DecodedJWT {
+  // the organization ID, pulled from `activeOrganizationId` in the JWT
+  activeOrganizationId: string;
+  // logged in user's ID, pulled from `sub` in the JWT via `zero-init.tsx`
+  sub: string;
 }
 
 export function createMutators(authData: DecodedJWT | undefined) {
