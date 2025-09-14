@@ -10,7 +10,7 @@
     }
   ],
   "eslint.rules.customizations": [
-    // for lint errors that will autofix on save, show them as info in the IDE rather than errors
+    // for lint errors that will autofix on save, show them as info (blue squiggly) in the IDE rather than errors (red squiggly)
     { "rule": "*", "fixable": true, "severity": "info" }
   ],
 

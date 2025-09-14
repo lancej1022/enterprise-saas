@@ -9,7 +9,7 @@ function generateId() {
 }
 
 // The decoded value of the JWT.
-interface DecodedJWT {
+export interface DecodedJWT {
   // the organization ID, pulled from `activeOrganizationId` in the JWT
   activeOrganizationId: string;
   // logged in user's ID, pulled from `sub` in the JWT via `zero-init.tsx`

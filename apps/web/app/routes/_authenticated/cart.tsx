@@ -10,17 +10,18 @@ export const Route = createFileRoute("/_authenticated/cart")({
     // eslint-disable-next-line no-console -- taken from ztunes
     console.log("preloading cart", context.session);
     const { zero, session } = context;
-    const userID = session.data?.userID;
-    if (userID) {
-      zero.preload(getCartItemsQuery(userID));
+    if (session.data) {
+      zero.preload(getCartItemsQuery(session.data));
     }
   },
 });
 
 function RouteComponent() {
   const { zero, session } = useRouter().options.context;
+
   const [cartItems, { type: resultType }] = useQuery(
-    getCartItemsQuery(session.data?.userID),
+    getCartItemsQuery(session.data),
+    { enabled: !!session.data },
   );
 
   if (!session.data) {

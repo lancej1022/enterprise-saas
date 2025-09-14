@@ -8,6 +8,13 @@ import { z } from "zod/v4";
 
 import { builder } from "./schema";
 
+type ClientContext =
+  | {
+      activeOrganizationId: string;
+      userID: string;
+    }
+  | undefined;
+
 export const getHomepageArtists = syncedQuery(
   "getHomepageArtists",
   z.tuple([z.string()]),
@@ -30,12 +37,12 @@ export const getArtistQuery = syncedQuery(
 export const getCartItemsQuery = syncedQueryWithContext(
   "getCartItems",
   z.tuple([]),
-  (userID: string | undefined) =>
+  (context: ClientContext) =>
     builder.cartItem
       .related("album", (album) =>
         album.one().related("artist", (artist) => artist.one()),
       )
-      .where("userId", userID ?? ""),
+      .where("userId", context?.userID ?? ""),
 );
 
 export const getUsersQuery = syncedQuery(
@@ -94,6 +101,7 @@ export const getCartItemsSimpleQuery = syncedQuery(
     builder.cartItem.where("userId", userID ?? "").orderBy("addedAt", "asc"),
 );
 
+// TODO: is this what Im supposed to use client side, rather than invoking the query directly?
 export const queries = Object.fromEntries(
   [
     getHomepageArtists,
@@ -109,7 +117,7 @@ export const queries = Object.fromEntries(
 );
 
 export function getQuery(
-  userID: string | undefined,
+  context: ClientContext,
   name: string,
   args: readonly ReadonlyJSONValue[],
 ) {
@@ -117,8 +125,8 @@ export function getQuery(
   if (!q) {
     throw new Error("Unknown query: " + name);
   }
-  if (!userID) {
+  if (!context?.userID) {
     throw new Error("User ID is required");
   }
-  return { query: q(userID, ...args) };
+  return { query: q(context, ...args) };
 }

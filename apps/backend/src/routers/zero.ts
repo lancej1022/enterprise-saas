@@ -157,12 +157,16 @@ app.post("/get-queries", async (c) => {
   }
 
   const userID = userAuth?.sub;
-  if (!userID) {
+  const activeOrganizationId = userAuth?.activeOrganizationId;
+  if (!userID || !activeOrganizationId) {
     return c.json({ error: "Invalid token" }, { status: 401 });
   }
 
   const result = await handleGetQueriesRequest(
-    (name, args) => getQuery(userID, name, args),
+    (name, args) =>
+      // TODO: is there a way to rework the `userAuth` object to be more consistent with the `ClientContext` type, so that we can pass the object directly
+      // rather than creating a new object here? Would probably help reduce object allocations on the backend
+      getQuery({ userID, activeOrganizationId }, name, args),
     schema,
     c.req.raw,
   );
