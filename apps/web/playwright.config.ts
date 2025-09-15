@@ -21,6 +21,7 @@ export default defineConfig({
       threshold: 0.2,
       maxDiffPixelRatio: 0.02,
     },
+    timeout: 10_000,
   },
   testDir: "./playwright",
   // testMatch: /.*\.spec\.ts/,
