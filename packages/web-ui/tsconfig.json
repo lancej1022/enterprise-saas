@@ -8,6 +8,6 @@
       "@solved-contact/web-ui/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", ".storybook/**/*"],
   "exclude": ["node_modules"]
 }

@@ -34,5 +34,8 @@ export default {
     "packages/chat-widget": {
       entry: ["src/index.ts", "src/router.tsx", "src/styles.css"],
     },
+    "packages/web-ui": {
+      entry: ["src/stories/**/*.stories.tsx", "vite.config.ts"],
+    },
   },
 } satisfies KnipConfig;
