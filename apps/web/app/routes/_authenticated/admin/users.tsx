@@ -122,7 +122,7 @@ function UserManagement() {
           </CardHeader>
           <CardContent>
             <div className="mb-4 flex items-center justify-between space-x-2">
-              <div className="flex flex-1 items-center space-x-2">
+              <div className="flex flex-1 flex-wrap items-center space-x-2">
                 <UsersSearchInput />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

@@ -36,7 +36,7 @@ import {
   TableRow,
 } from "@solved-contact/web-ui/components/table";
 
-const limit = 20;
+const limit = 10;
 
 function getStatusColor(status: string) {
   switch (status) {

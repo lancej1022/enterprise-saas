@@ -56,7 +56,7 @@ export const getUsersQuery = syncedQueryWithContext(
       .where("name", "ILIKE", search ? `%${search}%` : "%")
       .related("members")
       .orderBy("updatedAt", "desc")
-      .limit(20),
+      .limit(10),
 );
 
 export const getIndividualUserQuery = syncedQueryWithContext(

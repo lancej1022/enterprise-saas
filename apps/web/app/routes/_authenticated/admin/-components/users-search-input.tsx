@@ -17,7 +17,7 @@ export function UsersSearchInput() {
   );
 
   return (
-    <div className="relative max-w-sm flex-1">
+    <div className="relative max-w-sm min-w-[90px] flex-1">
       <Search className="text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4" />
       <Label className="sr-only" htmlFor="search">
         User search
