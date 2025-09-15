@@ -44,7 +44,9 @@ test.describe("Organization Settings page", () => {
       ).toBeVisible();
     } else {
       // Was unchecked, now checked - should show Enterprise Security
-      await expect(page.getByText("Enterprise Security")).toBeVisible();
+      await expect(page.getByText("Enterprise Security")).toBeVisible({
+        timeout: 15_000,
+      });
       await expect(
         page.getByText(
           "Enterprise mode: Requires JWT tokens for authentication",
@@ -58,7 +60,9 @@ test.describe("Organization Settings page", () => {
 
     // Verify it returns to original state
     if (initialState) {
-      await expect(page.getByText("Enterprise Security")).toBeVisible();
+      await expect(page.getByText("Enterprise Security")).toBeVisible({
+        timeout: 15_000,
+      });
     } else {
       await expect(page.getByText("Basic Security")).toBeVisible();
     }

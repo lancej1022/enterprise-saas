@@ -1,42 +1,57 @@
 import { relations } from "drizzle-orm";
 import {
   boolean,
+  index,
   integer,
   pgTable,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
 
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  emailVerified: boolean("email_verified")
-    .$defaultFn(() => false)
-    .notNull(),
-  image: text("image"),
-  createdAt: timestamp("created_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
-    .notNull(),
-  updatedAt: timestamp("updated_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
-    .notNull(),
-});
+export const users = pgTable(
+  "users",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email").notNull().unique(),
+    emailVerified: boolean("email_verified")
+      .$defaultFn(() => false)
+      .notNull(),
+    image: text("image"),
+    createdAt: timestamp("created_at")
+      .$defaultFn(() => /* @__PURE__ */ new Date())
+      .notNull(),
+    updatedAt: timestamp("updated_at")
+      .$defaultFn(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("users_name_search_idx").on(table.name),
+    index("users_email_idx").on(table.email),
+  ],
+);
 
-export const sessions = pgTable("sessions", {
-  id: text("id").primaryKey(),
-  expiresAt: timestamp("expires_at").notNull(),
-  token: text("token").notNull().unique(),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
-  ipAddress: text("ip_address"),
-  userAgent: text("user_agent"),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  activeOrganizationId: text("active_organization_id"),
-  activeTeamId: text("active_team_id"),
-});
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: text("id").primaryKey(),
+    expiresAt: timestamp("expires_at").notNull(),
+    token: text("token").notNull().unique(),
+    createdAt: timestamp("created_at").notNull(),
+    updatedAt: timestamp("updated_at").notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    activeOrganizationId: text("active_organization_id"),
+    activeTeamId: text("active_team_id"),
+  },
+  (table) => [
+    index("sessions_user_id_idx").on(table.userId),
+    index("sessions_token_idx").on(table.token),
+  ],
+);
 
 export const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),
@@ -102,42 +117,53 @@ export const apikeys = pgTable("apikeys", {
   metadata: text("metadata"),
 });
 
-export const organizations = pgTable("organizations", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  slug: text("slug").unique(),
-  logo: text("logo"),
-  createdAt: timestamp("created_at").notNull(),
-  metadata: text("metadata"),
-  chatDomain: text("chat_domain"),
-  chatApiKey: text("chat_api_key"),
-  chatWebhookUrl: text("chat_webhook_url"),
-  chatTheme: text("chat_theme"),
-  chatPrimaryColor: text("chat_primary_color"),
-  chatPosition: text("chat_position"),
-  chatWelcomeMessage: text("chat_welcome_message"),
-  chatCollectEmail: boolean("chat_collect_email"),
-  chatCollectName: boolean("chat_collect_name"),
-  chatSecurityLevel: text("chat_security_level").default("basic").notNull(),
-  // TODO: JSON array of domains, so we should probably store this differently...
-  chatAllowedDomains: text("chat_allowed_domains"),
-  chatJwtSecret: text("chat_jwt_secret"),
-  chatSessionDuration: integer("chat_session_duration"),
-});
+export const organizations = pgTable(
+  "organizations",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    slug: text("slug").unique(),
+    logo: text("logo"),
+    createdAt: timestamp("created_at").notNull(),
+    metadata: text("metadata"),
+    chatDomain: text("chat_domain"),
+    chatApiKey: text("chat_api_key"),
+    chatWebhookUrl: text("chat_webhook_url"),
+    chatTheme: text("chat_theme"),
+    chatPrimaryColor: text("chat_primary_color"),
+    chatPosition: text("chat_position"),
+    chatWelcomeMessage: text("chat_welcome_message"),
+    chatCollectEmail: boolean("chat_collect_email"),
+    chatCollectName: boolean("chat_collect_name"),
+    chatSecurityLevel: text("chat_security_level").default("basic").notNull(),
+    // TODO: JSON array of domains, so we should probably store this differently...
+    chatAllowedDomains: text("chat_allowed_domains"),
+    chatJwtSecret: text("chat_jwt_secret"),
+    chatSessionDuration: integer("chat_session_duration"),
+  },
+  (table) => [index("organizations_slug_lookup_idx").on(table.slug)],
+);
 
-export const members = pgTable("members", {
-  id: text("id").primaryKey(),
-  organizationId: text("organization_id")
-    .notNull()
-    .references(() => organizations.id, { onDelete: "cascade" }),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  role: text("role").default("member").notNull(),
-  createdAt: timestamp("created_at").notNull(),
-  chatDisplayName: text("chat_display_name"),
-  chatRole: text("chat_role"),
-});
+export const members = pgTable(
+  "members",
+  {
+    id: text("id").primaryKey(),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    role: text("role").default("member").notNull(),
+    createdAt: timestamp("created_at").notNull(),
+    chatDisplayName: text("chat_display_name"),
+    chatRole: text("chat_role"),
+  },
+  (table) => [
+    index("members_organization_idx").on(table.organizationId),
+    index("members_user_idx").on(table.userId),
+  ],
+);
 
 export const invitations = pgTable("invitations", {
   id: text("id").primaryKey(),
