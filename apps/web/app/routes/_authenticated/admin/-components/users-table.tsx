@@ -53,13 +53,12 @@ function getStatusColor(status: string) {
 
 export function UsersTable() {
   const { session } = useRouter().options.context;
-  const organizationId = session.data?.activeOrganizationId ?? "";
   const { search, page = 1 } = useSearch({
     from: "/_authenticated/admin/users",
   });
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  const [users] = useQuery(getUsersQuery(organizationId, search ?? null), {
+  const [users] = useQuery(getUsersQuery(session.data, search ?? null), {
     ttl: "5m",
   });
 

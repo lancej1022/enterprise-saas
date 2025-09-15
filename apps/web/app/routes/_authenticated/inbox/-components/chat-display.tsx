@@ -30,13 +30,18 @@ export function ChatDisplay({ conversationId }: ChatDisplayProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-  const { zero } = router.options.context;
+  const { zero, session } = router.options.context;
 
   // Real-time conversation data
-  const [conversationList] = useQuery(getConversationQuery(conversationId));
+  const [conversationList] = useQuery(
+    getConversationQuery(session.data, conversationId),
+    {
+      enabled: !!session.data,
+    },
+  );
   const conversation = conversationList[0]; // Get first (should be only one) conversation
 
-  const [messages] = useQuery(getMessagesQuery(conversationId));
+  const [messages] = useQuery(getMessagesQuery(session.data, conversationId));
 
   function handleSendMessage(e: React.FormEvent) {
     e.preventDefault();

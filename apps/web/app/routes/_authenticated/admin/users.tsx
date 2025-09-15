@@ -72,8 +72,7 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
   loaderDeps: ({ search }) => search,
   loader: ({ context, deps }) => {
     const { zero, session } = context;
-    const organizationId = session.data?.activeOrganizationId ?? "";
-    zero.preload(getUsersQuery(organizationId, deps.search ?? null));
+    zero.preload(getUsersQuery(session.data, deps.search ?? null));
   },
 });
 

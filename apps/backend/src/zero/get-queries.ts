@@ -45,50 +45,55 @@ export const getCartItemsQuery = syncedQueryWithContext(
       .where("userId", context?.userID ?? ""),
 );
 
-export const getUsersQuery = syncedQuery(
+export const getUsersQuery = syncedQueryWithContext(
   "getUsers",
-  z.tuple([z.string(), z.string().nullable()]),
-  (organizationId: string, search: null | string) =>
+  z.tuple([z.string().nullable()]),
+  (context: ClientContext, search) =>
     builder.users
-      .whereExists("members", (q) => q.where("organizationId", organizationId))
+      .whereExists("members", (q) =>
+        q.where("organizationId", context?.activeOrganizationId ?? ""),
+      )
       .where("name", "ILIKE", search ? `%${search}%` : "%")
       .related("members")
       .orderBy("updatedAt", "desc")
       .limit(20),
 );
 
-export const getIndividualUserQuery = syncedQuery(
+export const getIndividualUserQuery = syncedQueryWithContext(
   "getIndividualUser",
-  z.tuple([z.string(), z.string()]),
-  (organizationId: string, userId: string) =>
+  z.tuple([z.string()]),
+  (context: ClientContext, userId) =>
     builder.users
       .where("id", userId)
-      .whereExists("members", (q) => q.where("organizationId", organizationId))
+      .whereExists("members", (q) =>
+        q.where("organizationId", context?.activeOrganizationId ?? ""),
+      )
       .related("members")
       .one(),
 );
 
-export const getConversationsQuery = syncedQuery(
+export const getConversationsQuery = syncedQueryWithContext(
   "getConversations",
-  z.tuple([z.string()]),
-  (orgId: string) =>
+  z.tuple([]),
+  (context: ClientContext) =>
     builder.conversations
-      .where("organizationId", orgId)
+      .where("organizationId", context?.activeOrganizationId ?? "")
       .limit(10)
       .orderBy("updatedAt", "desc")
       .related("chatUser", (chatUser) => chatUser.one()),
 );
 
-export const getConversationQuery = syncedQuery(
+export const getConversationQuery = syncedQueryWithContext(
   "getConversation",
   z.tuple([z.string()]),
-  (conversationId: string) => builder.conversations.where("id", conversationId),
+  (_context: ClientContext, conversationId) =>
+    builder.conversations.where("id", conversationId),
 );
 
-export const getMessagesQuery = syncedQuery(
+export const getMessagesQuery = syncedQueryWithContext(
   "getMessages",
   z.tuple([z.string()]),
-  (conversationId: string) =>
+  (_context: ClientContext, conversationId) =>
     builder.messages
       .where("conversationId", conversationId)
       .orderBy("createdAt", "asc"),
@@ -97,8 +102,8 @@ export const getMessagesQuery = syncedQuery(
 export const getCartItemsSimpleQuery = syncedQuery(
   "getCartItemsSimple",
   z.tuple([z.string()]),
-  (userID: string | undefined) =>
-    builder.cartItem.where("userId", userID ?? "").orderBy("addedAt", "asc"),
+  (userID) =>
+    builder.cartItem.where("userId", userID).orderBy("addedAt", "asc"),
 );
 
 // TODO: is this what Im supposed to use client side, rather than invoking the query directly?

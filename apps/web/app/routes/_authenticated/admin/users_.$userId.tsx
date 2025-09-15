@@ -134,8 +134,7 @@ export const Route = createFileRoute("/_authenticated/admin/users_/$userId")({
   component: UserDetails,
   loader: ({ context, params }) => {
     const { zero, session } = context;
-    const organizationId = session.data?.activeOrganizationId ?? "";
-    zero.preload(getIndividualUserQuery(organizationId, params.userId));
+    zero.preload(getIndividualUserQuery(session.data, params.userId));
   },
 });
 
@@ -153,9 +152,7 @@ function UserDetails() {
     select: (params) => params.userId,
   });
 
-  const [dbUser] = useQuery(
-    getIndividualUserQuery(session.data?.activeOrganizationId ?? "", userId),
-  );
+  const [dbUser] = useQuery(getIndividualUserQuery(session.data, userId));
 
   // const [user, setUser] = useState(userData);
   const [isEditing, setIsEditing] = useState(false);

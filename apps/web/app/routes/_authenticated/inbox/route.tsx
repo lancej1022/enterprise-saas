@@ -21,9 +21,9 @@ function MailPage() {
   const { session } = router.options.context;
 
   // Get conversations for the current organization
-  const [conversations] = useQuery(
-    getConversationsQuery(session.data?.activeOrganizationId || ""),
-  );
+  const [conversations] = useQuery(getConversationsQuery(session.data), {
+    enabled: !!session.data,
+  });
 
   // Show loading state when no data
   if (conversations.length === 0) {
